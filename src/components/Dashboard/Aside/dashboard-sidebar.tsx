@@ -6,7 +6,7 @@ import { Folder } from "./folder"
 
 export default function DashboardSidebar() {
 	return (
-		<aside className="w-[500px] h-full">
+		<aside className="w-[400px] h-full">
 			<Card className="w-full">
 				<CardContent>
 					<div className="flex justify-between items-center">
