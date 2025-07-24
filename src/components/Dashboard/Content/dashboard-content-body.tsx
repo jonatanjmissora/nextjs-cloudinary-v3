@@ -20,14 +20,14 @@ export default function DashboardContentBody() {
 
 	if (isFetching) {
 		return (
-			<article className="w-full h-full columns-[1fr] sm:columns-[300px]">
+			<article className="w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px]">
 				<SkeltonList />
 			</article>
 		)
 	}
 
 	return (
-		<article className="w-full h-full columns-[1fr] sm:columns-[300px]">
+		<article className="w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px]">
 			{folders?.map(asset => (
 				<div key={asset.public_id} className="w-full h-full relative group">
 					<Image
@@ -53,7 +53,7 @@ const SkeltonList = () => {
 		<>
 			{Array.from({ length: 15 }, (_, index) => index + 1).map(item => (
 				<div key={item} className="w-full h-full relative group">
-					<Skeleton className="w-[300px] h-[400px] my-2" />
+					<Skeleton className="sm:w-[220px] sm:h-[270px] 2xl:w-[310px] 2xl:h-[370px] my-2" />
 				</div>
 			))}
 		</>

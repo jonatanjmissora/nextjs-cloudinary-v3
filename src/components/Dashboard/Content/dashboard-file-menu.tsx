@@ -25,7 +25,7 @@ export default function DashboardFileMenu({
 			<DropdownMenu open={open} onOpenChange={setOpen}>
 				<DropdownMenuTrigger asChild>
 					<div className="group-hover:opacity-100 opacity-0 bg-[var(--foreground)]/50 w-full flex items-center justify-between">
-						<span className="text-black truncate w-3/4 p-2">
+						<span className="text-black sm:text-xs 2xl:text-sm truncate w-3/4 p-2">
 							{asset.filename}
 						</span>
 						<Button variant="ghost" size="sm">

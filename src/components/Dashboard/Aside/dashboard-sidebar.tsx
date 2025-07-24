@@ -6,11 +6,11 @@ import { Folder } from "./folder"
 
 export default function DashboardSidebar() {
 	return (
-		<aside className="w-[400px] h-full">
+		<aside className="w-[350px] 2xl:w-[400px] h-full">
 			<Card className="w-full">
 				<CardContent>
 					<div className="flex justify-between items-center">
-						<span className="text-lg font-semibold tracking-wider">
+						<span className="sm:text-base 2xl:text-lg font-semibold tracking-wider">
 							Carpetas
 						</span>
 						<Button variant="ghost" className="">

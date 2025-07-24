@@ -62,14 +62,14 @@ const Menu = () => {
 		<>
 			<div className="flex items-center gap-12">
 				<span>vista</span>
-				<LayoutDashboard />
-				<StretchHorizontal />
+				<LayoutDashboard className="sm:size-5 2xl:size-6" />
+				<StretchHorizontal className="sm:size-5 2xl:size-6" />
 			</div>
 			<div className="flex items-center gap-12">
 				<span>orden</span>
-				<ArrowDownAZ />
-				<CalendarArrowDown />
-				<ArrowDownNarrowWide />
+				<ArrowDownAZ className="sm:size-5 2xl:size-6" />
+				<CalendarArrowDown className="sm:size-5 2xl:size-6" />
+				<ArrowDownNarrowWide className="sm:size-5 2xl:size-6" />
 			</div>
 		</>
 	)

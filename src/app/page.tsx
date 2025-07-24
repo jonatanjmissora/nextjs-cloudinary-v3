@@ -9,7 +9,7 @@ export default function Home() {
 
 			<Header />
 			<main
-				className={`flex flex-col sm:flex-row gap-[32px] row-start-2 items-center justify-center w-full h-full px-10`}
+				className={`flex flex-col sm:flex-row sm:gap-[20px] 2xl:gap-[32px] row-start-2 items-center justify-center w-full h-full sm:px-3 2xl:px-10`}
 			>
 				<DashboardSidebar />
 				<DashboardContent />

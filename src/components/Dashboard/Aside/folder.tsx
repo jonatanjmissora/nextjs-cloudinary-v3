@@ -17,10 +17,10 @@ export function Folder({ label }: { label: string }) {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<div className="flex w-full flex-col items-start justify-between px-4 py-3 sm:flex-row sm:items-center group hover:border-[var(--border)] border border-transparent rounded-lg">
+		<div className="flex w-full flex-col items-start justify-between sm:px-3 sm:py-2 2xl:px-4 2xl:py-3 sm:flex-row sm:items-center group hover:border-[var(--border)] border border-transparent rounded-lg">
 			<div className="flex items-center gap-4">
 				<FolderIcon className="size-5" />
-				<span className="">{label}</span>
+				<span className="sm:text-sm 2xl:text-base">{label}</span>
 			</div>
 			<DropdownMenu open={open} onOpenChange={setOpen}>
 				<DropdownMenuTrigger asChild>
