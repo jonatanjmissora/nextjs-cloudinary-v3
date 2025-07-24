@@ -171,6 +171,22 @@ export interface Folder {
   }
 
 /////////////////////////////////////////////////////////////////////////////////
+                REACT QUERY PROVIDER
+/////////////////////////////////////////////////////////////////////////////////
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+const queryClient = new QueryClient()
+
+export default function App({ children }: { children: React.ReactNode }) {
+  return (
+    <QueryClientProvider client={queryClient}>
+      {children}
+    </QueryClientProvider>
+  )
+}
+
+/////////////////////////////////////////////////////////////////////////////////
                 USE GET FOLDERS
 /////////////////////////////////////////////////////////////////////////////////
 import { Folder } from "@/_lib/types"

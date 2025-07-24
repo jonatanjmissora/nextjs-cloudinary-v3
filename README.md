@@ -85,3 +85,81 @@ export function ModeToggle() {
 
 instalar todos los componentes de shadcn
 
+hicimos el header, el sidebar y el dashboard body
+
+🟩 conectamos con cloudinary
+bun add cloudinary 
+
+en .env colocamos los valores de 
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+NEXT_PUBLIC_CLOUDINARY_API_KEY=
+NEXT_PUBLIC_CLOUDINARY_API_SECRET=
+CLOUDINARY_URL=
+
+🟩 mostramos los assets de cloudinary
+hicimos el masonry layout
+
+/lib/getAssets
+----------------
+"use server"
+import { CloudinaryAsset } from "@/_lib/types";
+import cloudinary from "cloudinary"
+
+//const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+export const getAssets = async (): Promise<{success: boolean, response: CloudinaryAsset[], message: string}> => {
+    try {
+        const res = await cloudinary.v2
+            .search
+            .expression('resource_type:image')
+            .sort_by('public_id', 'desc')
+            .max_results(30)
+            .execute();
+            
+        // demora de 2 segundos
+        //await sleep(1000)
+        
+        if(!res){
+            console.error("error en getAssets - !res: ")
+            return {success: false, response: [], message: "Problemas con la API de Cloudinary"}
+        }
+        
+        return {success: true, response: res.resources || [], message: "Assets obtenidos correctamente"}
+    } catch (error: unknown) {
+        console.error("error en getAssets - catch: ", error)
+        return {success: false, response: [], message: error instanceof Error ? error.message : "Error al obtener assets"}
+        }
+} 
+
+creamos el hook useGetFolders donde tenemos el query de getAssets
+import { getAssets } from "./get-assets"
+import { useQuery } from "@tanstack/react-query"
+
+export const useGetFolders = () => {
+	const {
+		isFetching,
+		data,
+		error: queryError,
+	} = useQuery({
+		queryKey: ["assets"],
+		queryFn: getAssets,
+		staleTime: 30 * 1000,
+		refetchInterval: 30 * 1000,
+		refetchIntervalInBackground: true,
+	})
+
+	const error = queryError || data?.success === false ? data?.message : null
+	const folders = data?.response || []
+
+	return { isFetching, folders, error }
+}
+
+
+
+
+
+
+
+
+🟩🟩🟩
+

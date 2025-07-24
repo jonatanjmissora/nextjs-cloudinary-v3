@@ -27,6 +27,7 @@ export default function DashboardSidebar() {
 
 const FolderList = () => {
 	const foldersMock = [
+		"Todas ",
 		"Folder 1",
 		"Folder 2",
 		"Folder 3",
