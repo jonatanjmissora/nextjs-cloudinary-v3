@@ -1,37 +1,37 @@
-import { create } from 'zustand'
-import { Folder } from './types'
+import { create } from "zustand"
+import { CloudinaryAsset } from "./types"
 
 interface StoreState {
-  folders: Folder[]
-  actualFolder: Folder | null
-  view: "grid" | "list"
-  order: "name" | "size" | "date"
-  search: string
+	sortedAssets: CloudinaryAsset[]
+	actualFolder: string | null
+	view: "grid" | "list"
+	order: "name" | "size" | "date"
+	search: string
 }
 
 interface StoreActions {
-  setFolders: (folders: Folder[]) => void
-  setActualFolder: (folder: Folder) => void
-  setView: (view: "grid" | "list") => void
-  setOrder: (order: "name" | "size" | "date") => void
-  setSearch: (search: string) => void
+	setSortedAssets: (assets: CloudinaryAsset[]) => void
+	setActualFolder: (folder: string) => void
+	setView: (view: "grid" | "list") => void
+	setOrder: (order: "name" | "size" | "date") => void
+	setSearch: (search: string) => void
 }
 
-const useStore = create<StoreState & StoreActions>((set) => ({
-  folders: [],
-  setFolders: (folders: Folder[]) => set({ folders }),
+const useStore = create<StoreState & StoreActions>(set => ({
+	sortedAssets: [],
+	setSortedAssets: (assets: CloudinaryAsset[]) => set({ sortedAssets: assets }),
 
-  actualFolder: null,
-  setActualFolder: (folder: Folder) => set({ actualFolder: folder }),
+	actualFolder: null,
+	setActualFolder: (folder: string) => set({ actualFolder: folder }),
 
-  view: "grid",
-  setView: (view: "grid" | "list") => set({ view }),
+	view: "grid",
+	setView: (view: "grid" | "list") => set({ view }),
 
-  order: "name",
-  setOrder: (order: "name" | "size" | "date") => set({ order }),
+	order: "name",
+	setOrder: (order: "name" | "size" | "date") => set({ order }),
 
-  search: "",
-  setSearch: (search: string) => set({ search }),
+	search: "",
+	setSearch: (search: string) => set({ search }),
 }))
 
 export default useStore

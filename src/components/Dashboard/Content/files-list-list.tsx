@@ -10,13 +10,11 @@ export const FilesListList = ({
 }: {
 	order: "name" | "size" | "date"
 }) => {
-	const { isFetching, assets, error } = useGetAssets()
+	const { isFetching, sortedAssets, error } = useGetAssets()
 
 	if (error) return <ErrorComponent error={error} />
 
 	if (isFetching) return <SkeltonList />
-
-	const sortedAssets = sortedAssetsFn(assets, order)
 
 	return (
 		<article
