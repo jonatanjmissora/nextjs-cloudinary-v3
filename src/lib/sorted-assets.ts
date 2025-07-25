@@ -1,6 +1,6 @@
 import { CloudinaryAsset } from "./types"
 
-export const sortedAssets = (assets: CloudinaryAsset[], order: string) => {
+export const sortedAssetsFn = (assets: CloudinaryAsset[], order: string) => {
 	return assets.sort((a, b) => {
 		if (order === "name") {
 			return a.public_id.localeCompare(b.public_id)

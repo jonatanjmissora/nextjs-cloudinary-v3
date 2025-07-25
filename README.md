@@ -131,11 +131,11 @@ export const getAssets = async (): Promise<{success: boolean, response: Cloudina
         }
 } 
 
-creamos el hook useGetFolders donde tenemos el query de getAssets
+creamos el hook useGetAssets donde tenemos el query de getAssets
 import { getAssets } from "./get-assets"
 import { useQuery } from "@tanstack/react-query"
 
-export const useGetFolders = () => {
+export const useGetAssets = () => {
 	const {
 		isFetching,
 		data,
@@ -196,6 +196,10 @@ const useStore = create<StoreState & StoreActions>((set) => ({
 export default useStore
 
 🟩 luego usamos la store, para listar y ordenar los archivos
+
+refactorizamos
+
+
 
 
 

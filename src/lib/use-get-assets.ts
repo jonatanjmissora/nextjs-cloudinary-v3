@@ -1,7 +1,7 @@
 import { getAssets } from "./get-assets"
 import { useQuery } from "@tanstack/react-query"
 
-export const useGetFolders = () => {
+export const useGetAssets = () => {
 	const {
 		isFetching,
 		data,
@@ -15,7 +15,7 @@ export const useGetFolders = () => {
 	})
 
 	const error = queryError || data?.success === false ? data?.message : null
-	const folders = data?.response || []
+	const assets = data?.response || []
 
-	return { isFetching, folders, error }
+	return { isFetching, assets, error }
 }

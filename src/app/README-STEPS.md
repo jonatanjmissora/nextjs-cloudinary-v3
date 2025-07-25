@@ -3,7 +3,7 @@ instalar next-themes shadcn, zustand, lucide, tanstack/react-query, cloudinary, 
 crear un <Folders /> y un <Files />
 
 <Folders />
-    const { isFetching, error } = useGetFolders()
+    const { isFetching, error } = useGetAssets()
 
     <section>
 
@@ -26,7 +26,7 @@ crear un <Folders /> y un <Files />
     }
 
     const FoldersError = () => {
-        const { error } = useGetFolders()
+        const { error } = useGetAssets()
 
         return ()
     }
@@ -195,7 +195,7 @@ import { useQuery } from "@tanstack/react-query"
 import { setFoldersFromAssets } from "@/_lib/utils/set-folders"
 import useStore from "@/_lib/cloudinary/store"
 
-export const useGetFolders = () => {
+export const useGetAssets = () => {
 
   const {actualFolder, setActualFolder} = useStore()
 

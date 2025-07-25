@@ -1,18 +1,28 @@
-import { CloudinaryAsset } from "@/lib/types"
 import Image from "next/image"
 import { DashboardFileMenu } from "./dashboard-file-menu"
 import { DashboardFileInfo } from "./dashboard-file-info"
+import { useGetAssets } from "@/lib/use-get-assets"
+import { sortedAssetsFn } from "@/lib/sorted-assets"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export const FilesListGrid = ({
-	sortedFolders,
+	order,
 }: {
-	sortedFolders: CloudinaryAsset[]
+	order: "name" | "size" | "date"
 }) => {
+	const { isFetching, assets, error } = useGetAssets()
+
+	if (error) return <ErrorComponent error={error} />
+
+	if (isFetching) return <SkeltonList />
+
+	const sortedAssets = sortedAssetsFn(assets, order)
+
 	return (
 		<article
 			className={`w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-2`}
 		>
-			{sortedFolders?.map(asset => (
+			{sortedAssets?.map(asset => (
 				<div
 					key={asset.public_id}
 					className={`w-full h-auto relative group border-4 border-transparent hover:border-orange-500/50`}
@@ -27,8 +37,29 @@ export const FilesListGrid = ({
 						objectFit="cover"
 						className={`w-full`}
 					/>
-					<DashboardFileMenu asset={asset} view="grid" />
+					<DashboardFileMenu view="grid" />
 					<DashboardFileInfo asset={asset} view="grid" />
+				</div>
+			))}
+		</article>
+	)
+}
+
+const ErrorComponent = ({ error }: { error: string }) => {
+	console.log("error en FilesListGrid - error: ", error)
+	return (
+		<article className="w-full h-[70dvh] flex justify-center items-center">
+			<p className="text-red-700 text-xl font-semibold">{error}</p>
+		</article>
+	)
+}
+
+const SkeltonList = () => {
+	return (
+		<article className="w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px]">
+			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
+				<div key={item} className="w-full h-full relative group">
+					<Skeleton className="sm:w-[220px] sm:h-[270px] 2xl:w-[310px] 2xl:h-[370px] my-2" />
 				</div>
 			))}
 		</article>

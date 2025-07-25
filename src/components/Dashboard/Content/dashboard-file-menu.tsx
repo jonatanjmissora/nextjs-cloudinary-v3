@@ -10,15 +10,8 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal, Trash2, Download, Wand } from "lucide-react"
-import { CloudinaryAsset } from "@/lib/types"
 
-export const DashboardFileMenu = ({
-	asset,
-	view,
-}: {
-	asset: CloudinaryAsset
-	view: "grid" | "list"
-}) => {
+export const DashboardFileMenu = ({ view }: { view: "grid" | "list" }) => {
 	const [open, setOpen] = useState(false)
 
 	return (
