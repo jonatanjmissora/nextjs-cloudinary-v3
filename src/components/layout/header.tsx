@@ -11,7 +11,7 @@ export default function Header() {
 
         <nav className="flex gap-[24px] items-center">
             <SearchFile />
-            <Button variant="default" size="lg">
+            <Button variant="default" size="lg" className="bg-orange-500">
                 <Upload /> Subir Archivo
             </Button>
         </nav>

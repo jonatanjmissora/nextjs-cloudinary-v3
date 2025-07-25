@@ -23,7 +23,7 @@ export const DashboardFileInfo = ({
 		)
 	else 
 		return (
-			<div className="group flex-1 flex flex-col justify-center gap-2 p-1 sm:text-sm2xl:text-base">
+			<div className="group flex-1 flex flex-col justify-center gap-2 p-1 sm:text-sm 2xl:text-base">
 				<span className="w-1/2 truncate">{asset.display_name}</span>
 				<span>{setFileDate(asset.created_at)}</span>
 				<span>{setFileSize(asset.bytes)}</span>
