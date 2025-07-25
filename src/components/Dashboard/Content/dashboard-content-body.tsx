@@ -1,13 +1,15 @@
 "use client"
 
-import Image from "next/image"
-import DashboardFileMenu from "./dashboard-file-menu"
-import DashboardFileInfo from "./dashboard-file-info"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useGetFolders } from "@/lib/use-get-folders"
+import useStore from "@/lib/zustand-coudinary"
+import { sortedAssets } from "@/lib/sorted-assets"
+import { FilesListGrid } from "./files-list-grid"
+import { FilesListList } from "./files-list-list"
 
 export default function DashboardContentBody() {
 	const { isFetching, folders, error } = useGetFolders()
+	const {view, order} = useStore()
 
 	if (error) {
 		console.error("error en DashboardContentBody - error: ", error)
@@ -26,32 +28,17 @@ export default function DashboardContentBody() {
 		)
 	}
 
-	return (
-		<article className="w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px]">
-			{folders?.map(asset => (
-				<div key={asset.public_id} className="w-full h-full relative group">
-					<Image
-						src={asset.secure_url}
-						alt={asset.public_id}
-						width={300}
-						height={300}
-						quality={100}
-						priority
-						objectFit="cover"
-						className="w-full h-full border-4 border-transparent my-2 hover:border-[var(--foreground)]/50"
-					/>
-					<DashboardFileMenu asset={asset} />
-					<DashboardFileInfo asset={asset} />
-				</div>
-			))}
-		</article>
-	)
+	const sortedFolders = sortedAssets(folders, order)
+	if(view === "grid") 
+		return <FilesListGrid sortedFolders={sortedFolders} />
+	else 
+		return <FilesListList sortedFolders={sortedFolders}/>
 }
 
 const SkeltonList = () => {
 	return (
 		<>
-			{Array.from({ length: 15 }, (_, index) => index + 1).map(item => (
+			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
 				<div key={item} className="w-full h-full relative group">
 					<Skeleton className="sm:w-[220px] sm:h-[270px] 2xl:w-[310px] 2xl:h-[370px] my-2" />
 				</div>

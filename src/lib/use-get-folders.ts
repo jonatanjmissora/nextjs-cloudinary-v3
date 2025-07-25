@@ -9,8 +9,8 @@ export const useGetFolders = () => {
 	} = useQuery({
 		queryKey: ["assets"],
 		queryFn: getAssets,
-		staleTime: 30 * 1000,
-		refetchInterval: 30 * 1000,
+		staleTime: 600 * 1000,
+		refetchInterval: 600 * 1000,
 		refetchIntervalInBackground: true,
 	})
 

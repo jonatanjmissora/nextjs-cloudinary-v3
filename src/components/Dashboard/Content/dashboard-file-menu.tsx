@@ -10,31 +10,32 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal, Trash2, Download, Wand } from "lucide-react"
+import { MoreHorizontal, Trash2, Download, Wand, Expand } from "lucide-react"
 import { CloudinaryAsset } from "@/lib/types"
 
-export default function DashboardFileMenu({
+export const DashboardFileMenu = ({
 	asset,
+	view,
 }: {
 	asset: CloudinaryAsset
-}) {
+	view: "grid" | "list"
+}) => {
 	const [open, setOpen] = useState(false)
 
 	return (
-		<div className="absolute top-1 right-1 left-1">
+		<div className={`absolute top-0 right-0`}>
 			<DropdownMenu open={open} onOpenChange={setOpen}>
 				<DropdownMenuTrigger asChild>
-					<div className="group-hover:opacity-100 opacity-0 bg-[var(--foreground)]/50 w-full flex items-center justify-between">
-						<span className="text-black sm:text-xs 2xl:text-sm truncate w-3/4 p-2">
-							{asset.filename}
-						</span>
-						<Button variant="ghost" size="sm">
-							<MoreHorizontal className="size-5 text-black" />
-						</Button>
-					</div>
+					<Button variant="ghost" size="sm" className={`${view === "grid" && "group-hover:opacity-100 opacity-0 text-black bg-[var(--foreground)]/50"}`}>
+						<MoreHorizontal className="size-5 " />
+					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end" className="w-[200px]">
 					<DropdownMenuGroup>
+						<DropdownMenuItem className="flex items-center justify-between p-3">
+							ampliar <Expand />
+						</DropdownMenuItem>
+						<DropdownMenuSeparator />
 						<DropdownMenuItem className="flex items-center justify-between p-3">
 							descargar <Download />
 						</DropdownMenuItem>
