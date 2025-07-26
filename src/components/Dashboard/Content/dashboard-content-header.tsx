@@ -19,6 +19,7 @@ import {
 	StretchHorizontal,
 } from "lucide-react"
 import useStore from "@/lib/zustand-coudinary"
+import { useGetAssets } from "@/lib/use-get-assets"
 
 export default function DashboardContentHeader() {
 	return (
@@ -82,6 +83,12 @@ const Menu = () => {
 }
 
 const FileStats = () => {
+
+	const { actualFolder } = useStore()
+	const {assets} = useGetAssets()
+
+	const actualFolderAssetsLength = actualFolder === "Todas" ? assets.length : assets.filter(asset => asset.asset_folder === actualFolder).length
+
 	return (
 		<div className="w-full flex items-center justify-between">
 			<div className="flex items-center gap-3">
@@ -91,7 +98,7 @@ const FileStats = () => {
 				</Label>
 			</div>
 			<span>seleccionados ( 20 )</span>
-			<span>total 48</span>
+			<span>total {actualFolderAssetsLength}</span>
 		</div>
 	)
 }

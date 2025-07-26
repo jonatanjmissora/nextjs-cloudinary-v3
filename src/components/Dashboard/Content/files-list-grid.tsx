@@ -21,8 +21,6 @@ export const FilesListGrid = ({
 	const sortedAssets = sortedAssetsFn(assets, order)
 	const filteredAssets = actualFolder === "Todas" ? sortedAssets : sortedAssets.filter(asset => asset.asset_folder === actualFolder)
 
-	console.log("filteredAssets: ", filteredAssets.map(asset => asset.asset_folder))
-
 	return (
 		<article
 			className={`w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-2`}

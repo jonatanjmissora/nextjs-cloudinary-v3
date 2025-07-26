@@ -19,12 +19,13 @@ export const FilesListList = ({
 		if (isFetching) return <SkeltonList />
 	
 		const sortedAssets = sortedAssetsFn(assets, order)
+		const filteredAssets = actualFolder === "Todas" ? sortedAssets : sortedAssets.filter(asset => asset.asset_folder === actualFolder)
 
 	return (
 		<article
 			className={`w-full h-full grid grid-cols-1 sm:grid-cols-2 gap-2 my-3`}
 		>
-			{sortedAssets?.map(asset => (
+			{filteredAssets?.map(asset => (
 				<div
 					key={asset.public_id}
 					className={`w-full h-full relative group border-2 p-2 flex items-center gap-20 rounded-lg hover:border-orange-500/50 overflow-hidden`}
