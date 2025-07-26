@@ -10,7 +10,7 @@ export const FilesListGrid = ({
 	actualFolder,
 }: {
 	order: "name" | "size" | "date"
-	actualFolder: string | null
+	actualFolder: string
 }) => {
 	const { isFetching, assets, error } = useGetAssets()
 
@@ -19,7 +19,7 @@ export const FilesListGrid = ({
 	if (isFetching) return <SkeltonList />
 
 	const sortedAssets = sortedAssetsFn(assets, order)
-	const filteredAssets = actualFolder ? sortedAssets.filter(asset => asset.asset_folder === actualFolder) : sortedAssets
+	const filteredAssets = actualFolder === "Todas" ? sortedAssets : sortedAssets.filter(asset => asset.asset_folder === actualFolder)
 
 	console.log("filteredAssets: ", filteredAssets.map(asset => asset.asset_folder))
 

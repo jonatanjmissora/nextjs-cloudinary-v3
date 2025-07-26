@@ -10,7 +10,7 @@ export const FilesListList = ({
 	actualFolder,
 }: {
 	order: "name" | "size" | "date"
-	actualFolder: string | null
+	actualFolder: string
 }) => {
 	const { isFetching, assets, error } = useGetAssets()
 	

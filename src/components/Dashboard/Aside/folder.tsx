@@ -1,6 +1,6 @@
 "use client"
 
-import { Edit2, FolderIcon, MoreHorizontal, Trash2 } from "lucide-react"
+import { Edit2, FolderIcon, FolderOpenIcon, MoreHorizontal, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,14 +15,20 @@ import { useState } from "react"
 import useStore from "@/lib/zustand-coudinary"
 
 export function Folder({ label }: { label: string }) {
-	const [open, setOpen] = useState(false)
+	const [open, setOpen] = useState<boolean>(false)
 	const { setActualFolder, actualFolder } = useStore()
+	const folderName = label === "" 
+		? "Sin nombre" 
+		: label.split("/").length > 1
+			? label.split("/").pop()
+			: label
+	const isSubFolderName = label.split("/").length > 1
 
-	return (
-		<div className="flex w-full flex-col items-start justify-between sm:px-3 sm:py-2 2xl:px-4 2xl:py-3 sm:flex-row sm:items-center group hover:border-[var(--border)] border border-transparent rounded-lg">
-			<button className={`flex items-center gap-4 cursor-pointer hover:border-[var(--border)] ${label === actualFolder ? "bg-[var(--border)]" : ""}`}  onClick={() => setActualFolder(label)}>
-				<FolderIcon className="size-5" />
-				<span className="sm:text-sm 2xl:text-base">{label}</span>
+	return ( 
+		<div className={`flex w-full items-center justify-between sm:flex-row sm:items-center group hover:border-[var(--border)] border border-transparent rounded-lg ${label === actualFolder && "bg-[var(--border)]"} my-[2px]`}>
+			<button className={`flex gap-3 items-center cursor-pointer flex-1 h-[3rem] px-2 ${isSubFolderName && "pl-8"}`}  onClick={() => setActualFolder(label)}>
+				{label === actualFolder ? <FolderOpenIcon className="size-5 text-orange-500" /> : <FolderIcon className="size-5" />}
+				<span className={`${label === actualFolder && "text-orange-500"} sm:text-sm 2xl:text-base`}>{folderName}</span>
 			</button>
 			<DropdownMenu open={open} onOpenChange={setOpen}>
 				<DropdownMenuTrigger asChild>

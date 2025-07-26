@@ -3,7 +3,7 @@ import { CloudinaryAsset } from "./types"
 
 interface StoreState {
 	sortedAssets: CloudinaryAsset[]
-	actualFolder: string | null
+	actualFolder: string
 	view: "grid" | "list"
 	order: "name" | "size" | "date"
 	search: string
@@ -21,7 +21,7 @@ const useStore = create<StoreState & StoreActions>(set => ({
 	sortedAssets: [],
 	setSortedAssets: (assets: CloudinaryAsset[]) => set({ sortedAssets: assets }),
 
-	actualFolder: null,
+	actualFolder: "Todas",
 	setActualFolder: (folderName: string) => set({ actualFolder: folderName }),
 
 	view: "grid",
