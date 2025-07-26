@@ -7,8 +7,10 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export const FilesListGrid = ({
 	order,
+	actualFolder,
 }: {
 	order: "name" | "size" | "date"
+	actualFolder: string | null
 }) => {
 	const { isFetching, assets, error } = useGetAssets()
 
@@ -17,12 +19,15 @@ export const FilesListGrid = ({
 	if (isFetching) return <SkeltonList />
 
 	const sortedAssets = sortedAssetsFn(assets, order)
+	const filteredAssets = actualFolder ? sortedAssets.filter(asset => asset.asset_folder === actualFolder) : sortedAssets
+
+	console.log("filteredAssets: ", filteredAssets.map(asset => asset.asset_folder))
 
 	return (
 		<article
 			className={`w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-2`}
 		>
-			{sortedAssets?.map(asset => (
+			{filteredAssets?.map(asset => (
 				<div
 					key={asset.public_id}
 					className={`w-full h-auto relative group border-4 border-transparent hover:border-orange-500/50`}
@@ -34,8 +39,7 @@ export const FilesListGrid = ({
 						height={300}
 						quality={100}
 						priority
-						objectFit="cover"
-						className={`w-full`}
+						className={`w-full object-cover`}
 					/>
 					<DashboardFileMenu view="grid" />
 					<DashboardFileInfo asset={asset} view="grid" />

@@ -1,8 +1,23 @@
+"use client"
+
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { Folder } from "./folder"
+import useStore from "@/lib/zustand-coudinary"
+import { useGetAssets } from "@/lib/use-get-assets"
+
+const getUniqueFolders = (assets: any[]): string[] => {
+	// Extract all folder names from assets and filter out undefined/null
+	const allFolders = assets
+	  .map(asset => asset.asset_folder)
+	  .filter((folder): folder is string => folder != null)
+	  .sort((a, b) => a.localeCompare(b))
+	
+	// Use Set to get unique values and convert back to array
+	return ['Todas', ...new Set(allFolders)];
+  };
 
 export default function DashboardSidebar() {
 	return (
@@ -26,18 +41,13 @@ export default function DashboardSidebar() {
 }
 
 const FolderList = () => {
-	const foldersMock = [
-		"Todas ",
-		"Folder 1",
-		"Folder 2",
-		"Folder 3",
-		"Folder 4",
-		"Folder 5",
-	]
+
+	const { assets } = useGetAssets()
+	const folders = getUniqueFolders(assets)
 
 	return (
 		<div>
-			{foldersMock.map(folder => (
+			{folders.map(folder => (
 				<Folder key={folder} label={folder} />
 			))}
 		</div>

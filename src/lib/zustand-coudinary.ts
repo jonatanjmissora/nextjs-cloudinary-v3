@@ -22,7 +22,7 @@ const useStore = create<StoreState & StoreActions>(set => ({
 	setSortedAssets: (assets: CloudinaryAsset[]) => set({ sortedAssets: assets }),
 
 	actualFolder: null,
-	setActualFolder: (folder: string) => set({ actualFolder: folder }),
+	setActualFolder: (folderName: string) => set({ actualFolder: folderName }),
 
 	view: "grid",
 	setView: (view: "grid" | "list") => set({ view }),

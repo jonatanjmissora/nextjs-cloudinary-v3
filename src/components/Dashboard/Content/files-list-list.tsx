@@ -7,8 +7,10 @@ import { sortedAssetsFn } from "@/lib/sorted-assets"
 
 export const FilesListList = ({
 	order,
+	actualFolder,
 }: {
 	order: "name" | "size" | "date"
+	actualFolder: string | null
 }) => {
 	const { isFetching, assets, error } = useGetAssets()
 	

@@ -12,16 +12,18 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useState } from "react"
+import useStore from "@/lib/zustand-coudinary"
 
 export function Folder({ label }: { label: string }) {
 	const [open, setOpen] = useState(false)
+	const { setActualFolder, actualFolder } = useStore()
 
 	return (
 		<div className="flex w-full flex-col items-start justify-between sm:px-3 sm:py-2 2xl:px-4 2xl:py-3 sm:flex-row sm:items-center group hover:border-[var(--border)] border border-transparent rounded-lg">
-			<div className="flex items-center gap-4">
+			<button className={`flex items-center gap-4 cursor-pointer hover:border-[var(--border)] ${label === actualFolder ? "bg-[var(--border)]" : ""}`}  onClick={() => setActualFolder(label)}>
 				<FolderIcon className="size-5" />
 				<span className="sm:text-sm 2xl:text-base">{label}</span>
-			</div>
+			</button>
 			<DropdownMenu open={open} onOpenChange={setOpen}>
 				<DropdownMenuTrigger asChild>
 					<Button

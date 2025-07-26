@@ -5,9 +5,9 @@ import { FilesListGrid } from "./files-list-grid"
 import { FilesListList } from "./files-list-list"
 
 export default function DashboardContentBody() {
-	const { view, order } = useStore()
+	const { view, order, actualFolder } = useStore()
 
 	return view === "grid" 
-		? <FilesListGrid order={order} />
-		: <FilesListList order={order} />
+		? <FilesListGrid order={order} actualFolder={actualFolder} />
+		: <FilesListList order={order} actualFolder={actualFolder} />
 }
