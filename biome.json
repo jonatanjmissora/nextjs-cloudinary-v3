@@ -24,9 +24,12 @@
 			"a11y": {
 				"useButtonType": "off"
 			  },
-			  "complexity": {
+			"complexity": {
 				"noFlatMapIdentity": "off"
-			  }
+			},
+			"correctness": {
+				"noUnusedImports": "warn"
+			}
 		}
 	},
 	"javascript": {

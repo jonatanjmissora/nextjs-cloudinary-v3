@@ -7,6 +7,7 @@ import { FilesListList } from "./files-list-list"
 export default function DashboardContentBody() {
 	const { view, order } = useStore()
 
-	if (view === "grid") return <FilesListGrid order={order} />
-	else return <FilesListList order={order} />
+	return view === "grid" 
+		? <FilesListGrid order={order} />
+		: <FilesListList order={order} />
 }
