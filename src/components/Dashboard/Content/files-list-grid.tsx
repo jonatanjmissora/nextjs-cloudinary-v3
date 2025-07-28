@@ -4,6 +4,7 @@ import { DashboardFileInfo } from "./dashboard-file-info"
 import { useGetAssets } from "@/lib/use-get-assets"
 import { sortedAssetsFn } from "@/lib/sorted-assets"
 import { Skeleton } from "@/components/ui/skeleton"
+import useStore from "@/lib/zustand-coudinary"
 
 export const FilesListGrid = ({
 	order,
@@ -13,13 +14,24 @@ export const FilesListGrid = ({
 	actualFolder: string
 }) => {
 	const { isFetching, assets, error } = useGetAssets()
+	const { selectedAssets, setSelectedAssets } = useStore()
 
 	if (error) return <ErrorComponent error={error} />
-
 	if (isFetching) return <SkeltonList />
 
 	const sortedAssets = sortedAssetsFn(assets, order)
-	const filteredAssets = actualFolder === "Todas" ? sortedAssets : sortedAssets.filter(asset => asset.asset_folder === actualFolder)
+	const filteredAssets =
+		actualFolder === "Todas"
+			? sortedAssets
+			: sortedAssets.filter(asset => asset.asset_folder === actualFolder)
+
+	const handleSelectAsset = (assetName: string) => {
+		if (selectedAssets.includes(assetName)) {
+			setSelectedAssets(selectedAssets.filter(id => id !== assetName))
+		} else {
+			setSelectedAssets([...selectedAssets, assetName])
+		}
+	}
 
 	return (
 		<article
@@ -28,7 +40,7 @@ export const FilesListGrid = ({
 			{filteredAssets?.map(asset => (
 				<div
 					key={asset.public_id}
-					className={`w-full h-auto relative group border-4 border-transparent hover:border-orange-500/50`}
+					className={`w-full h-auto relative group border-4 ${selectedAssets.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"}`}
 				>
 					<Image
 						src={asset.secure_url}
@@ -38,6 +50,7 @@ export const FilesListGrid = ({
 						quality={100}
 						priority
 						className={`w-full object-cover`}
+						onClick={() => handleSelectAsset(asset.public_id)}
 					/>
 					<DashboardFileMenu view="grid" />
 					<DashboardFileInfo asset={asset} view="grid" />

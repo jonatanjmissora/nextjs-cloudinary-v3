@@ -5,7 +5,6 @@ import {
 	BreadcrumbItem,
 	BreadcrumbLink,
 	BreadcrumbList,
-	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Label } from "@/components/ui/label"
@@ -14,12 +13,15 @@ import {
 	ArrowDownAZ,
 	ArrowDownNarrowWide,
 	CalendarArrowDown,
+	DownloadIcon,
 	LayoutDashboard,
 	SlashIcon,
 	StretchHorizontal,
+	Trash2Icon,
 } from "lucide-react"
 import useStore from "@/lib/zustand-coudinary"
 import { useGetAssets } from "@/lib/use-get-assets"
+import { Button } from "@/components/ui/button"
 
 export default function DashboardContentHeader() {
 	return (
@@ -34,15 +36,33 @@ export default function DashboardContentHeader() {
 }
 
 const BreadcrumbUI = () => {
+	const { actualFolder, setActualFolder } = useStore()
+
+	const foldersArray = actualFolder.split("/")
+
 	return (
 		<Breadcrumb>
 			<BreadcrumbList>
 				<BreadcrumbItem>
 					<BreadcrumbLink asChild>
-						<span>Home</span>
+						<button onClick={() => setActualFolder("Todas")}>Home</button>
 					</BreadcrumbLink>
 				</BreadcrumbItem>
-				<BreadcrumbSeparator>
+				{foldersArray.map(folderName => (
+					<>
+						<BreadcrumbSeparator>
+							<SlashIcon />
+						</BreadcrumbSeparator>
+						<BreadcrumbItem key={folderName}>
+							<BreadcrumbLink asChild>
+								<button onClick={() => setActualFolder(folderName)}>
+									{folderName}
+								</button>
+							</BreadcrumbLink>
+						</BreadcrumbItem>
+					</>
+				))}
+				{/* <BreadcrumbSeparator>
 					<SlashIcon />
 				</BreadcrumbSeparator>
 				<BreadcrumbItem>
@@ -55,39 +75,55 @@ const BreadcrumbUI = () => {
 				</BreadcrumbSeparator>
 				<BreadcrumbItem>
 					<BreadcrumbPage>Dashboard</BreadcrumbPage>
-				</BreadcrumbItem>
+				</BreadcrumbItem> */}
 			</BreadcrumbList>
 		</Breadcrumb>
 	)
 }
 
 const Menu = () => {
-
 	const { view, setView, order, setOrder } = useStore()
 
 	return (
 		<>
 			<div className="flex items-center gap-12">
 				<span>vista</span>
-				<LayoutDashboard className={`sm:size-5 2xl:size-6 ${view === "grid" ? "text-orange-500" : ""} cursor-pointer`} onClick={() => setView("grid")} />
-				<StretchHorizontal className={`sm:size-5 2xl:size-6 ${view === "list" ? "text-orange-500" : ""} cursor-pointer`} onClick={() => setView("list")} />
+				<LayoutDashboard
+					className={`sm:size-5 2xl:size-6 ${view === "grid" ? "text-orange-500" : ""} cursor-pointer`}
+					onClick={() => setView("grid")}
+				/>
+				<StretchHorizontal
+					className={`sm:size-5 2xl:size-6 ${view === "list" ? "text-orange-500" : ""} cursor-pointer`}
+					onClick={() => setView("list")}
+				/>
 			</div>
 			<div className="flex items-center gap-12">
 				<span>orden</span>
-				<ArrowDownAZ className={`sm:size-5 2xl:size-6 ${order === "name" ? "text-orange-500" : ""} cursor-pointer`} onClick={() => setOrder("name")} />
-				<CalendarArrowDown className={`sm:size-5 2xl:size-6 ${order === "date" ? "text-orange-500" : ""} cursor-pointer`} onClick={() => setOrder("date")} />
-				<ArrowDownNarrowWide className={`sm:size-5 2xl:size-6 ${order === "size" ? "text-orange-500" : ""} cursor-pointer`} onClick={() => setOrder("size")} />
+				<ArrowDownAZ
+					className={`sm:size-5 2xl:size-6 ${order === "name" ? "text-orange-500" : ""} cursor-pointer`}
+					onClick={() => setOrder("name")}
+				/>
+				<CalendarArrowDown
+					className={`sm:size-5 2xl:size-6 ${order === "date" ? "text-orange-500" : ""} cursor-pointer`}
+					onClick={() => setOrder("date")}
+				/>
+				<ArrowDownNarrowWide
+					className={`sm:size-5 2xl:size-6 ${order === "size" ? "text-orange-500" : ""} cursor-pointer`}
+					onClick={() => setOrder("size")}
+				/>
 			</div>
 		</>
 	)
 }
 
 const FileStats = () => {
+	const { actualFolder, selectedAssets } = useStore()
+	const { assets } = useGetAssets()
 
-	const { actualFolder } = useStore()
-	const {assets} = useGetAssets()
-
-	const actualFolderAssetsLength = actualFolder === "Todas" ? assets.length : assets.filter(asset => asset.asset_folder === actualFolder).length
+	const actualFolderAssetsLength =
+		actualFolder === "Todas"
+			? assets.length
+			: assets.filter(asset => asset.asset_folder === actualFolder).length
 
 	return (
 		<div className="w-full flex items-center justify-between">
@@ -97,7 +133,17 @@ const FileStats = () => {
 					todos
 				</Label>
 			</div>
-			<span>seleccionados ( 20 )</span>
+
+			<div className="flex items-center gap-6">
+				<span>seleccionados ({selectedAssets.length})</span>
+				<Button variant="ghost" className="size-7 p-2">
+					<Trash2Icon />
+				</Button>
+				<Button variant="ghost" className="size-7 p-2">
+					<DownloadIcon />
+				</Button>
+			</div>
+
 			<span>total {actualFolderAssetsLength}</span>
 		</div>
 	)

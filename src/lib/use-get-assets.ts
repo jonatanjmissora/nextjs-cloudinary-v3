@@ -2,7 +2,6 @@ import { getAssets } from "./get-assets"
 import { useQuery } from "@tanstack/react-query"
 
 export const useGetAssets = () => {
-
 	const {
 		isFetching,
 		data,
@@ -11,8 +10,8 @@ export const useGetAssets = () => {
 		queryKey: ["assets"],
 		queryFn: getAssets,
 		staleTime: 60 * 1000,
-		refetchInterval: 60 * 1000,
-		refetchIntervalInBackground: true,
+		// refetchInterval: 60 * 1000,
+		// refetchIntervalInBackground: true,
 	})
 
 	const error = queryError || data?.success === false ? data?.message : null

@@ -4,6 +4,7 @@ import { DashboardFileInfo } from "./dashboard-file-info"
 import { useGetAssets } from "@/lib/use-get-assets"
 import { Skeleton } from "@/components/ui/skeleton"
 import { sortedAssetsFn } from "@/lib/sorted-assets"
+import useStore from "@/lib/zustand-coudinary"
 
 export const FilesListList = ({
 	order,
@@ -13,22 +14,35 @@ export const FilesListList = ({
 	actualFolder: string
 }) => {
 	const { isFetching, assets, error } = useGetAssets()
-	
-		if (error) return <ErrorComponent error={error} />
-	
-		if (isFetching) return <SkeltonList />
-	
-		const sortedAssets = sortedAssetsFn(assets, order)
-		const filteredAssets = actualFolder === "Todas" ? sortedAssets : sortedAssets.filter(asset => asset.asset_folder === actualFolder)
+	const { selectedAssets, setSelectedAssets } = useStore()
+
+	if (error) return <ErrorComponent error={error} />
+
+	if (isFetching) return <SkeltonList />
+
+	const sortedAssets = sortedAssetsFn(assets, order)
+	const filteredAssets =
+		actualFolder === "Todas"
+			? sortedAssets
+			: sortedAssets.filter(asset => asset.asset_folder === actualFolder)
+
+	const handleSelectAsset = (assetName: string) => {
+		if (selectedAssets.includes(assetName)) {
+			setSelectedAssets(selectedAssets.filter(id => id !== assetName))
+		} else {
+			setSelectedAssets([...selectedAssets, assetName])
+		}
+	}
 
 	return (
 		<article
-			className={`w-full h-full grid grid-cols-1 sm:grid-cols-2 gap-2 my-3`}
+			className={`w-full h-full grid grid-cols-1 sm:grid-cols-2 gap-2 m-3`}
 		>
 			{filteredAssets?.map(asset => (
-				<div
+				<button
 					key={asset.public_id}
-					className={`w-full h-full relative group border-2 p-2 flex items-center gap-20 rounded-lg hover:border-orange-500/50 overflow-hidden`}
+					className={`w-full h-full relative group border-2 p-2 flex items-center gap-20 rounded-lg overflow-hidden ${selectedAssets.includes(asset.public_id) ? "bg-orange-500/30" : "bg-transparent hover:bg-[var(--foreground)]/10"}`}
+					onClick={() => handleSelectAsset(asset.public_id)}
 				>
 					<Image
 						src={asset.secure_url}
@@ -42,7 +56,7 @@ export const FilesListList = ({
 					/>
 					<DashboardFileMenu view="list" />
 					<DashboardFileInfo asset={asset} view="list" />
-				</div>
+				</button>
 			))}
 		</article>
 	)
