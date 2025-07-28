@@ -5,19 +5,8 @@ import { Button } from "@/components/ui/button"
 import { PlusIcon } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { Folder } from "./folder"
-import useStore from "@/lib/zustand-coudinary"
 import { useGetAssets } from "@/lib/use-get-assets"
-
-const getUniqueFolders = (assets: any[]): string[] => {
-	// Extract all folder names from assets and filter out undefined/null
-	const allFolders = assets
-	  .map(asset => asset.asset_folder)
-	  .filter((folder): folder is string => folder != null)
-	  .sort((a, b) => a.localeCompare(b))
-	
-	// Use Set to get unique values and convert back to array
-	return ['Todas', ...new Set(allFolders)];
-  };
+import { CloudinaryAsset } from "@/lib/types"
 
 export default function DashboardSidebar() {
 	return (
@@ -47,9 +36,34 @@ const FolderList = () => {
 
 	return (
 		<div>
-			{folders.map(folder => (
-				<Folder key={folder} label={folder} />
+			{folders.map((folder) => (
+				<Folder key={folder.name} folderName={folder.name} assetsCount={folder.count}/>
 			))}
 		</div>
 	)
 }
+
+function getUniqueFolders(assets: CloudinaryAsset[]): { name: string, count: number }[] {
+	// Extract all folder names from assets and filter out undefined/null
+	const allFolders = assets
+	  .map(asset => asset.asset_folder !== "" ? asset.asset_folder : "Sin nombre")
+	  .filter((folder): folder is string => folder != null)
+	  .sort((a, b) => a.localeCompare(b))
+	const allFoldersAndCounts = countArrayStrings(allFolders)
+	return [{name: "Todas", count: assets.length}, ...allFoldersAndCounts];
+  };
+
+  
+function countArrayStrings(arr: string[]): { name: string, count: number }[] {
+	return arr.reduce((prev, current) => {
+		const existing = prev.find((item) => item.name === current);
+		if (existing) {
+			existing.count += 1;
+		} else {
+			prev.push({ name: current, count: 1 });
+		}
+		return prev;
+	}, [] as { name: string, count: number }[]);
+  };
+
+
