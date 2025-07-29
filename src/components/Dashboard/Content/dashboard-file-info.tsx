@@ -40,7 +40,7 @@ export const DashboardFileInfo = ({
 			<>
 				<Ampliar asset={asset} />
 				<div className="group flex-1 flex flex-col justify-center gap-2 p-1 sm:text-sm 2xl:text-base">
-					<span className="w-1/2 truncate">{asset.display_name}</span>
+					<span className="w-3/4 mx-auto truncate">{asset.display_name}</span>
 					<span>{setFileDate(asset.created_at)}</span>
 					<span>{setFileSize(asset.bytes)}</span>
 				</div>

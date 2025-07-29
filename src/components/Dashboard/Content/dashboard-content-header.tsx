@@ -39,6 +39,8 @@ const BreadcrumbUI = () => {
 	const { actualFolder, setActualFolder } = useStore()
 
 	const foldersArray = actualFolder.split("/")
+	const foldersArrayWithoutLast = foldersArray.slice(0, foldersArray.length - 1)
+	const foldersArrayLast = foldersArray[foldersArray.length - 1]
 
 	return (
 		<Breadcrumb>
@@ -48,34 +50,30 @@ const BreadcrumbUI = () => {
 						<button onClick={() => setActualFolder("Todas")}>Home</button>
 					</BreadcrumbLink>
 				</BreadcrumbItem>
-				{foldersArray.map(folderName => (
-					<>
+				{foldersArrayWithoutLast.map(folderName => (
+					<div key={folderName} className="flex items-center gap-2">
 						<BreadcrumbSeparator>
 							<SlashIcon />
 						</BreadcrumbSeparator>
-						<BreadcrumbItem key={folderName}>
+						<BreadcrumbItem>
 							<BreadcrumbLink asChild>
 								<button onClick={() => setActualFolder(folderName)}>
 									{folderName}
 								</button>
 							</BreadcrumbLink>
 						</BreadcrumbItem>
-					</>
+					</div>
 				))}
-				{/* <BreadcrumbSeparator>
-					<SlashIcon />
-				</BreadcrumbSeparator>
-				<BreadcrumbItem>
-					<BreadcrumbLink asChild>
-						<span>Components</span>
-					</BreadcrumbLink>
-				</BreadcrumbItem>
 				<BreadcrumbSeparator>
 					<SlashIcon />
 				</BreadcrumbSeparator>
 				<BreadcrumbItem>
-					<BreadcrumbPage>Dashboard</BreadcrumbPage>
-				</BreadcrumbItem> */}
+					<BreadcrumbLink asChild>
+						<span >
+							{foldersArrayLast}
+						</span>
+					</BreadcrumbLink>
+				</BreadcrumbItem>
 			</BreadcrumbList>
 		</Breadcrumb>
 	)
@@ -117,7 +115,7 @@ const Menu = () => {
 }
 
 const FileStats = () => {
-	const { actualFolder, selectedAssets } = useStore()
+	const { actualFolder, selectedAssets, setSelectedAssets } = useStore()
 	const { assets } = useGetAssets()
 
 	const actualFolderAssetsLength =
@@ -125,21 +123,32 @@ const FileStats = () => {
 			? assets.length
 			: assets.filter(asset => asset.asset_folder === actualFolder).length
 
+	const handleSelectAllAssets = (checked: boolean) => {
+		if (!checked) return setSelectedAssets([])
+		setSelectedAssets(
+			actualFolder === "Todas"
+				? assets.map(asset => asset.public_id)
+				: assets
+						.filter(asset => asset.asset_folder === actualFolder)
+						.map(asset => asset.public_id)
+			)
+	}
+
 	return (
-		<div className="w-full flex items-center justify-between">
+		<div className="w-full flex items-center justify-between min-h-8">
 			<div className="flex items-center gap-3">
-				<Checkbox id="selection" className="size-5" />
+				<Checkbox id="selection" className="size-5" onCheckedChange={handleSelectAllAssets} checked={selectedAssets.length === actualFolderAssetsLength}/>
 				<Label htmlFor="selection" className="text-base">
 					todos
 				</Label>
 			</div>
 
-			<div className="flex items-center gap-6">
-				<span>seleccionados ({selectedAssets.length})</span>
-				<Button variant="ghost" className="size-7 p-2">
+			<div className={`flex items-center gap-6 ${selectedAssets.length > 0 ? "" : "hidden"}`}>
+				<span className="text-sm">seleccionados ({selectedAssets.length})</span>
+				<Button variant="ghost" className={`size-7 p-2`}>
 					<Trash2Icon />
 				</Button>
-				<Button variant="ghost" className="size-7 p-2">
+				<Button variant="ghost" className={`size-7 p-2`}>
 					<DownloadIcon />
 				</Button>
 			</div>
