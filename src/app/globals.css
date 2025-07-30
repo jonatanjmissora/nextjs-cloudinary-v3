@@ -123,3 +123,9 @@
 html {
 	scrollbar-gutter: stable;
 }
+
+input[type="file"]::file-selector-button {
+	font-weight: bold;
+	padding: 0 1rem;
+	margin-left: auto;
+}
