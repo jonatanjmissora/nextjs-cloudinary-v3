@@ -4,20 +4,20 @@ import Header from "@/components/layout/header"
 
 export default function Home() {
 	return (
-		<div className="font-sans grid grid-rows-[100px_1fr_40px] items-center justify-items-center min-h-screen relative">
+		<div className="font-sans flex flex-col justify-center items-center min-h-screen relative">
 			<BGMain />
 
 			<Header />
 			<main
-				className={`flex flex-col sm:flex-row sm:gap-[20px] 2xl:gap-[32px] row-start-2 items-center justify-center w-full h-full sm:px-3 2xl:px-10`}
+				className={`flex flex-col sm:flex-row sm:gap-[20px] 2xl:gap-[32px] items-start justify-center w-full min-h-[80dvh] flex-1 sm:px-3 2xl:px-10`}
 			>
 				<DashboardSidebar />
 				<DashboardContent />
 			</main>
 			<footer
-				className={`row-start-3 flex gap-[24px] flex-wrap items-center justify-end w-full px-10`}
+				className={`flex items-center justify-end w-full px-10 py-4`}
 			>
-				footer
+				KatoDev {new Date().getFullYear()}
 			</footer>
 		</div>
 	)

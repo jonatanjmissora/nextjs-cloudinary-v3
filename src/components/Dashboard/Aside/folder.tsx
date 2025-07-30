@@ -53,7 +53,7 @@ export function Folder({
 				<p
 					className={`${folderName === actualFolder && "text-orange-500"} sm:text-sm 2xl:text-base`}
 				>
-					{simpleFolderName}{" "}
+					{simpleFolderName === "" ? "Sin nombre" : simpleFolderName}{" "}
 					<span className="text-[var(--foreground)]/30 text-xs">
 						{" "}
 						({assetsCount})

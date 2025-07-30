@@ -14,7 +14,7 @@ export default function DashboardSidebar() {
 			<Card className="w-full">
 				<CardContent>
 					<div className="flex justify-between items-center">
-						<span className="sm:text-base 2xl:text-lg font-semibold tracking-wider">
+						<span className="sm:text-base 2xl:text-lg font-semibold tracking-wider py-4">
 							Carpetas
 						</span>
 						<Button variant="ghost" className="">
@@ -46,7 +46,7 @@ const FolderList = () => {
 function getUniqueFolders(assets: CloudinaryAsset[]): { name: string, count: number }[] {
 	// Extract all folder names from assets and filter out undefined/null
 	const allFolders = assets
-	  .map(asset => asset.asset_folder !== "" ? asset.asset_folder : "Sin nombre")
+	  .map(asset => asset.asset_folder)
 	  .filter((folder): folder is string => folder != null)
 	  .sort((a, b) => a.localeCompare(b))
 	const allFoldersAndCounts = countArrayStrings(allFolders)
