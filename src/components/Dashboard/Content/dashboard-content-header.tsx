@@ -14,6 +14,7 @@ import {
 	ArrowDownNarrowWide,
 	CalendarArrowDown,
 	DownloadIcon,
+	FolderInput,
 	LayoutDashboard,
 	SlashIcon,
 	StretchHorizontal,
@@ -69,9 +70,7 @@ const BreadcrumbUI = () => {
 				</BreadcrumbSeparator>
 				<BreadcrumbItem>
 					<BreadcrumbLink asChild>
-						<span >
-							{foldersArrayLast}
-						</span>
+						<span>{foldersArrayLast}</span>
 					</BreadcrumbLink>
 				</BreadcrumbItem>
 			</BreadcrumbList>
@@ -131,25 +130,35 @@ const FileStats = () => {
 				: assets
 						.filter(asset => asset.asset_folder === actualFolder)
 						.map(asset => asset.public_id)
-			)
+		)
 	}
 
 	return (
 		<div className="w-full flex items-center justify-between min-h-8">
 			<div className="flex items-center gap-3">
-				<Checkbox id="selection" className="size-5" onCheckedChange={handleSelectAllAssets} checked={selectedAssets.length === actualFolderAssetsLength}/>
+				<Checkbox
+					id="selection"
+					className="size-5"
+					onCheckedChange={handleSelectAllAssets}
+					checked={selectedAssets.length === actualFolderAssetsLength}
+				/>
 				<Label htmlFor="selection" className="text-base">
 					todos
 				</Label>
 			</div>
 
-			<div className={`flex items-center gap-6 ${selectedAssets.length > 0 ? "" : "hidden"}`}>
+			<div
+				className={`flex items-center gap-6 ${selectedAssets.length > 0 ? "" : "hidden"}`}
+			>
 				<span className="text-sm">seleccionados ({selectedAssets.length})</span>
 				<Button variant="ghost" className={`size-7 p-2`}>
 					<Trash2Icon />
 				</Button>
 				<Button variant="ghost" className={`size-7 p-2`}>
 					<DownloadIcon />
+				</Button>
+				<Button variant="ghost" className={`size-7 p-2`}>
+					<FolderInput />
 				</Button>
 			</div>
 

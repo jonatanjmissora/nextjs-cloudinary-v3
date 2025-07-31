@@ -206,6 +206,7 @@ arreglar el skelton para el Folders, y para la vista list
 
 arreglar la galeria de fotos, en el upload
 
+guardar las peferencias en el local storage
 
 
 
