@@ -1,18 +1,21 @@
 "use server"
 
+import { CloudinaryUploadResponse } from "@/lib/types"
+
+const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME // Replace with your Cloudinary cloud name
+const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+const cloudinaryUploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`
+
 export const uploadAction = async (formData2: FormData) => {
-	const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME // Replace with your Cloudinary cloud name
-	const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
 	if (!uploadPreset) {
 		throw new Error(
 			"Cloudinary upload preset is not configured. Please check your environment variables."
 		)
 	}
-	const cloudinaryUploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`
-
 	const files = formData2.getAll("files")
-
+	console.log("uploadAction", formData2)
 	try {
+		console.log(files)
 		const formData = new FormData()
 		formData.append("upload_preset", uploadPreset)
 
@@ -27,8 +30,11 @@ export const uploadAction = async (formData2: FormData) => {
 				throw new Error("Failed to upload files")
 			}
 
-			const data = await response.json()
-			console.log("File uploaded successfully:", data)
+			const data = (await response.json()) as CloudinaryUploadResponse
+			console.log("File uploaded successfully:", {
+				id: data.public_id,
+				display_name: data.display_name,
+			})
 		}
 	} catch (error) {
 		console.error("Error uploading files:", error)

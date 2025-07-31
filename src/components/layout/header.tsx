@@ -1,8 +1,6 @@
-import { uploadAction } from "@/app/actions/upload-files"
 import { ModeToggle } from "../ui/theme-toggle"
 import SearchFile from "./search-file"
 import { UploadBtn } from "./upload"
-import UploadForm from "./upload-form"
 
 export default function Header() {
 	return (
@@ -13,8 +11,7 @@ export default function Header() {
 
 			<nav className="flex gap-[24px] items-center">
 				<SearchFile />
-				{/* <UploadBtn /> */}
-				<UploadForm />
+				<UploadBtn />
 			</nav>
 
 			<ModeToggle />

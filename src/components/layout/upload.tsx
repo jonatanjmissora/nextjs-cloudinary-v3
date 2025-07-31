@@ -1,87 +1,74 @@
 "use client"
-import { Upload } from "lucide-react"
+import { Trash2, Upload } from "lucide-react"
 import { Button } from "../ui/button"
 import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-	DialogClose,
-	DialogFooter,
-} from "../ui/dialog"
+	AlertDialog,
+	AlertDialogTrigger,
+	AlertDialogContent,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogCancel,
+} from "../ui/alert-dialog"
 import Image from "next/image"
-import { useState } from "react"
+import { startTransition, useState } from "react"
 import { uploadAction } from "@/app/actions/upload-files"
+import { useQueryClient } from "@tanstack/react-query"
+import { toast } from "sonner"
+import SubmitBtn from "./submit-btn"
 
 export const UploadBtn = () => {
 	const [files, setFiles] = useState<File[]>([])
+	const queryClient = useQueryClient()
+	const [alertDialog, setAlertDialog] = useState(false)
 
-	const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME // Replace with your Cloudinary cloud name
-	const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
-
-	if (!uploadPreset) {
-		throw new Error(
-			"Cloudinary upload preset is not configured. Please check your environment variables."
-		)
-	}
-
-	const cloudinaryUploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`
-
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		console.log("ENTRRRAAANDDDO")
-		if (!files) return
-		// try {
-		// 	const formData = new FormData()
-		// 	files.forEach(file => formData.append("file", file))
-		// 	formData.append("upload_preset", uploadPreset)
 
-		// 	const response = await fetch(cloudinaryUploadUrl, {
-		// 		method: "POST",
-		// 		body: formData,
-		// 	})
+		if (!files.length) return toast.error("No ha seleccionado archivos")
+		const formData = new FormData(e.currentTarget)
 
-		// 	if (!response.ok) {
-		// 		throw new Error("Failed to upload files")
-		// 	}
-
-		// 	const data = await response.json()
-		// 	console.log("Files uploaded successfully:", data)
-		// } catch (error) {
-		// 	console.error("Error uploading files:", error)
-		// }
+		startTransition(async () => {
+			toast.promise(uploadAction(formData), {
+				loading: "Subiendo archivos...",
+				success: "Archivos subidos exitosamente",
+				error: "Error al subir archivos",
+			})
+			queryClient.invalidateQueries({ queryKey: ["assets"] })
+			setFiles([])
+			//close AlertDialog
+			setAlertDialog(false)
+		})
 	}
 	return (
-		<Dialog>
-			<form action={uploadAction}>
-				<DialogTrigger asChild>
-					<Button variant="default" size="lg" className="bg-orange-500">
-						<Upload /> Subir Imagen
-					</Button>
-				</DialogTrigger>
-				<DialogContent className="max-w-6xl min-h-[40dvh]">
-					<DialogHeader>
-						<DialogTitle className="text-xl font-semibold w-full text-center">
-							Subir Imagen
-						</DialogTitle>
-					</DialogHeader>
-
+		<AlertDialog open={alertDialog} onOpenChange={setAlertDialog}>
+			<AlertDialogTrigger asChild>
+				<Button variant="default" size="lg" className="bg-orange-500">
+					<Upload /> Subir Imagen
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent className="w-max">
+				<form
+					onSubmit={handleSubmit}
+					className="flex flex-col gap-2 justify-center items-center"
+				>
+					<AlertDialogHeader>
+						<AlertDialogTitle className="text-2xl">
+							Subir Imágenes
+						</AlertDialogTitle>
+						<AlertDialogDescription></AlertDialogDescription>
+					</AlertDialogHeader>
 					<InputFiles files={files} setFiles={setFiles} />
-
-					<DialogFooter className="mx-auto w-3/4 flex justify-between gap-12">
-						<DialogClose asChild className="flex-1">
-							<Button variant="outline" onClick={() => setFiles([])}>
-								Cancelar
-							</Button>
-						</DialogClose>
-						<Button type="submit" className="flex-1">
-							Subir
-						</Button>
-					</DialogFooter>
-				</DialogContent>
-			</form>
-		</Dialog>
+					<AlertDialogFooter className="w-full flex justify-center">
+						<AlertDialogCancel onClick={() => setFiles([])} className="w-1/4">
+							Cancelar
+						</AlertDialogCancel>
+						<SubmitBtn label="Subir" className="w-1/4" />
+					</AlertDialogFooter>
+				</form>
+			</AlertDialogContent>
+		</AlertDialog>
 	)
 }
 
@@ -104,14 +91,15 @@ const InputFiles = ({
 				type="file"
 				onChange={handleFileChange}
 				multiple
+				name="files"
 				className={`w-3/4 mx-auto border bg-[var(--foreground)]/20 rounded-lg px-12 py-2 ${files.length === 0 ? "py-60" : "mb-4"}`}
 			/>
 
-			<div className="w-full flex flex-wrap gap-1">
+			<div className="w-[80dvw] max-h-[70dvh] flex flex-wrap gap-1 overflow-y-auto">
 				{files.map(file => (
 					<div
 						key={file.name + file.size + file.lastModified}
-						className="relative h-64 border flex-[200px] rounded-lg overflow-hidden"
+						className={`relative ${files.length < 4 ? "h-[700px]" : "h-80"} border flex-[400px] rounded-lg overflow-hidden`}
 					>
 						<Image
 							src={URL.createObjectURL(file)}
@@ -120,6 +108,13 @@ const InputFiles = ({
 							style={{ objectFit: "contain" }}
 							quality={100}
 						/>
+						<Button
+							variant="ghost"
+							onClick={() => setFiles(files.filter(f => f !== file))}
+							className="absolute top-2 right-2"
+						>
+							<Trash2 />
+						</Button>
 					</div>
 				))}
 			</div>
