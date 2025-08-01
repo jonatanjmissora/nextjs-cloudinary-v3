@@ -60,7 +60,7 @@ export const UploadBtn = () => {
 						<AlertDialogDescription></AlertDialogDescription>
 					</AlertDialogHeader>
 					<InputFiles files={files} setFiles={setFiles} />
-					<AlertDialogFooter className="w-full flex justify-center">
+					<AlertDialogFooter className="w-full flex justify-center gap-4">
 						<AlertDialogCancel onClick={() => setFiles([])} className="w-1/4">
 							Cancelar
 						</AlertDialogCancel>
@@ -99,7 +99,7 @@ const InputFiles = ({
 				{files.map(file => (
 					<div
 						key={file.name + file.size + file.lastModified}
-						className={`relative ${files.length < 4 ? "h-[700px]" : "h-80"} border flex-[400px] rounded-lg overflow-hidden`}
+						className={`relative ${files.length < 4 ? "h-[300px] 2xl:h-[700px]" : "h-40 2xl:h-80"} border flex-[400px] rounded-lg overflow-hidden`}
 					>
 						<Image
 							src={URL.createObjectURL(file)}

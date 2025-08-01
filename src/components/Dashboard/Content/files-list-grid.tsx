@@ -52,7 +52,7 @@ export const FilesListGrid = ({
 						className={`w-full object-cover`}
 						onClick={() => handleSelectAsset(asset.public_id)}
 					/>
-					<DashboardFileMenu view="grid" />
+					<DashboardFileMenu view="grid" asset={asset} />
 					<DashboardFileInfo asset={asset} view="grid" />
 				</div>
 			))}

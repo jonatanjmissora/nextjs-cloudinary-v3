@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -21,8 +22,16 @@ import {
 	AlertDialogCancel,
 	AlertDialogAction,
 } from "@/components/ui/alert-dialog"
+import { CloudinaryAsset } from "@/lib/types"
+import { deleteAction } from "@/app/actions/delete-file"
 
-export const DashboardFileMenu = ({ view }: { view: "grid" | "list" }) => {
+export const DashboardFileMenu = ({
+	view,
+	asset,
+}: {
+	view: "grid" | "list"
+	asset: CloudinaryAsset
+}) => {
 	const [open, setOpen] = useState(false)
 
 	return (
@@ -42,46 +51,93 @@ export const DashboardFileMenu = ({ view }: { view: "grid" | "list" }) => {
 						transformar <Wand />
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
-					<DropdownMenuItem className="text-red-600 flex items-center justify-between p-3">
-						<DeleteDialog />
-					</DropdownMenuItem>
+					<DeleteDialog asset={asset} setOpen={setOpen} />
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)
 }
 
-const DeleteDialog = () => {
-	const deleteImage = async e => {
+const DeleteDialog = ({
+	asset,
+	setOpen,
+}: {
+	asset: CloudinaryAsset
+	setOpen: (open: boolean) => void
+}) => {
+	const handleDeleteAsset = async () => {
+		setOpen(false)
+		await deleteAction(asset.public_id)
+	}
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		cloudinary.v2.uploader
-			.destroy(imageData.public_id, function (error, result) {
-				console.log(result, error)
+
+		if (!files.length) return toast.error("No ha seleccionado archivos")
+		const formData = new FormData(e.currentTarget)
+
+		startTransition(async () => {
+			toast.promise(uploadAction(formData), {
+				loading: "Subiendo archivos...",
+				success: "Archivos subidos exitosamente",
+				error: "Error al subir archivos",
 			})
-			.then(resp => console.log(resp))
-			.catch(_err =>
-				console.log("Something went wrong, please try again later.")
-			)
+			queryClient.invalidateQueries({ queryKey: ["assets"] })
+			setFiles([])
+			//close AlertDialog
+			setAlertDialog(false)
+		})
 	}
 
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
-				<Button variant="outline">
-					eliminar <Trash2 />
+				<Button
+					variant="ghost"
+					className="w-full flex items-center justify-between"
+				>
+					eliminar <Trash2 className="opacity-50" />
 				</Button>
 			</AlertDialogTrigger>
-			<AlertDialogContent>
+			<AlertDialogContent className="w-[500px] flex flex-col gap-6 p-20 py-12">
 				<AlertDialogHeader>
 					<AlertDialogTitle>
 						¿ Seguro deseas eliminar la imagen ?
 					</AlertDialogTitle>
 				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Cancelar</AlertDialogCancel>
-					<AlertDialogAction>Eliminar</AlertDialogAction>
+
+				<AlertModalImage asset={asset} />
+
+				<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
+					<AlertDialogCancel className="flex-1" onClick={() => setOpen(false)}>
+						Cancelar
+					</AlertDialogCancel>
+					<AlertDialogAction
+						className="flex-1 bg-orange-500"
+						onClick={handleDeleteAsset}
+					>
+						Eliminar
+					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>
+	)
+}
+
+const AlertModalImage = ({ asset }: { asset: CloudinaryAsset }) => {
+	return (
+		<div className="flex items-center gap-4">
+			<div className="relative size-[50px]">
+				<Image
+					src={asset.secure_url}
+					alt={asset.public_id}
+					layout="fill"
+					quality={100}
+					priority
+					className="w-full object-cover"
+				/>
+			</div>
+			<span>{asset.display_name}</span>
+		</div>
 	)
 }

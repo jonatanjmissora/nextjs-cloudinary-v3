@@ -54,7 +54,7 @@ export const FilesListList = ({
 						objectFit="cover"
 						className={`w-[150px] h-[150px] object-cover`}
 					/>
-					<DashboardFileMenu view="list" />
+					<DashboardFileMenu view="list" asset={asset} />
 					<DashboardFileInfo asset={asset} view="list" />
 				</button>
 			))}
@@ -73,14 +73,16 @@ const ErrorComponent = ({ error }: { error: string }) => {
 
 const SkeltonList = () => {
 	return (
-		<article className={`w-full h-full grid grid-cols-1 sm:grid-cols-2 gap-2 m-3`}>
+		<article
+			className={`w-full h-full grid grid-cols-1 sm:grid-cols-2 gap-2 m-3`}
+		>
 			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
 				<div
-				key={item}
-				className={`w-full h-full relative group border-2 flex items-center justify-center rounded-lg overflow-hidden`}
-			>
-				<Skeleton className={`w-[150px] h-[150px] object-cover mr-auto`}/>
-			</div>
+					key={item}
+					className={`w-full h-full relative group border-2 flex items-center justify-center rounded-lg overflow-hidden`}
+				>
+					<Skeleton className={`w-[150px] h-[150px] object-cover mr-auto`} />
+				</div>
 			))}
 		</article>
 	)
