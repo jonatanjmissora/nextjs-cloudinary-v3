@@ -18,11 +18,11 @@ import {
 	LayoutDashboard,
 	SlashIcon,
 	StretchHorizontal,
-	Trash2Icon,
 } from "lucide-react"
 import useStore from "@/lib/zustand-coudinary"
 import { useGetAssets } from "@/lib/use-get-assets"
 import { Button } from "@/components/ui/button"
+import { HeaderAssetsDelete } from "./dashboard-content-header-delete"
 
 export default function DashboardContentHeader() {
 	return (
@@ -126,10 +126,10 @@ const FileStats = () => {
 		if (!checked) return setSelectedAssets([])
 		setSelectedAssets(
 			actualFolder === "Todas"
-				? assets.map(asset => asset.public_id)
+				? assets
 				: assets
 						.filter(asset => asset.asset_folder === actualFolder)
-						.map(asset => asset.public_id)
+						.map(asset => asset)
 		)
 	}
 
@@ -151,9 +151,7 @@ const FileStats = () => {
 				className={`flex items-center gap-6 ${selectedAssets.length > 0 ? "" : "hidden"}`}
 			>
 				<span className="text-sm">seleccionados ({selectedAssets.length})</span>
-				<Button variant="ghost" className={`size-7 p-2`}>
-					<Trash2Icon />
-				</Button>
+				<HeaderAssetsDelete />
 				<Button variant="ghost" className={`size-7 p-2`}>
 					<DownloadIcon />
 				</Button>

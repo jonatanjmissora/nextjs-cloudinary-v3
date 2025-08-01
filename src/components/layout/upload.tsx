@@ -41,6 +41,7 @@ export const UploadBtn = () => {
 			setAlertDialog(false)
 		})
 	}
+
 	return (
 		<AlertDialog open={alertDialog} onOpenChange={setAlertDialog}>
 			<AlertDialogTrigger asChild>

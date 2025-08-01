@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { startTransition, useState } from "react"
 import Image from "next/image"
 import {
 	DropdownMenu,
@@ -20,10 +20,12 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 	AlertDialogCancel,
-	AlertDialogAction,
 } from "@/components/ui/alert-dialog"
 import { CloudinaryAsset } from "@/lib/types"
 import { deleteAction } from "@/app/actions/delete-file"
+import { useQueryClient } from "@tanstack/react-query"
+import { toast } from "sonner"
+import SubmitBtn from "@/components/layout/submit-btn"
 
 export const DashboardFileMenu = ({
 	view,
@@ -65,27 +67,19 @@ const DeleteDialog = ({
 	asset: CloudinaryAsset
 	setOpen: (open: boolean) => void
 }) => {
-	const handleDeleteAsset = async () => {
-		setOpen(false)
-		await deleteAction(asset.public_id)
-	}
-
+	const queryClient = useQueryClient()
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
-		if (!files.length) return toast.error("No ha seleccionado archivos")
-		const formData = new FormData(e.currentTarget)
-
 		startTransition(async () => {
-			toast.promise(uploadAction(formData), {
-				loading: "Subiendo archivos...",
-				success: "Archivos subidos exitosamente",
-				error: "Error al subir archivos",
+			toast.promise(deleteAction(asset.public_id), {
+				loading: "borrando imagen...",
+				success: "imagen borrada exitosamente",
+				error: "Error al borrar imagen",
 			})
+
 			queryClient.invalidateQueries({ queryKey: ["assets"] })
-			setFiles([])
-			//close AlertDialog
-			setAlertDialog(false)
+			setOpen(false)
 		})
 	}
 
@@ -99,26 +93,29 @@ const DeleteDialog = ({
 					eliminar <Trash2 className="opacity-50" />
 				</Button>
 			</AlertDialogTrigger>
-			<AlertDialogContent className="w-[500px] flex flex-col gap-6 p-20 py-12">
-				<AlertDialogHeader>
-					<AlertDialogTitle>
-						¿ Seguro deseas eliminar la imagen ?
-					</AlertDialogTitle>
-				</AlertDialogHeader>
+			<AlertDialogContent className="w-[600px]">
+				<form
+					onSubmit={handleSubmit}
+					className="w-full flex flex-col gap-6 p-12"
+				>
+					<AlertDialogHeader>
+						<AlertDialogTitle className="text-xl">
+							¿ Seguro deseas eliminar la imagen ?
+						</AlertDialogTitle>
+					</AlertDialogHeader>
 
-				<AlertModalImage asset={asset} />
+					<AlertModalImage asset={asset} />
 
-				<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
-					<AlertDialogCancel className="flex-1" onClick={() => setOpen(false)}>
-						Cancelar
-					</AlertDialogCancel>
-					<AlertDialogAction
-						className="flex-1 bg-orange-500"
-						onClick={handleDeleteAsset}
-					>
-						Eliminar
-					</AlertDialogAction>
-				</AlertDialogFooter>
+					<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
+						<AlertDialogCancel
+							className="flex-1"
+							onClick={() => setOpen(false)}
+						>
+							Cancelar
+						</AlertDialogCancel>
+						<SubmitBtn label="Eliminar" className="flex-1" />
+					</AlertDialogFooter>
+				</form>
 			</AlertDialogContent>
 		</AlertDialog>
 	)

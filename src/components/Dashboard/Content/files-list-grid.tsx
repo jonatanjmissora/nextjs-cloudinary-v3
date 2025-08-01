@@ -5,6 +5,7 @@ import { useGetAssets } from "@/lib/use-get-assets"
 import { sortedAssetsFn } from "@/lib/sorted-assets"
 import { Skeleton } from "@/components/ui/skeleton"
 import useStore from "@/lib/zustand-coudinary"
+import { CloudinaryAsset } from "@/lib/types"
 
 export const FilesListGrid = ({
 	order,
@@ -25,11 +26,17 @@ export const FilesListGrid = ({
 			? sortedAssets
 			: sortedAssets.filter(asset => asset.asset_folder === actualFolder)
 
-	const handleSelectAsset = (assetName: string) => {
-		if (selectedAssets.includes(assetName)) {
-			setSelectedAssets(selectedAssets.filter(id => id !== assetName))
+	const selectedAssetsNames = selectedAssets.map(asset => asset.public_id)
+
+	const handleSelectAsset = (asset: CloudinaryAsset) => {
+		if (selectedAssetsNames.includes(asset.public_id)) {
+			setSelectedAssets(
+				selectedAssets.filter(
+					assetElement => assetElement.public_id !== asset.public_id
+				)
+			)
 		} else {
-			setSelectedAssets([...selectedAssets, assetName])
+			setSelectedAssets([...selectedAssets, asset])
 		}
 	}
 
@@ -40,7 +47,7 @@ export const FilesListGrid = ({
 			{filteredAssets?.map(asset => (
 				<div
 					key={asset.public_id}
-					className={`w-full h-auto relative group border-4 ${selectedAssets.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"}`}
+					className={`w-full h-auto relative group border-4 ${selectedAssetsNames.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"}`}
 				>
 					<Image
 						src={asset.secure_url}
@@ -50,7 +57,7 @@ export const FilesListGrid = ({
 						quality={100}
 						priority
 						className={`w-full object-cover`}
-						onClick={() => handleSelectAsset(asset.public_id)}
+						onClick={() => handleSelectAsset(asset)}
 					/>
 					<DashboardFileMenu view="grid" asset={asset} />
 					<DashboardFileInfo asset={asset} view="grid" />

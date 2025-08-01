@@ -5,6 +5,7 @@ import { useGetAssets } from "@/lib/use-get-assets"
 import { Skeleton } from "@/components/ui/skeleton"
 import { sortedAssetsFn } from "@/lib/sorted-assets"
 import useStore from "@/lib/zustand-coudinary"
+import { CloudinaryAsset } from "@/lib/types"
 
 export const FilesListList = ({
 	order,
@@ -26,11 +27,17 @@ export const FilesListList = ({
 			? sortedAssets
 			: sortedAssets.filter(asset => asset.asset_folder === actualFolder)
 
-	const handleSelectAsset = (assetName: string) => {
-		if (selectedAssets.includes(assetName)) {
-			setSelectedAssets(selectedAssets.filter(id => id !== assetName))
+	const selectedAssetsNames = selectedAssets.map(asset => asset.public_id)
+
+	const handleSelectAsset = (asset: CloudinaryAsset) => {
+		if (selectedAssetsNames.includes(asset.public_id)) {
+			setSelectedAssets(
+				selectedAssets.filter(
+					assetElement => assetElement.public_id !== asset.public_id
+				)
+			)
 		} else {
-			setSelectedAssets([...selectedAssets, assetName])
+			setSelectedAssets([...selectedAssets, asset])
 		}
 	}
 
@@ -41,8 +48,8 @@ export const FilesListList = ({
 			{filteredAssets?.map(asset => (
 				<button
 					key={asset.public_id}
-					className={`w-full h-full relative group border-2 flex items-center justify-center rounded-lg overflow-hidden ${selectedAssets.includes(asset.public_id) ? "bg-orange-500/30" : "bg-transparent hover:bg-[var(--foreground)]/10"}`}
-					onClick={() => handleSelectAsset(asset.public_id)}
+					className={`w-full h-full relative group border-2 flex items-center justify-center rounded-lg overflow-hidden ${selectedAssetsNames.includes(asset.public_id) ? "bg-orange-500/30" : "bg-transparent hover:bg-[var(--foreground)]/10"}`}
+					onClick={() => handleSelectAsset(asset)}
 				>
 					<Image
 						src={asset.secure_url}
