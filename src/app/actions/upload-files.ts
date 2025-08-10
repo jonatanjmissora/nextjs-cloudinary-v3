@@ -13,9 +13,7 @@ export const uploadAction = async (formData2: FormData) => {
 		)
 	}
 	const files = formData2.getAll("files")
-	console.log("uploadAction", formData2)
 	try {
-		console.log(files)
 		const formData = new FormData()
 		formData.append("upload_preset", uploadPreset)
 

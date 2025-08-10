@@ -31,9 +31,9 @@ export const UploadBtn = () => {
 
 		startTransition(async () => {
 			toast.promise(uploadAction(formData), {
-				loading: "Subiendo archivos...",
-				success: "Archivos subidos exitosamente",
-				error: "Error al subir archivos",
+				loading: "Subiendo archivo(s)...",
+				success: "Archivo(s) subido(s) exitosamente",
+				error: "Error al subir archivo(s)",
 			})
 			queryClient.invalidateQueries({ queryKey: ["assets"] })
 			setFiles([])

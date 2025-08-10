@@ -134,7 +134,7 @@ const FileStats = () => {
 	}
 
 	return (
-		<div className="w-full flex items-center justify-between min-h-8">
+		<div className="w-full flex items-center justify-between min-h-9">
 			<div className="flex items-center gap-3">
 				<Checkbox
 					id="selection"

@@ -17,24 +17,30 @@ import { toast } from "sonner"
 import { deleteMultipleAction } from "@/app/actions/delete-file"
 import { useQueryClient } from "@tanstack/react-query"
 import useStore from "@/lib/zustand-coudinary"
-import { useState } from "react"
+import { startTransition, useState } from "react"
+
+const sleep = () => new Promise(resolve => setTimeout(resolve, 1000))
 
 export function HeaderAssetsDelete() {
 	const [open, setOpen] = useState(false)
-	const { selectedAssets } = useStore()
+	const { selectedAssets, setSelectedAssets } = useStore()
 
 	const queryClient = useQueryClient()
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		const selectedAssetsIds = selectedAssets.map(asset => asset.public_id)
-		toast.promise(deleteMultipleAction(selectedAssetsIds), {
-			loading: "borrando imagen(es)...",
-			success: "imagen(es) borrada exitosamente",
-			error: "Error al borrar imagen(es)",
-		})
 
-		queryClient.invalidateQueries({ queryKey: ["assets"] })
-		setOpen(false)
+		const selectedAssetsIds = selectedAssets.map(asset => asset.public_id)
+		startTransition(async () => {
+			toast.promise(deleteMultipleAction(selectedAssetsIds), {
+				loading: "borrando imagen(es)...",
+				success: "imagen(es) borrada exitosamente",
+				error: "Error al borrar imagen(es)",
+			})
+			setOpen(false)
+			queryClient.invalidateQueries({ queryKey: ["assets"] })
+			await sleep()
+			setSelectedAssets([])
+		})
 	}
 
 	return (
