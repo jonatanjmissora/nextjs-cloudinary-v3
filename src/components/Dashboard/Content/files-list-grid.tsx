@@ -42,12 +42,12 @@ export const FilesListGrid = ({
 
 	return (
 		<article
-			className={`w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-2`}
+			className={`w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-x-1`}
 		>
 			{filteredAssets?.map(asset => (
 				<div
 					key={asset.public_id}
-					className={`w-full h-auto relative group border-4 ${selectedAssetsNames.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"}`}
+					className={`w-full h-auto relative group border-4 ${selectedAssetsNames.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"} mb-1`}
 				>
 					<Image
 						src={asset.secure_url}
