@@ -11,13 +11,13 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { CloudinaryAsset } from "@/lib/types"
-import { Trash2 } from "lucide-react"
-import Image from "next/image"
+import { LoaderCircle, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { deleteMultipleAction } from "@/app/actions/delete-file"
 import { useQueryClient } from "@tanstack/react-query"
 import useStore from "@/lib/zustand-coudinary"
 import { startTransition, useState } from "react"
+import MyImage from "@/components/my-image"
 
 const sleep = () => new Promise(resolve => setTimeout(resolve, 1000))
 
@@ -79,22 +79,35 @@ const AlertModalImage = ({
 	selectedAssets: CloudinaryAsset[]
 }) => {
 	return (
-		<div className="flex flex-col gap-1 overflow-y-auto h-max max-h-[300px]">
+		<div className="flex flex-col gap-1 overflow-y-auto h-max max-h-[300px] px-1">
 			{selectedAssets.map(asset => (
 				<div key={asset.public_id} className="flex items-center gap-4">
-					<div className="relative size-[50px]">
-						<Image
-							src={asset.secure_url}
-							alt={asset.public_id}
-							layout="fill"
-							quality={100}
-							priority
-							className="w-full object-cover"
-						/>
-					</div>
-					<span>{asset.display_name}</span>
+					<ThumbnailWithSkeleton asset={asset} />
+					<span className="truncate max-w-[200px]">
+						{asset.display_name || asset.public_id.split("/").pop()}
+					</span>
 				</div>
 			))}
+		</div>
+	)
+}
+
+function ThumbnailWithSkeleton({ asset }: { asset: CloudinaryAsset }) {
+	const [isLoading, setIsLoading] = useState(true)
+
+	return (
+		<div className="relative size-[75px]">
+			{isLoading && (
+				<div className="absolute inset-0 bg-muted rounded-md animate-pulse flex items-center justify-center border">
+					<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/25" />
+				</div>
+			)}
+			<MyImage
+				asset={asset}
+				width={150}
+				className={"h-full w-full border rounded-md object-cover"}
+				onLoad={() => setIsLoading(false)}
+			/>
 		</div>
 	)
 }

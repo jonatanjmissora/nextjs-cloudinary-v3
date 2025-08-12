@@ -89,6 +89,7 @@ const InputFiles = ({
 	return (
 		<>
 			<input
+				id="files"
 				type="file"
 				onChange={handleFileChange}
 				multiple

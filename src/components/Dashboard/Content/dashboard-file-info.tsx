@@ -8,8 +8,9 @@ import {
 } from "@/components/ui/dialog"
 import { CloudinaryAsset } from "@/lib/types"
 import { setFileDate, setFileSize } from "@/lib/utils"
-import { Expand } from "lucide-react"
-import Image from "next/image"
+import { Expand, LoaderCircle } from "lucide-react"
+import MyImage from "@/components/my-image"
+import { useState } from "react"
 
 export const DashboardFileInfo = ({
 	asset,
@@ -58,16 +59,8 @@ const Ampliar = ({ asset }: { asset: CloudinaryAsset }) => {
 				<DialogHeader>
 					<DialogTitle></DialogTitle>
 				</DialogHeader>
-				<div className="relative w-full h-[80dvh]">
-					<Image
-						src={asset.secure_url}
-						alt={asset.public_id}
-						fill
-						quality={100}
-						priority
-						objectFit="contain"
-						className=""
-					/>
+				<div className="relative w-full h-[85dvh]">
+					<ThumbnailWithSkeleton asset={asset} />
 				</div>
 				<DialogFooter className="w-full flex justify-around items-center text-[var(--foreground)]/75">
 					<span>{setFileDate(asset.created_at)}</span>
@@ -76,5 +69,24 @@ const Ampliar = ({ asset }: { asset: CloudinaryAsset }) => {
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
+	)
+}
+
+function ThumbnailWithSkeleton({ asset }: { asset: CloudinaryAsset }) {
+	const [isLoading, setIsLoading] = useState(true)
+
+	return (
+		<div className="relative w-full h-full">
+			{isLoading && (
+				<div className="absolute inset-0 bg-muted rounded-md animate-pulse flex items-center justify-center border">
+					<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/25" />
+				</div>
+			)}
+			<MyImage
+				asset={asset}
+				className="w-auto h-full object-contain"
+				onLoad={() => setIsLoading(false)}
+			/>
+		</div>
 	)
 }

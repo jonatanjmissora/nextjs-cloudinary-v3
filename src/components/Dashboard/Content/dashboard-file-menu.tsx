@@ -10,7 +10,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Trash2, Download, Wand } from "lucide-react"
+import { MoreHorizontal, Trash2, Download, Wand, Link } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
 	AlertDialog,
@@ -45,6 +45,8 @@ export const DashboardFileMenu = ({
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[200px]">
 				<DropdownMenuGroup>
+					<CopyURL assetURL={asset.secure_url} />
+					<DropdownMenuSeparator />
 					<DropdownMenuItem className="flex items-center justify-between p-3">
 						descargar <Download />
 					</DropdownMenuItem>
@@ -136,5 +138,16 @@ const AlertModalImage = ({ asset }: { asset: CloudinaryAsset }) => {
 			</div>
 			<span>{asset.display_name}</span>
 		</div>
+	)
+}
+
+const CopyURL = ({ assetURL }: { assetURL: string }) => {
+	return (
+		<DropdownMenuItem
+			className="flex items-center justify-between p-3"
+			onClick={() => navigator.clipboard.writeText(assetURL)}
+		>
+			copiar url <Link />
+		</DropdownMenuItem>
 	)
 }
