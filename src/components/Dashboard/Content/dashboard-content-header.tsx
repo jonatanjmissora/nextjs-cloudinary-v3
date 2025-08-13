@@ -13,7 +13,6 @@ import {
 	ArrowDownAZ,
 	ArrowDownNarrowWide,
 	CalendarArrowDown,
-	DownloadIcon,
 	FolderInput,
 	LayoutDashboard,
 	SlashIcon,
@@ -23,6 +22,7 @@ import useStore from "@/lib/zustand-cloudinary"
 import { useGetAssets } from "@/lib/use-get-assets"
 import { Button } from "@/components/ui/button"
 import { HeaderAssetsDelete } from "./dashboard-content-header-delete"
+import { HeaderAssetsDownload } from "./dashboard-content-header-download"
 
 export default function DashboardContentHeader() {
 	return (
@@ -162,9 +162,7 @@ const FileStats = () => {
 			>
 				<span className="text-sm">seleccionados ({selectedAssets.length})</span>
 				<HeaderAssetsDelete />
-				<Button variant="ghost" className={`size-7 p-2`}>
-					<DownloadIcon />
-				</Button>
+				<HeaderAssetsDownload />
 				<Button variant="ghost" className={`size-7 p-2`}>
 					<FolderInput />
 				</Button>

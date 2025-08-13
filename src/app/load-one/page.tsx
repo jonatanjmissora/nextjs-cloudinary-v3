@@ -29,6 +29,9 @@ export default function LoadOnePage() {
 
 	return (
 		<div className="w-full min-h-screen flex items-center justify-center bg-blue-900 p-4">
+			<a href="https://res.cloudinary.com/dfvzvdpfa/image/upload/e_grayscale/fl_attachment/v1748820180/cld-sample-4.jpg ">
+				Download
+			</a>
 			<div className="w-full flex gap-1">
 				<div className="flex-1 flex flex-wrap gap-2">
 					<h2>Next.js Image with Cloudinary</h2>

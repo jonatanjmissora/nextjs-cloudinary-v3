@@ -20,6 +20,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 	AlertDialogCancel,
+	AlertDialogDescription,
 } from "@/components/ui/alert-dialog"
 import { CloudinaryAsset } from "@/lib/types"
 import { deleteAction } from "@/app/actions/delete-file"
@@ -47,9 +48,7 @@ export const DashboardFileMenu = ({
 				<DropdownMenuGroup>
 					<CopyURL assetURL={asset.secure_url} />
 					<DropdownMenuSeparator />
-					<DropdownMenuItem className="flex items-center justify-between p-3">
-						descargar <Download />
-					</DropdownMenuItem>
+					<DownloadFile assetURL={asset.secure_url} />
 					<DropdownMenuSeparator />
 					<DropdownMenuItem className="flex items-center justify-between p-3">
 						transformar <Wand />
@@ -59,6 +58,38 @@ export const DashboardFileMenu = ({
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
+	)
+}
+
+const CopyURL = ({ assetURL }: { assetURL: string }) => {
+	const handleClick = () => {
+		navigator.clipboard.writeText(assetURL)
+		toast.success("URL copiada exitosamente")
+	}
+
+	return (
+		<DropdownMenuItem
+			className="flex items-center justify-between p-3"
+			onClick={handleClick}
+		>
+			copiar url <Link />
+		</DropdownMenuItem>
+	)
+}
+
+const DownloadFile = ({ assetURL }: { assetURL: string }) => {
+	const downloadURL = assetURL.replace(/upload\//, "upload/fl_attachment/")
+
+	return (
+		<DropdownMenuItem>
+			<a
+				className="flex items-center justify-between w-full py-2 px-1"
+				href={downloadURL}
+			>
+				descargar
+				<Download />
+			</a>
+		</DropdownMenuItem>
 	)
 }
 
@@ -96,6 +127,7 @@ const DeleteDialog = ({
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">
+				<AlertDialogDescription></AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"
@@ -138,21 +170,5 @@ const AlertModalImage = ({ asset }: { asset: CloudinaryAsset }) => {
 			</div>
 			<span>{asset.display_name}</span>
 		</div>
-	)
-}
-
-const CopyURL = ({ assetURL }: { assetURL: string }) => {
-	const handleClick = () => {
-		navigator.clipboard.writeText(assetURL)
-		toast.success("URL copiada exitosamente")
-	}
-
-	return (
-		<DropdownMenuItem
-			className="flex items-center justify-between p-3"
-			onClick={handleClick}
-		>
-			copiar url <Link />
-		</DropdownMenuItem>
 	)
 }

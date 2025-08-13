@@ -59,7 +59,6 @@ export const FilesListList = ({
 						height={300}
 						quality={100}
 						priority
-						objectFit="cover"
 						className={`w-[150px] h-[150px] object-cover`}
 					/>
 					<DashboardFileMenu view="list" asset={asset} />

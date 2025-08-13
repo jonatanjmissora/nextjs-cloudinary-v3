@@ -202,13 +202,21 @@ refactorizamos
 
 
 
-arreglar el skelton para el Folders, y para la vista list
-
-arreglar la galeria de fotos, en el upload
-
-guardar las peferencias en el local storage
+testear el skelton contra el MyImageWithSkelton
 
 
+CARPETAS:
+crear una nueva en la raiz, o en donde este la selectedFolder
+editar nombre
+eliminar carpeta con todos los assets
+
+DashboardStats:
+bajar uno o varios archivos seleccionados
+mover de carpeta a/los archivo/s seleccionado/s
+
+AssetMenu:
+descargar
+transformar
 
 🟩🟩
 

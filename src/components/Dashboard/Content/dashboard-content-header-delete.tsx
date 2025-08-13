@@ -4,6 +4,7 @@ import {
 	AlertDialog,
 	AlertDialogCancel,
 	AlertDialogContent,
+	AlertDialogDescription,
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
@@ -46,11 +47,12 @@ export function HeaderAssetsDelete() {
 	return (
 		<AlertDialog open={open} onOpenChange={setOpen}>
 			<AlertDialogTrigger asChild>
-				<Button variant="ghost" className="">
+				<Button variant="ghost" className="cursor-pointer">
 					<Trash2 className="" />
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">
+				<AlertDialogDescription></AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"
