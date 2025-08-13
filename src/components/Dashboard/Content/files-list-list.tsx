@@ -4,7 +4,7 @@ import { DashboardFileInfo } from "./dashboard-file-info"
 import { useGetAssets } from "@/lib/use-get-assets"
 // import { Skeleton } from "@/components/ui/skeleton"
 import { sortedAssetsFn } from "@/lib/sorted-assets"
-import useStore from "@/lib/zustand-coudinary"
+import useStore from "@/lib/zustand-cloudinary"
 import { CloudinaryAsset } from "@/lib/types"
 import { LoaderCircle } from "lucide-react"
 

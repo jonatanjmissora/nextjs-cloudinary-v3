@@ -18,7 +18,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { useState } from "react"
-import useStore from "@/lib/zustand-coudinary"
+import useStore from "@/lib/zustand-cloudinary"
 
 export function Folder({
 	folderName,

@@ -19,7 +19,7 @@ import {
 	SlashIcon,
 	StretchHorizontal,
 } from "lucide-react"
-import useStore from "@/lib/zustand-coudinary"
+import useStore from "@/lib/zustand-cloudinary"
 import { useGetAssets } from "@/lib/use-get-assets"
 import { Button } from "@/components/ui/button"
 import { HeaderAssetsDelete } from "./dashboard-content-header-delete"

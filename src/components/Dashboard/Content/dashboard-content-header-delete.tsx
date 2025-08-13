@@ -15,7 +15,7 @@ import { LoaderCircle, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 import { deleteMultipleAction } from "@/app/actions/delete-file"
 import { useQueryClient } from "@tanstack/react-query"
-import useStore from "@/lib/zustand-coudinary"
+import useStore from "@/lib/zustand-cloudinary"
 import { startTransition, useState } from "react"
 import MyImage from "@/components/my-image"
 
