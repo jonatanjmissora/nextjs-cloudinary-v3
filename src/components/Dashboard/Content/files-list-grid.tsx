@@ -2,11 +2,12 @@ import { DashboardFileMenu } from "./dashboard-file-menu"
 import { DashboardFileInfo } from "./dashboard-file-info"
 import { useGetAssets } from "@/lib/use-get-assets"
 import { sortedAssetsFn } from "@/lib/sorted-assets"
-import { Skeleton } from "@/components/ui/skeleton"
+// import { Skeleton } from "@/components/ui/skeleton"
 import useStore from "@/lib/zustand-coudinary"
 import { CloudinaryAsset } from "@/lib/types"
-import MyImage from "@/components/my-image"
-import { useState } from "react"
+// import MyImage from "@/components/my-image"
+// import { useState } from "react"
+import Image from "next/image"
 import { LoaderCircle } from "lucide-react"
 
 export const FilesListGrid = ({
@@ -51,9 +52,19 @@ export const FilesListGrid = ({
 					key={asset.public_id}
 					className={`w-full h-auto relative group border-4 ${selectedAssetsNames.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"} mb-1`}
 				>
-					<ThumbnailWithSkeleton
+					{/* <ThumbnailWithSkeleton
 						asset={asset}
 						handleSelectAsset={handleSelectAsset}
+					/> */}
+					<Image
+						src={asset.secure_url}
+						alt={asset.public_id}
+						width={300}
+						height={300}
+						quality={100}
+						priority
+						className={`w-full object-cover`}
+						onClick={() => handleSelectAsset(asset)}
 					/>
 					<DashboardFileMenu view="grid" asset={asset} />
 					<DashboardFileInfo asset={asset} view="grid" />
@@ -74,39 +85,41 @@ const ErrorComponent = ({ error }: { error: string }) => {
 
 const SkeltonList = () => {
 	return (
-		<article className="w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px]">
+		<article className="w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-x-1">
 			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
-				<div key={item} className="w-full h-full relative group">
-					<Skeleton className="sm:w-[220px] sm:h-[270px] 2xl:w-[310px] 2xl:h-[370px] my-2" />
+				<div key={item} className="relative w-full h-full">
+					<div className="sm:w-[230px] sm:h-[270px] 2xl:w-[310px] 2xl:h-[370px] my-3 bg-muted rounded-md animate-pulse flex items-center justify-center">
+						<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/15" />
+					</div>
 				</div>
 			))}
 		</article>
 	)
 }
 
-function ThumbnailWithSkeleton({
-	asset,
-	handleSelectAsset,
-}: {
-	asset: CloudinaryAsset
-	handleSelectAsset: (asset: CloudinaryAsset) => void
-}) {
-	const [isLoading, setIsLoading] = useState(true)
+// function ThumbnailWithSkeleton({
+// 	asset,
+// 	handleSelectAsset,
+// }: {
+// 	asset: CloudinaryAsset
+// 	handleSelectAsset: (asset: CloudinaryAsset) => void
+// }) {
+// 	const [isLoading, setIsLoading] = useState(true)
 
-	return (
-		<div className="relative w-full h-full">
-			{isLoading && (
-				<div className="absolute inset-0 bg-muted rounded-md animate-pulse flex items-center justify-center border">
-					<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/25" />
-				</div>
-			)}
-			<MyImage
-				asset={asset}
-				width={600}
-				priority
-				onClick={() => handleSelectAsset(asset)}
-				onLoad={() => setIsLoading(false)}
-			/>
-		</div>
-	)
-}
+// 	return (
+// 		<div className="relative w-full h-full">
+// 			{isLoading && (
+// 				<div className="absolute inset-0 bg-muted rounded-md animate-pulse flex items-center justify-center border">
+// 					<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/25" />
+// 				</div>
+// 			)}
+// 			<MyImage
+// 				asset={asset}
+// 				width={600}
+// 				priority
+// 				onClick={() => handleSelectAsset(asset)}
+// 				onLoad={() => setIsLoading(false)}
+// 			/>
+// 		</div>
+// 	)
+// }

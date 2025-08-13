@@ -142,10 +142,15 @@ const AlertModalImage = ({ asset }: { asset: CloudinaryAsset }) => {
 }
 
 const CopyURL = ({ assetURL }: { assetURL: string }) => {
+	const handleClick = () => {
+		navigator.clipboard.writeText(assetURL)
+		toast.success("URL copiada exitosamente")
+	}
+
 	return (
 		<DropdownMenuItem
 			className="flex items-center justify-between p-3"
-			onClick={() => navigator.clipboard.writeText(assetURL)}
+			onClick={handleClick}
 		>
 			copiar url <Link />
 		</DropdownMenuItem>

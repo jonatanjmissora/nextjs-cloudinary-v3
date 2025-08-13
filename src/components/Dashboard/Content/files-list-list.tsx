@@ -2,10 +2,11 @@ import Image from "next/image"
 import { DashboardFileMenu } from "./dashboard-file-menu"
 import { DashboardFileInfo } from "./dashboard-file-info"
 import { useGetAssets } from "@/lib/use-get-assets"
-import { Skeleton } from "@/components/ui/skeleton"
+// import { Skeleton } from "@/components/ui/skeleton"
 import { sortedAssetsFn } from "@/lib/sorted-assets"
 import useStore from "@/lib/zustand-coudinary"
 import { CloudinaryAsset } from "@/lib/types"
+import { LoaderCircle } from "lucide-react"
 
 export const FilesListList = ({
 	order,
@@ -86,9 +87,12 @@ const SkeltonList = () => {
 			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
 				<div
 					key={item}
-					className={`w-full h-full relative group border-2 flex items-center justify-center rounded-lg overflow-hidden`}
+					className={`w-full h-full relative group border-2 flex items-center justify-start rounded-lg overflow-hidden`}
 				>
-					<Skeleton className={`w-[150px] h-[150px] object-cover mr-auto`} />
+					{/* <Skeleton className={`w-[150px] h-[150px] object-cover mr-auto`} /> */}
+					<div className="w-[150px] h-[150px] bg-muted rounded-md animate-pulse flex items-center justify-center">
+						<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/15" />
+					</div>
 				</div>
 			))}
 		</article>

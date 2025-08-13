@@ -81,28 +81,38 @@ const BreadcrumbUI = () => {
 const Menu = () => {
 	const { view, setView, order, setOrder } = useStore()
 
+	const handleView = (view: "grid" | "list") => {
+		setView(view)
+		localStorage.setItem("view", view)
+	}
+
+	const handleOrder = (order: "name" | "size" | "date") => {
+		setOrder(order)
+		localStorage.setItem("order", order)
+	}
+
 	return (
 		<>
 			<div className="flex items-center gap-12">
 				<span>vista</span>
 				<LayoutDashboard
 					className={`sm:size-5 2xl:size-6 ${view === "grid" ? "text-orange-500" : ""} cursor-pointer`}
-					onClick={() => setView("grid")}
+					onClick={() => handleView("grid")}
 				/>
 				<StretchHorizontal
 					className={`sm:size-5 2xl:size-6 ${view === "list" ? "text-orange-500" : ""} cursor-pointer`}
-					onClick={() => setView("list")}
+					onClick={() => handleView("list")}
 				/>
 			</div>
 			<div className="flex items-center gap-12">
 				<span>orden</span>
 				<ArrowDownAZ
 					className={`sm:size-5 2xl:size-6 ${order === "name" ? "text-orange-500" : ""} cursor-pointer`}
-					onClick={() => setOrder("name")}
+					onClick={() => handleOrder("name")}
 				/>
 				<CalendarArrowDown
 					className={`sm:size-5 2xl:size-6 ${order === "date" ? "text-orange-500" : ""} cursor-pointer`}
-					onClick={() => setOrder("date")}
+					onClick={() => handleOrder("date")}
 				/>
 				<ArrowDownNarrowWide
 					className={`sm:size-5 2xl:size-6 ${order === "size" ? "text-orange-500" : ""} cursor-pointer`}
