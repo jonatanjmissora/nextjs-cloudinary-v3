@@ -19,8 +19,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import useStore from "@/lib/zustand-cloudinary"
 import { startTransition, useState } from "react"
 import MyImage from "@/components/my-image"
-
-const sleep = () => new Promise(resolve => setTimeout(resolve, 1000))
+import { sleep } from "@/lib/utils"
 
 export function HeaderAssetsDelete() {
 	const [open, setOpen] = useState(false)

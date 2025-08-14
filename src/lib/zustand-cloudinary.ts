@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { CloudinaryAsset } from "./types"
+import { CloudinaryAsset, Folder } from "./types"
 import { persist, createJSONStorage } from "zustand/middleware"
 
 interface NonPersistedState {
@@ -8,6 +8,7 @@ interface NonPersistedState {
 	actualFolder: string
 	selectedAssets: CloudinaryAsset[]
 	search: string
+	foldersTree: Folder[]
 }
 
 interface PersistedState {
@@ -22,6 +23,7 @@ interface StoreActions {
 	setActualFolder: (folder: string) => void
 	setSelectedAssets: (assets: CloudinaryAsset[]) => void
 	setSearch: (search: string) => void
+	setFoldersTree: (folders: Folder[]) => void
 
 	// Persisted actions
 	setView: (view: "grid" | "list") => void
@@ -39,6 +41,7 @@ export const useStore = create<StoreState & StoreActions>()(
 			actualFolder: "Todas",
 			selectedAssets: [],
 			search: "",
+			foldersTree: [],
 
 			// Persisted state with defaults
 			view: "grid",
@@ -49,6 +52,7 @@ export const useStore = create<StoreState & StoreActions>()(
 			setActualFolder: folderName => set({ actualFolder: folderName }),
 			setSelectedAssets: selectedAssets => set({ selectedAssets }),
 			setSearch: search => set({ search }),
+			setFoldersTree: folders => set({ foldersTree: folders }),
 
 			// Persisted actions
 			setView: view => set({ view }),

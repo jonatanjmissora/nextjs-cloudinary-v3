@@ -11,10 +11,8 @@ export interface CustomFile {
 }
 
 export interface Folder {
-	id: string
 	name: string
-	parentId: string | null
-	files: CustomFile[]
+	parent: string | null
 }
 
 interface AccessKeyInfo {

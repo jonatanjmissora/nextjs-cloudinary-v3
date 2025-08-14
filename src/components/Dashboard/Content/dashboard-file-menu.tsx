@@ -10,7 +10,14 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Trash2, Download, Wand, Link } from "lucide-react"
+import {
+	MoreHorizontal,
+	Trash2,
+	Download,
+	Wand,
+	Link,
+	Edit2,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
 	AlertDialog,
@@ -27,6 +34,7 @@ import { deleteAction } from "@/app/actions/delete-file"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 import SubmitBtn from "@/components/layout/submit-btn"
+import { renameAction } from "@/app/actions/rename-file"
 
 export const DashboardFileMenu = ({
 	view,
@@ -46,18 +54,92 @@ export const DashboardFileMenu = ({
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[200px]">
 				<DropdownMenuGroup>
+					<RenameAsset asset={asset} setOpen={setOpen} />
+					<DropdownMenuSeparator />
+
 					<CopyURL assetURL={asset.secure_url} />
 					<DropdownMenuSeparator />
+
 					<DownloadFile assetURL={asset.secure_url} />
 					<DropdownMenuSeparator />
+
 					<DropdownMenuItem className="flex items-center justify-between p-3">
 						transformar <Wand />
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
+
 					<DeleteDialog asset={asset} setOpen={setOpen} />
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
+	)
+}
+
+const RenameAsset = ({
+	asset,
+	setOpen,
+}: {
+	asset: CloudinaryAsset
+	setOpen: (open: boolean) => void
+}) => {
+	const queryClient = useQueryClient()
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+
+		startTransition(async () => {
+			toast.promise(renameAction(asset, e.currentTarget.newName.value), {
+				loading: "renombrando imagen...",
+				success: "imagen renombrada exitosamente",
+				error: "Error al renombrar imagen",
+			})
+
+			queryClient.invalidateQueries({ queryKey: ["assets"] })
+			setOpen(false)
+		})
+	}
+
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger asChild>
+				<Button
+					variant="ghost"
+					className="w-full flex items-center justify-between"
+				>
+					renombrar <Edit2 className="opacity-50" />
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent className="w-[600px]">
+				<AlertDialogDescription></AlertDialogDescription>
+				<form
+					onSubmit={handleSubmit}
+					className="w-full flex flex-col gap-6 p-12"
+				>
+					<AlertDialogHeader>
+						<AlertDialogTitle className="text-xl">
+							Cambio de nombre
+						</AlertDialogTitle>
+					</AlertDialogHeader>
+
+					<input
+						defaultValue={asset.public_id}
+						type="text"
+						name="newName"
+						required
+						placeholder="Nuevo nombre"
+					/>
+
+					<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
+						<AlertDialogCancel
+							className="flex-1"
+							onClick={() => setOpen(false)}
+						>
+							Cancelar
+						</AlertDialogCancel>
+						<SubmitBtn label="Renombrar" className="flex-1" />
+					</AlertDialogFooter>
+				</form>
+			</AlertDialogContent>
+		</AlertDialog>
 	)
 }
 

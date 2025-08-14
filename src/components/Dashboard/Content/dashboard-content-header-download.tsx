@@ -63,9 +63,12 @@ export function HeaderAssetsDownload() {
 						temporaryDownloadLink.click()
 
 						// Small delay between downloads
-						setTimeout(() => {
-							resolve()
-						}, 1000)
+						setTimeout(
+							() => {
+								resolve()
+							},
+							300 + i * 100
+						)
 					})
 				}
 

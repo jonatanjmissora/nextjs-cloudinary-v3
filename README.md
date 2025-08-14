@@ -210,12 +210,13 @@ crear una nueva en la raiz, o en donde este la selectedFolder
 editar nombre
 eliminar carpeta con todos los assets
 
+DashboardHeader:
+elegir carpeta para el upload
+
 DashboardStats:
-bajar uno o varios archivos seleccionados
 mover de carpeta a/los archivo/s seleccionado/s
 
 AssetMenu:
-descargar
 transformar
 
 🟩🟩

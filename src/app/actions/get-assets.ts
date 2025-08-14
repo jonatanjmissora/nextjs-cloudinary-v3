@@ -1,9 +1,7 @@
 "use server"
 
-import { CloudinaryAsset } from "./types"
+import { CloudinaryAsset } from "../../lib/types"
 import cloudinary from "cloudinary"
-
-// const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export const getAssets = async (): Promise<{
 	success: boolean
@@ -19,6 +17,11 @@ export const getAssets = async (): Promise<{
 
 		// demora de 2 segundos
 		// await sleep(1000)
+		// console.log("Ya estoy aca")
+		// const rootFolders = await cloudinary.v2.api.root_folders()
+		// console.log("rootFolders: ", rootFolders)
+		// const subFolder = await cloudinary.v2.api.sub_folders("")
+		// console.log("subfolder", subFolder)
 
 		if (!res) {
 			console.error("error en getAssets - !res: ")

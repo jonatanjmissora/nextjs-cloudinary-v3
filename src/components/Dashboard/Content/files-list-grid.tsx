@@ -88,7 +88,7 @@ const SkeltonList = () => {
 		<article className="w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-x-1">
 			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
 				<div key={item} className="relative w-full h-full">
-					<div className="sm:w-[230px] sm:h-[270px] 2xl:w-[310px] 2xl:h-[370px] my-3 bg-muted rounded-md animate-pulse flex items-center justify-center">
+					<div className="sm:w-[230px] sm:h-[270px] 2xl:w-[345px] 2xl:h-[370px] my-3 bg-muted rounded-md animate-pulse flex items-center justify-center">
 						<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/15" />
 					</div>
 				</div>
