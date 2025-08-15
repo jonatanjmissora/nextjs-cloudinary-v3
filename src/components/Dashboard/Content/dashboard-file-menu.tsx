@@ -54,20 +54,25 @@ export const DashboardFileMenu = ({
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[200px]">
 				<DropdownMenuGroup>
+					{/* 				RENAME							 */}
 					<RenameAsset asset={asset} setOpen={setOpen} />
 					<DropdownMenuSeparator />
 
+					{/* 				COPY URL							 */}
 					<CopyURL assetURL={asset.secure_url} />
 					<DropdownMenuSeparator />
 
+					{/* 				DOWNLOAD							 */}
 					<DownloadFile assetURL={asset.secure_url} />
 					<DropdownMenuSeparator />
 
+					{/* 				TRANSFORM							 */}
 					<DropdownMenuItem className="flex items-center justify-between p-3">
 						transformar <Wand />
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
 
+					{/* 				DELETE							 */}
 					<DeleteDialog asset={asset} setOpen={setOpen} />
 				</DropdownMenuGroup>
 			</DropdownMenuContent>

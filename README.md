@@ -209,6 +209,8 @@ CARPETAS:
 crear una nueva en la raiz, o en donde este la selectedFolder
 editar nombre
 eliminar carpeta con todos los assets
+mostrar carpetas vacias
+
 
 DashboardHeader:
 elegir carpeta para el upload

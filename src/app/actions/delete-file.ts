@@ -19,6 +19,8 @@ export const deleteMultipleAction = async (public_ids: string[]) => {
 			const result = await cloudinary.uploader.destroy(public_id)
 			if (result.result !== "ok") {
 				throw new Error("Error eliminando asset")
+			} else {
+				console.log("Asset eliminado:", public_id)
 			}
 		}
 	} catch (error) {
