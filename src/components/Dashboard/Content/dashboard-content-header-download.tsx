@@ -109,7 +109,9 @@ export function HeaderAssetsDownload() {
 				>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="text-xl">
-							¿ Seguro deseas descargar la(s) imagen(es) ?
+							¿ Seguro deseas descargar la
+							{selectedAssets.length > 1 ? "s" : ""} imagen
+							{selectedAssets.length > 1 ? "es" : ""} ?
 						</AlertDialogTitle>
 					</AlertDialogHeader>
 

@@ -91,8 +91,12 @@ const RenameAsset = ({
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
+		const newName = e.currentTarget.newName.value.trim()
+		if (newName === asset.public_id || newName === "") {
+			return
+		}
 		startTransition(async () => {
-			toast.promise(renameAction(asset, e.currentTarget.newName.value), {
+			toast.promise(renameAction(asset, newName), {
 				loading: "renombrando imagen...",
 				success: "imagen renombrada exitosamente",
 				error: "Error al renombrar imagen",
@@ -121,17 +125,23 @@ const RenameAsset = ({
 				>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="text-xl">
-							Cambio de nombre
+							Cambio de nombre:
 						</AlertDialogTitle>
 					</AlertDialogHeader>
 
-					<input
-						defaultValue={asset.public_id}
-						type="text"
-						name="newName"
-						required
-						placeholder="Nuevo nombre"
-					/>
+					<div className="flex flex-col gap-1">
+						<input
+							defaultValue={asset.public_id}
+							type="text"
+							name="newName"
+							required
+							placeholder="Nuevo nombre"
+							className="bg-muted/50 px-6 py-3 rounded-md"
+						/>
+						<p className="text-xs text-orange-500/30">
+							* controle que el nombre lleve caracteres permitidos
+						</p>
+					</div>
 
 					<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
 						<AlertDialogCancel

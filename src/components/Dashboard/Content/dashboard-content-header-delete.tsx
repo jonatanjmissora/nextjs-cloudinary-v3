@@ -58,7 +58,8 @@ export function HeaderAssetsDelete() {
 				>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="text-xl">
-							¿ Seguro deseas eliminar la(s) imagen(es) ?
+							¿ Seguro deseas eliminar la{selectedAssets.length > 1 ? "s" : ""}{" "}
+							imagen{selectedAssets.length > 1 ? "es" : ""} ?
 						</AlertDialogTitle>
 					</AlertDialogHeader>
 
