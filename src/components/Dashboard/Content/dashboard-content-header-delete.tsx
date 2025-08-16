@@ -19,7 +19,6 @@ import { useQueryClient } from "@tanstack/react-query"
 import useStore from "@/lib/zustand-cloudinary"
 import { startTransition, useState } from "react"
 import MyImage from "@/components/my-image"
-import { sleep } from "@/lib/utils"
 
 export function HeaderAssetsDelete() {
 	const [open, setOpen] = useState(false)
@@ -36,10 +35,11 @@ export function HeaderAssetsDelete() {
 				success: "imagen(es) borrada exitosamente",
 				error: "Error al borrar imagen(es)",
 			})
-			setOpen(false)
-			queryClient.invalidateQueries({ queryKey: ["assets"] })
-			await sleep()
-			setSelectedAssets([])
+			startTransition(() => {
+				setOpen(false)
+				queryClient.invalidateQueries({ queryKey: ["assets"] })
+				setSelectedAssets([])
+			})
 		})
 	}
 

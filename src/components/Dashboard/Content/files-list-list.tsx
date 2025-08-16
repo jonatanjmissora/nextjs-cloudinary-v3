@@ -2,7 +2,6 @@ import Image from "next/image"
 import { DashboardFileMenu } from "./dashboard-file-menu"
 import { DashboardFileInfo } from "./dashboard-file-info"
 import { useGetAssets } from "@/lib/use-get-assets"
-// import { Skeleton } from "@/components/ui/skeleton"
 import { sortedAssetsFn } from "@/lib/sorted-assets"
 import useStore from "@/lib/zustand-cloudinary"
 import { CloudinaryAsset } from "@/lib/types"
@@ -43,9 +42,7 @@ export const FilesListList = ({
 	}
 
 	return (
-		<article
-			className={`w-full h-full grid grid-cols-1 sm:grid-cols-2 gap-2 m-3`}
-		>
+		<ListLayout>
 			{filteredAssets?.map(asset => (
 				<button
 					key={asset.public_id}
@@ -65,7 +62,7 @@ export const FilesListList = ({
 					<DashboardFileInfo asset={asset} view="list" />
 				</button>
 			))}
-		</article>
+		</ListLayout>
 	)
 }
 
@@ -78,11 +75,19 @@ const ErrorComponent = ({ error }: { error: string }) => {
 	)
 }
 
-const SkeltonList = () => {
+const ListLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<article
 			className={`w-full h-full grid grid-cols-1 sm:grid-cols-2 gap-2 m-3`}
 		>
+			{children}
+		</article>
+	)
+}
+
+const SkeltonList = () => {
+	return (
+		<ListLayout>
 			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
 				<div
 					key={item}
@@ -94,6 +99,6 @@ const SkeltonList = () => {
 					</div>
 				</div>
 			))}
-		</article>
+		</ListLayout>
 	)
 }

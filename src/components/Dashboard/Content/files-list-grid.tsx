@@ -44,24 +44,18 @@ export const FilesListGrid = ({
 	}
 
 	return (
-		<article
-			className={`w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-x-1`}
-		>
+		<GridLayout>
 			{filteredAssets?.map(asset => (
 				<div
 					key={asset.public_id}
 					className={`w-full h-auto relative group border-4 ${selectedAssetsNames.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"} mb-1`}
 				>
-					{/* <ThumbnailWithSkeleton
-						asset={asset}
-						handleSelectAsset={handleSelectAsset}
-					/> */}
 					<Image
 						src={asset.secure_url}
 						alt={asset.public_id}
-						width={300}
-						height={300}
-						quality={100}
+						width={600}
+						height={600}
+						quality={90}
 						priority
 						className={`w-full object-cover`}
 						onClick={() => handleSelectAsset(asset)}
@@ -70,7 +64,7 @@ export const FilesListGrid = ({
 					<DashboardFileInfo asset={asset} view="grid" />
 				</div>
 			))}
-		</article>
+		</GridLayout>
 	)
 }
 
@@ -83,9 +77,17 @@ const ErrorComponent = ({ error }: { error: string }) => {
 	)
 }
 
-const SkeltonList = () => {
+const GridLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<article className="w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-x-1">
+			{children}
+		</article>
+	)
+}
+
+const SkeltonList = () => {
+	return (
+		<GridLayout>
 			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
 				<div key={item} className="relative w-full h-full">
 					<div className="sm:w-[230px] sm:h-[270px] 2xl:w-[345px] 2xl:h-[370px] my-3 bg-muted rounded-md animate-pulse flex items-center justify-center">
@@ -93,33 +95,6 @@ const SkeltonList = () => {
 					</div>
 				</div>
 			))}
-		</article>
+		</GridLayout>
 	)
 }
-
-// function ThumbnailWithSkeleton({
-// 	asset,
-// 	handleSelectAsset,
-// }: {
-// 	asset: CloudinaryAsset
-// 	handleSelectAsset: (asset: CloudinaryAsset) => void
-// }) {
-// 	const [isLoading, setIsLoading] = useState(true)
-
-// 	return (
-// 		<div className="relative w-full h-full">
-// 			{isLoading && (
-// 				<div className="absolute inset-0 bg-muted rounded-md animate-pulse flex items-center justify-center border">
-// 					<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/25" />
-// 				</div>
-// 			)}
-// 			<MyImage
-// 				asset={asset}
-// 				width={600}
-// 				priority
-// 				onClick={() => handleSelectAsset(asset)}
-// 				onLoad={() => setIsLoading(false)}
-// 			/>
-// 		</div>
-// 	)
-// }

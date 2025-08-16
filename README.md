@@ -163,7 +163,7 @@ import { Folder } from '../types'
 interface StoreState {
   folders: Folder[]
   actualFolder: Folder | null
-  view: "grid" | "list"
+  view: "grid" | "list" | null
   order: "name" | "size" | "date"
   search: string
 }

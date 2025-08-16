@@ -31,7 +31,6 @@ export function HeaderAssetsMove() {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
-		console.log("selectedMoveFolder", selectedMoveFolder)
 		if (!selectedMoveFolder) {
 			toast.error("Por favor, selecciona una carpeta")
 			return

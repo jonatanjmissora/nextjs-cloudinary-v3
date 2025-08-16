@@ -1,6 +1,7 @@
 "use server"
 
 import { v2 as cloudinary } from "cloudinary"
+import { revalidatePath } from "next/cache"
 
 export const deleteAction = async (public_id: string) => {
 	try {
@@ -23,6 +24,7 @@ export const deleteMultipleAction = async (public_ids: string[]) => {
 				console.log("Asset eliminado:", public_id)
 			}
 		}
+		revalidatePath("/")
 	} catch (error) {
 		console.error("Error eliminando asset:", error)
 	}
