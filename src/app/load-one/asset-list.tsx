@@ -2,6 +2,7 @@
 import Image from "next/image"
 
 import { useGetAssets } from "@/lib/use-get-assets"
+import { CldImage } from "next-cloudinary"
 
 export default function AssetList() {
 	const { isFetching, assets, error } = useGetAssets()
@@ -24,23 +25,34 @@ export default function AssetList() {
 		)
 
 	return (
-		<div className="flex-1 flex flex-wrap gap-2">
-			{assets?.slice(0, 7).map(asset => (
-				<div
-					key={`next-${asset.public_id}`}
-					className="relative w-[200px] aspect-[3/2]"
-				>
-					<Image
-						src={newSrc(asset.secure_url)}
-						alt={asset.public_id}
-						quality={90}
-						width={600}
-						height={600}
-						priority
-						className="object-cover w-full h-auto"
+		<div className="w-full border">
+			<div className="flex-1 flex flex-wrap gap-2">
+				<div className="relative w-[300px] aspect-[3/2]">
+					<CldImage
+						src={assets?.[0].secure_url}
+						crop="fill"
+						sizes="50vw"
+						fill={true}
+						alt={assets?.[0].public_id}
 					/>
 				</div>
-			))}
+				<CldImage
+					src={assets?.[0].secure_url}
+					width={300}
+					height={300}
+					sizes="50vw"
+					alt={assets?.[0].public_id}
+				/>
+				<div className="relative w-[300px] h-auto border flex items-center">
+					<CldImage
+						src={assets?.[6].secure_url}
+						width={300}
+						height={450}
+						sizes="50vw"
+						alt={assets?.[6].public_id}
+					/>
+				</div>
+			</div>
 		</div>
 	)
 }

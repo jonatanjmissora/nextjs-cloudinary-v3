@@ -9,6 +9,7 @@ import { CloudinaryAsset } from "@/lib/types"
 // import { useState } from "react"
 import Image from "next/image"
 import { LoaderCircle } from "lucide-react"
+import { CldImage } from "next-cloudinary"
 
 export const FilesListGrid = ({
 	order,
@@ -50,7 +51,15 @@ export const FilesListGrid = ({
 					key={asset.public_id}
 					className={`w-full h-auto relative group border-4 ${selectedAssetsNames.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"} mb-1`}
 				>
-					<Image
+					<CldImage
+						src={asset.secure_url}
+						width={600}
+						height={600}
+						sizes="50vw"
+						alt={asset.public_id}
+						onClick={() => handleSelectAsset(asset)}
+					/>
+					{/* <Image
 						src={asset.secure_url}
 						alt={asset.public_id}
 						width={600}
@@ -59,7 +68,7 @@ export const FilesListGrid = ({
 						priority
 						className={`w-full object-cover`}
 						onClick={() => handleSelectAsset(asset)}
-					/>
+					/> */}
 					<DashboardFileMenu view="grid" asset={asset} />
 					<DashboardFileInfo asset={asset} view="grid" />
 				</div>
