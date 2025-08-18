@@ -7,7 +7,7 @@ import useStore from "@/lib/zustand-cloudinary"
 import { CloudinaryAsset } from "@/lib/types"
 // import MyImage from "@/components/my-image"
 // import { useState } from "react"
-import Image from "next/image"
+// import Image from "next/image"
 import { LoaderCircle } from "lucide-react"
 import { CldImage } from "next-cloudinary"
 

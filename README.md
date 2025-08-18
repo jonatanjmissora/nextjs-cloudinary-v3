@@ -221,5 +221,8 @@ mover de carpeta a/los archivo/s seleccionado/s
 AssetMenu:
 transformar
 
+probe nueva forma de upload
+up.ts route.ts y upload-files.ts
+
 🟩🟩
 

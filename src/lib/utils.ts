@@ -51,3 +51,11 @@ export const getFoldersTree = (assets: CloudinaryAsset[]) => {
 	})
 	return folders
 }
+
+export const getFileUri = async (file: File) => {
+	const fileBuffer = Buffer.from(await file.arrayBuffer())
+	const mimeType = file.type
+	const encoding = "base64"
+	const base64Data = fileBuffer.toString(encoding)
+	return `data:${mimeType};${encoding},${base64Data}`
+}
