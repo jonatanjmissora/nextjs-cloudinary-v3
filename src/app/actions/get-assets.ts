@@ -1,7 +1,7 @@
 "use server"
 
 import { CloudinaryAsset } from "../../lib/types"
-import cloudinary from "cloudinary"
+import { v2 as cloudinary } from "cloudinary"
 
 export const getAssets = async (): Promise<{
 	success: boolean
@@ -9,7 +9,7 @@ export const getAssets = async (): Promise<{
 	message: string
 }> => {
 	try {
-		const res = await cloudinary.v2.search
+		const res = await cloudinary.search
 			.expression("resource_type:image")
 			.sort_by("public_id", "desc")
 			.max_results(30)

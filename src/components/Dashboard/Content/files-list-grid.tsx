@@ -2,12 +2,9 @@ import { DashboardFileMenu } from "./dashboard-file-menu"
 import { DashboardFileInfo } from "./dashboard-file-info"
 import { useGetAssets } from "@/lib/use-get-assets"
 import { sortedAssetsFn } from "@/lib/sorted-assets"
-// import { Skeleton } from "@/components/ui/skeleton"
 import useStore from "@/lib/zustand-cloudinary"
 import { CloudinaryAsset } from "@/lib/types"
-// import MyImage from "@/components/my-image"
-// import { useState } from "react"
-// import Image from "next/image"
+import Image from "next/image"
 import { LoaderCircle } from "lucide-react"
 import { CldImage } from "next-cloudinary"
 
@@ -52,14 +49,14 @@ export const FilesListGrid = ({
 					className={`w-full h-auto relative group border-4 ${selectedAssetsNames.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"} mb-1`}
 				>
 					<CldImage
-						src={asset.secure_url}
+						src={asset.public_id}
 						width={600}
 						height={600}
 						sizes="50vw"
 						alt={asset.public_id}
 						onClick={() => handleSelectAsset(asset)}
 					/>
-					{/* <Image
+					<Image
 						src={asset.secure_url}
 						alt={asset.public_id}
 						width={600}
@@ -68,7 +65,7 @@ export const FilesListGrid = ({
 						priority
 						className={`w-full object-cover`}
 						onClick={() => handleSelectAsset(asset)}
-					/> */}
+					/>
 					<DashboardFileMenu view="grid" asset={asset} />
 					<DashboardFileInfo asset={asset} view="grid" />
 				</div>

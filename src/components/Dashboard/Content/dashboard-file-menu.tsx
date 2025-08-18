@@ -34,7 +34,7 @@ import { deleteAction } from "@/app/actions/delete-file"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 import SubmitBtn from "@/components/layout/submit-btn"
-import { renameAction } from "@/app/actions/rename-file"
+import { renameFileAction } from "@/app/actions/rename-file"
 
 export const DashboardFileMenu = ({
 	view,
@@ -96,7 +96,7 @@ const RenameAsset = ({
 			return
 		}
 		startTransition(async () => {
-			toast.promise(renameAction(asset, newName), {
+			toast.promise(renameFileAction(asset, newName), {
 				loading: "renombrando imagen...",
 				success: "imagen renombrada exitosamente",
 				error: "Error al renombrar imagen",

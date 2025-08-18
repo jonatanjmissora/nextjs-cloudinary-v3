@@ -17,8 +17,22 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useState } from "react"
+import { startTransition, useState } from "react"
 import useStore from "@/lib/zustand-cloudinary"
+import { useQueryClient } from "@tanstack/react-query"
+import { toast } from "sonner"
+import { AlertDialog } from "@radix-ui/react-alert-dialog"
+import { AlertDialogContent } from "@radix-ui/react-alert-dialog"
+import { AlertDialogTitle } from "@radix-ui/react-alert-dialog"
+import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
+import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
+import { AlertDialogDescription } from "@radix-ui/react-alert-dialog"
+import SubmitBtn from "@/components/layout/submit-btn"
+import {
+	AlertDialogFooter,
+	AlertDialogHeader,
+} from "@/components/ui/alert-dialog"
+import { renameFolderAction } from "@/app/actions/rename-folder"
 
 export function Folder({
 	folderName,
@@ -61,12 +75,12 @@ export function Folder({
 				</p>
 			</button>
 
-			<DropdownMenuFolder />
+			{folderName !== "Todas" && <DropdownMenuFolder folderName={folderName} />}
 		</div>
 	)
 }
 
-const DropdownMenuFolder = () => {
+const DropdownMenuFolder = ({ folderName }: { folderName: string }) => {
 	const [open, setOpen] = useState<boolean>(false)
 
 	return (
@@ -82,9 +96,10 @@ const DropdownMenuFolder = () => {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[200px]">
 				<DropdownMenuGroup>
-					<DropdownMenuItem className="flex items-center justify-between p-3">
-						renombrar <Edit2 />
-					</DropdownMenuItem>
+					{/* 				RENAME							 */}
+					<RenameFolder folderName={folderName} setOpen={setOpen} />
+					<DropdownMenuSeparator />
+
 					<DropdownMenuSeparator />
 					<DropdownMenuItem className="text-red-600 flex items-center justify-between p-3">
 						eliminar <Trash2 />
@@ -92,5 +107,83 @@ const DropdownMenuFolder = () => {
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
+	)
+}
+
+const RenameFolder = ({
+	folderName,
+	setOpen,
+}: {
+	folderName: string
+	setOpen: (open: boolean) => void
+}) => {
+	const queryClient = useQueryClient()
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+
+		const newName = e.currentTarget.newName.value.trim()
+		if (newName === folderName || newName === "") {
+			return
+		}
+		startTransition(async () => {
+			toast.promise(renameFolderAction(folderName, newName), {
+				loading: "renombrando imagen...",
+				success: "imagen renombrada exitosamente",
+				error: "Error al renombrar imagen",
+			})
+
+			queryClient.invalidateQueries({ queryKey: ["assets"] })
+			setOpen(false)
+		})
+	}
+
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger asChild>
+				<Button
+					variant="ghost"
+					className="w-full flex items-center justify-between"
+				>
+					renombrar <Edit2 className="opacity-50" />
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent className="w-[600px]">
+				<AlertDialogDescription></AlertDialogDescription>
+				<form
+					onSubmit={handleSubmit}
+					className="w-full flex flex-col gap-6 p-12"
+				>
+					<AlertDialogHeader>
+						<AlertDialogTitle className="text-xl">
+							Cambio de nombre:
+						</AlertDialogTitle>
+					</AlertDialogHeader>
+
+					<div className="flex flex-col gap-1">
+						<input
+							defaultValue={folderName}
+							type="text"
+							name="newName"
+							required
+							placeholder="Nuevo nombre"
+							className="bg-muted/50 px-6 py-3 rounded-md"
+						/>
+						<p className="text-xs text-orange-500/30">
+							* controle que el nombre lleve caracteres permitidos
+						</p>
+					</div>
+
+					<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
+						<AlertDialogCancel
+							className="flex-1"
+							onClick={() => setOpen(false)}
+						>
+							Cancelar
+						</AlertDialogCancel>
+						<SubmitBtn label="Renombrar" className="flex-1" />
+					</AlertDialogFooter>
+				</form>
+			</AlertDialogContent>
+		</AlertDialog>
 	)
 }

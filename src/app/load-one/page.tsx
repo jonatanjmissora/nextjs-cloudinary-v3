@@ -29,7 +29,16 @@ export default function LoadOnePage() {
 	}
 
 	return (
-		<div className="w-full min-h-screen flex items-center justify-center bg-blue-900 p-4">
+		<div className="w-full min-h-screen flex flex-col items-center justify-center bg-blue-900 p-4">
+			<form
+				onSubmit={uploadStagedFile}
+				className="flex items-center gap-2 mb-4"
+			>
+				<input type="file" name="file" />
+				<button type="submit" className="bg-blue-500 text-white p-2">
+					Upload
+				</button>
+			</form>
 			<div className="w-full flex flex-col gap-1">
 				<AssetList />
 
@@ -48,10 +57,6 @@ export default function LoadOnePage() {
 					</div>
 				)}
 			</div>
-			<form onSubmit={uploadStagedFile}>
-				<input type="file" name="file" />
-				<button type="submit">Upload</button>
-			</form>
 		</div>
 	)
 }
