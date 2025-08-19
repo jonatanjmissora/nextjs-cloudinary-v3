@@ -29,8 +29,14 @@ export default function DashboardSidebar() {
 
 const FolderList = () => {
 	const { assets } = useGetAssets()
-	const { folders: rootfolders } = useGetFolders()
-	const folders = getUniqueFolders(assets)
+	const { foldersTree } = useGetFolders()
+	const assetsByFolders = getUniqueFolders(assets)
+	const folders = foldersTree.map(folder => ({
+		name: folder.name,
+		count: assetsByFolders.find(f => f.name === folder.name)?.count || 0,
+
+		aca falta poner las subcarpetas
+	}))
 
 	return (
 		<div>

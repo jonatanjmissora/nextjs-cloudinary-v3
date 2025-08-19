@@ -16,7 +16,7 @@ export const useGetFolders = () => {
 	})
 
 	const error = queryError || data?.success === false ? data?.message : null
-	const folders = data?.response || []
+	const foldersTree = data?.response || []
 
-	return { isFetching, folders, error }
+	return { isFetching, foldersTree, error }
 }
