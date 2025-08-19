@@ -1,4 +1,4 @@
-import { getAssets } from "../app/actions/get-assets"
+import { getAssets } from "../app/actions/data/get-assets"
 import { useQuery } from "@tanstack/react-query"
 
 export const useGetAssets = () => {

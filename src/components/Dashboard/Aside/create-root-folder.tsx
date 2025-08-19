@@ -19,9 +19,11 @@ import { startTransition, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 import { createFolderAction } from "@/app/actions/create-folder"
+import { useQueryClient } from "@tanstack/react-query"
 
 export default function CreateRootFolder() {
 	const [open, setOpen] = useState(false)
+	const queryClient = useQueryClient()
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
@@ -38,6 +40,7 @@ export default function CreateRootFolder() {
 				error: "Error al crear carpeta",
 			})
 			setOpen(false)
+			queryClient.invalidateQueries({ queryKey: ["folders"] })
 		})
 	}
 

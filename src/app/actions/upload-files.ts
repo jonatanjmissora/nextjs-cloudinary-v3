@@ -1,7 +1,6 @@
 "use server"
 
 import { CloudinaryUploadResponse } from "@/lib/types"
-import { revalidatePath } from "next/cache"
 
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME // Replace with your Cloudinary cloud name
 const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
@@ -35,7 +34,6 @@ export const uploadAction = async (formData2: FormData) => {
 				display_name: data.display_name,
 			})
 		}
-		revalidatePath("/")
 	} catch (error) {
 		console.error("Error uploading files:", error)
 	}

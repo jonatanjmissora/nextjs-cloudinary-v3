@@ -1,4 +1,4 @@
-import { getFolders } from "../app/actions/get-folders"
+import { getFolders } from "../app/actions/data/get-folders"
 import { useQuery } from "@tanstack/react-query"
 
 export const useGetFolders = () => {

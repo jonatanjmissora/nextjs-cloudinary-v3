@@ -35,7 +35,7 @@ export const UploadBtn = () => {
 				success: "Archivo(s) subido(s) exitosamente",
 				error: "Error al subir archivo(s)",
 			})
-			queryClient.invalidateQueries({ queryKey: ["assets"] })
+			queryClient.invalidateQueries()
 			setFiles([])
 			//close AlertDialog
 			setAlertDialog(false)

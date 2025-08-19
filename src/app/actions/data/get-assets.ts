@@ -1,6 +1,6 @@
 "use server"
 
-import { CloudinaryAsset } from "../../lib/types"
+import { CloudinaryAsset } from "../../../lib/types"
 import { v2 as cloudinary } from "cloudinary"
 
 export const getAssets = async (): Promise<{

@@ -208,7 +208,7 @@ const DeleteDialog = ({
 				error: "Error al borrar imagen",
 			})
 
-			queryClient.invalidateQueries({ queryKey: ["assets"] })
+			queryClient.invalidateQueries()
 			setOpen(false)
 		})
 	}

@@ -32,10 +32,8 @@ const FolderList = () => {
 	const { foldersTree } = useGetFolders()
 	const assetsByFolders = getUniqueFolders(assets)
 	const folders = foldersTree.map(folder => ({
-		name: folder.name,
-		count: assetsByFolders.find(f => f.name === folder.name)?.count || 0,
-
-		aca falta poner las subcarpetas
+		name: folder,
+		count: assetsByFolders.find(f => f.name === folder)?.count || 0,
 	}))
 
 	return (

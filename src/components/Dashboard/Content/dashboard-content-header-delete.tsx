@@ -37,7 +37,7 @@ export function HeaderAssetsDelete() {
 			})
 			startTransition(() => {
 				setOpen(false)
-				queryClient.invalidateQueries({ queryKey: ["assets"] })
+				queryClient.invalidateQueries()
 				setSelectedAssets([])
 			})
 		})

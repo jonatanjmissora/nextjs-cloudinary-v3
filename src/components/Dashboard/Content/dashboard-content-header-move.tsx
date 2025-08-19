@@ -43,7 +43,7 @@ export function HeaderAssetsMove() {
 				error: "Error al mover imagen(es)",
 			})
 			setOpen(false)
-			queryClient.invalidateQueries({ queryKey: ["assets"] })
+			queryClient.invalidateQueries()
 			await sleep()
 			setSelectedAssets([])
 		})

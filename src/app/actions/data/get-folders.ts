@@ -4,7 +4,7 @@ import { v2 as cloudinary } from "cloudinary"
 
 export const getFolders = async (): Promise<{
 	success: boolean
-	response: GetFoldersType[]
+	response: string[]
 	message: string
 }> => {
 	try {
@@ -65,25 +65,19 @@ type SubFolderType = {
 	rate_limit_reset_at: string
 	rate_limit_remaining: number
 }
-type GetFoldersType = {
-	name: string
-	subfolders: string[] | null
-}
 
 function getFoldersTree(
 	rootFolders: RootFolderType[],
 	subfolders: SubFolderType[]
-): GetFoldersType[] {
-	const folderTree = [] as GetFoldersType[]
+): string[] {
+	const folderTree = ["Todas"] as string[]
 	for (let index = 0; index < rootFolders.length; index++) {
-		const newFolder = {
-			name: rootFolders[index].name,
-			subfolders:
-				subfolders[index].folders.length !== 0
-					? subfolders[index].folders.map(folder => folder.name)
-					: null,
+		folderTree.push(rootFolders[index].name)
+		for (let j = 0; j < subfolders[index].folders.length; j++) {
+			folderTree.push(
+				`${rootFolders[index].name}/${subfolders[index].folders[j].name}`
+			)
 		}
-		folderTree.push(newFolder)
 	}
 	return folderTree
 }

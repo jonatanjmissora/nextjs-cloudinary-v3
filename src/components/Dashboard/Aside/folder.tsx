@@ -75,7 +75,7 @@ export function Folder({
 				</p>
 			</button>
 
-			{folderName !== "Todas" && <DropdownMenuFolder folderName={folderName} />}
+			{(folderName !== "Todas" && folderName === actualFolder) && <DropdownMenuFolder folderName={folderName} />}
 		</div>
 	)
 }
@@ -132,7 +132,7 @@ const RenameFolder = ({
 				error: "Error al renombrar imagen",
 			})
 
-			queryClient.invalidateQueries({ queryKey: ["assets"] })
+			queryClient.invalidateQueries({ queryKey: ["folders"] })
 			setOpen(false)
 		})
 	}

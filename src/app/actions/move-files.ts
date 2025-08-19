@@ -1,7 +1,6 @@
 "use server"
 
 import { v2 as cloudinary } from "cloudinary"
-import { revalidatePath } from "next/cache"
 
 export const moveMultipleAction = async (
 	assetIds: string[],
@@ -18,7 +17,6 @@ export const moveMultipleAction = async (
 			}
 			console.log("Asset movido:", result.public_id)
 		}
-		revalidatePath("/")
 	} catch (error) {
 		console.error("Error moviendo asset(s):", error)
 	}
