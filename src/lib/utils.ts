@@ -29,29 +29,6 @@ export const setFileSize = (bits: number, decimalPlaces = 1) => {
 export const sleep = (delay?: number) =>
 	new Promise(resolve => setTimeout(resolve, delay || 1000))
 
-export const getFoldersTree = (assets: CloudinaryAsset[]) => {
-	const foldersMap: Record<string, Folder> = {}
-	const folders: Folder[] = []
-
-	assets.forEach(asset => {
-		const path = asset.asset_folder
-		const folderNames = path.split("/")
-		const parentFolderName =
-			folderNames.length > 1 ? folderNames[folderNames.length - 2] : null
-		const folder = folderNames[folderNames.length - 1]
-
-		if (!foldersMap[folder]) {
-			const folderObj: Folder = {
-				name: folder,
-				parent: parentFolderName,
-			}
-			foldersMap[folder] = folderObj
-			folders.push(folderObj)
-		}
-	})
-	return folders
-}
-
 export const getFileUri = async (file: File) => {
 	const fileBuffer = Buffer.from(await file.arrayBuffer())
 	const mimeType = file.type
@@ -59,3 +36,4 @@ export const getFileUri = async (file: File) => {
 	const base64Data = fileBuffer.toString(encoding)
 	return `data:${mimeType};${encoding},${base64Data}`
 }
+

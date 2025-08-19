@@ -16,7 +16,6 @@ import { toast } from "sonner"
 import { useQueryClient } from "@tanstack/react-query"
 import useStore from "@/lib/zustand-cloudinary"
 import { startTransition, useState } from "react"
-import { sleep } from "@/lib/utils"
 import { moveMultipleAction } from "@/app/actions/move-files"
 import FolderTree from "./folder-tree"
 
@@ -42,10 +41,11 @@ export function HeaderAssetsMove() {
 				success: "imagen(es) movida(s) exitosamente",
 				error: "Error al mover imagen(es)",
 			})
-			setOpen(false)
-			queryClient.invalidateQueries()
-			await sleep()
-			setSelectedAssets([])
+			startTransition(() => {
+				setOpen(false)
+				queryClient.invalidateQueries()
+				setSelectedAssets([])
+			})
 		})
 	}
 
@@ -64,6 +64,7 @@ export function HeaderAssetsMove() {
 				>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="text-xl">
+							{selectedMoveFolder}
 							¿ Seguro deseas mover {selectedAssets.length} imagen
 							{selectedAssets.length > 1 ? "es" : ""} a ?
 						</AlertDialogTitle>
@@ -79,7 +80,8 @@ export function HeaderAssetsMove() {
 						))}
 					</div>
 
-					<FolderTree setSelectedMoveFolder={setSelectedMoveFolder} />
+					<FolderTree selectedMoveFolder={selectedMoveFolder} setSelectedMoveFolder={setSelectedMoveFolder} />
+					
 					<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
 						<AlertDialogCancel className="flex-1">Cancelar</AlertDialogCancel>
 						<SubmitBtn label="Mover" className="flex-1" />

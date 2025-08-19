@@ -3,10 +3,8 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { Folder } from "./folder"
-import { useGetAssets } from "@/lib/use-get-assets"
-import { CloudinaryAsset } from "@/lib/types"
 import CreateRootFolder from "./create-root-folder"
-import { useGetFolders } from "@/lib/use-get-folders"
+import { useGetTreeFolders } from "@/lib/use-get-tree-folders"
 
 export default function DashboardSidebar() {
 	return (
@@ -28,17 +26,12 @@ export default function DashboardSidebar() {
 }
 
 const FolderList = () => {
-	const { assets } = useGetAssets()
-	const { foldersTree } = useGetFolders()
-	const assetsByFolders = getUniqueFolders(assets)
-	const folders = foldersTree.map(folder => ({
-		name: folder,
-		count: assetsByFolders.find(f => f.name === folder)?.count || 0,
-	}))
+	
+	const {treeFolders} = useGetTreeFolders()
 
 	return (
 		<div>
-			{folders.map(folder => (
+			{treeFolders.map(folder => (
 				<Folder
 					key={folder.name}
 					folderName={folder.name}
@@ -49,29 +42,3 @@ const FolderList = () => {
 	)
 }
 
-function getUniqueFolders(
-	assets: CloudinaryAsset[]
-): { name: string; count: number }[] {
-	// Extract all folder names from assets and filter out undefined/null
-	const allFolders = assets
-		.map(asset => asset.asset_folder)
-		.filter((folder): folder is string => folder != null)
-		.sort((a, b) => a.localeCompare(b))
-	const allFoldersAndCounts = countArrayStrings(allFolders)
-	return [{ name: "Todas", count: assets.length }, ...allFoldersAndCounts]
-}
-
-function countArrayStrings(arr: string[]): { name: string; count: number }[] {
-	return arr.reduce(
-		(prev, current) => {
-			const existing = prev.find(item => item.name === current)
-			if (existing) {
-				existing.count += 1
-			} else {
-				prev.push({ name: current, count: 1 })
-			}
-			return prev
-		},
-		[] as { name: string; count: number }[]
-	)
-}

@@ -7,19 +7,24 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import { useGetAssets } from "@/lib/use-get-assets"
-import { getFoldersTree } from "@/lib/utils"
+import { useGetTreeFolders } from "@/lib/use-get-tree-folders"
+import useStore from "@/lib/zustand-cloudinary"
 
 export default function FolderTree({
+	selectedMoveFolder,
 	setSelectedMoveFolder,
 }: {
+	selectedMoveFolder: string | null
 	setSelectedMoveFolder: (folder: string | null) => void
 }) {
-	const { assets } = useGetAssets()
-
-	const foldersTreeArray = getFoldersTree(assets)
+	
+	const { actualFolder } = useStore()
+	const { treeFolders } = useGetTreeFolders()
+	const foldersTreeArray = treeFolders.filter(folder => folder.name !== "Todas" && folder.name !== actualFolder)
 
 	return (
+	<>
+		{selectedMoveFolder}
 		<Select>
 			<SelectTrigger className="w-full">
 				<SelectValue placeholder="Selecciona una carpeta" />
@@ -28,7 +33,7 @@ export default function FolderTree({
 				<SelectGroup>
 					{foldersTreeArray.map(folder => (
 						<SelectItem
-							key={folder.name}
+						key={folder.name}
 							value={folder.name}
 							onChange={() => setSelectedMoveFolder(folder.name)}
 						>
@@ -38,5 +43,6 @@ export default function FolderTree({
 				</SelectGroup>
 			</SelectContent>
 		</Select>
+						</>
 	)
 }

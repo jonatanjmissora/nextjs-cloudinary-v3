@@ -27,6 +27,8 @@ export const FilesListList = ({
 			? sortedAssets
 			: sortedAssets.filter(asset => asset.asset_folder === actualFolder)
 
+	if(filteredAssets.length === 0) return <NoAssets />
+
 	const selectedAssetsNames = selectedAssets.map(asset => asset.public_id)
 
 	const handleSelectAsset = (asset: CloudinaryAsset) => {
@@ -88,7 +90,7 @@ const ListLayout = ({ children }: { children: React.ReactNode }) => {
 const SkeltonList = () => {
 	return (
 		<ListLayout>
-			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
+			{[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
 				<div
 					key={item}
 					className={`w-full h-full relative group border-2 flex items-center justify-start rounded-lg overflow-hidden`}
@@ -100,5 +102,14 @@ const SkeltonList = () => {
 				</div>
 			))}
 		</ListLayout>
+	)
+}
+
+const NoAssets = () => {
+	return (
+		<article className="w-full h-[60dvh] flex flex-col gap-12 justify-center items-center relative">
+			<Image src="/no-pictures.svg" alt="no-pictures" width={300} height={300} className="opacity-20" />
+			<p className="text-foreground/30 text-xl font-semibold">carpeta sin imágenes..</p>
+		</article>
 	)
 }

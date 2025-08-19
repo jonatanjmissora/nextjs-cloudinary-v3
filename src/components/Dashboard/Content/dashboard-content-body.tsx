@@ -10,7 +10,7 @@ export default function DashboardContentBody() {
 
 	if (!view)
 		return (
-			<div className="w-full h-[70dvh] flex justify-center items-center">
+			<div className="w-full h-[60dvh] flex justify-center items-center">
 				<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/15" />
 			</div>
 		)

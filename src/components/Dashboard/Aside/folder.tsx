@@ -21,18 +21,20 @@ import { startTransition, useState } from "react"
 import useStore from "@/lib/zustand-cloudinary"
 import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
-import { AlertDialog } from "@radix-ui/react-alert-dialog"
-import { AlertDialogContent } from "@radix-ui/react-alert-dialog"
-import { AlertDialogTitle } from "@radix-ui/react-alert-dialog"
-import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog"
-import { AlertDialogCancel } from "@radix-ui/react-alert-dialog"
-import { AlertDialogDescription } from "@radix-ui/react-alert-dialog"
+
 import SubmitBtn from "@/components/layout/submit-btn"
 import {
+	AlertDialog,
 	AlertDialogFooter,
 	AlertDialogHeader,
+	AlertDialogContent,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+	AlertDialogCancel,
+	AlertDialogDescription,
 } from "@/components/ui/alert-dialog"
 import { renameFolderAction } from "@/app/actions/rename-folder"
+import { deleteFolderAction } from "@/app/actions/delete-folder"
 
 export function Folder({
 	folderName,
@@ -75,12 +77,15 @@ export function Folder({
 				</p>
 			</button>
 
-			{(folderName !== "Todas" && folderName === actualFolder) && <DropdownMenuFolder folderName={folderName} />}
+			{
+				(folderName !== "Todas" && folderName === actualFolder) 
+				&& <DropdownMenuFolder folderName={folderName} assetsCount={assetsCount}/>
+			}
 		</div>
 	)
 }
 
-const DropdownMenuFolder = ({ folderName }: { folderName: string }) => {
+const DropdownMenuFolder = ({ folderName, assetsCount }: { folderName: string, assetsCount: number }) => {
 	const [open, setOpen] = useState<boolean>(false)
 
 	return (
@@ -96,14 +101,15 @@ const DropdownMenuFolder = ({ folderName }: { folderName: string }) => {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[200px]">
 				<DropdownMenuGroup>
+
 					{/* 				RENAME							 */}
 					<RenameFolder folderName={folderName} setOpen={setOpen} />
-					<DropdownMenuSeparator />
 
 					<DropdownMenuSeparator />
-					<DropdownMenuItem className="text-red-600 flex items-center justify-between p-3">
-						eliminar <Trash2 />
-					</DropdownMenuItem>
+
+					{/* 				DELETE							 */}
+					<DeleteFolder folderName={folderName} setOpen={setOpen} assetsCount={assetsCount} />
+
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
@@ -118,6 +124,7 @@ const RenameFolder = ({
 	setOpen: (open: boolean) => void
 }) => {
 	const queryClient = useQueryClient()
+	const {setActualFolder} = useStore()
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
@@ -127,12 +134,13 @@ const RenameFolder = ({
 		}
 		startTransition(async () => {
 			toast.promise(renameFolderAction(folderName, newName), {
-				loading: "renombrando imagen...",
-				success: "imagen renombrada exitosamente",
-				error: "Error al renombrar imagen",
+				loading: "renombrando carpeta...",
+				success: "carpeta renombrada exitosamente",
+				error: "Error al renombrar carpeta",
 			})
 
-			queryClient.invalidateQueries({ queryKey: ["folders"] })
+			queryClient.invalidateQueries()
+			setActualFolder(newName)
 			setOpen(false)
 		})
 	}
@@ -181,6 +189,93 @@ const RenameFolder = ({
 							Cancelar
 						</AlertDialogCancel>
 						<SubmitBtn label="Renombrar" className="flex-1" />
+					</AlertDialogFooter>
+				</form>
+			</AlertDialogContent>
+		</AlertDialog>
+	)
+}
+
+const DeleteFolder = ({
+	folderName,
+	setOpen,
+	assetsCount
+}: {
+	folderName: string
+	setOpen: (open: boolean) => void
+	assetsCount: number
+}) => {
+
+	const [deleteError, setDeleteError] = useState<string | null>(null)
+	const queryClient = useQueryClient()
+	const {setActualFolder} = useStore()
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+
+		setDeleteError(null)
+		const folderName = e.currentTarget.newName.value.trim()
+		if(assetsCount > 0) {
+			setDeleteError("No se puede eliminar una carpeta con archivos")
+			return
+		}
+
+		startTransition(async () => {
+			toast.promise(deleteFolderAction(folderName), {
+				loading: "eliminando carpeta...",
+				success: "carpeta eliminada exitosamente",
+				error: "Error al eliminar carpeta",
+			})
+
+			queryClient.invalidateQueries({ queryKey: ["folders"] })
+			setActualFolder("Todas")
+			setOpen(false)
+		})
+	}
+
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger asChild>
+				<Button
+					variant="ghost"
+					className="w-full flex items-center justify-between"
+				>
+					eliminar <Trash2 className="text-red-700 opacity-50" />
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent className="w-[600px]">
+				<AlertDialogDescription></AlertDialogDescription>
+				<form
+					onSubmit={handleSubmit}
+					className="w-full flex flex-col gap-6 p-12"
+				>
+					<AlertDialogHeader>
+						<AlertDialogTitle className="text-xl">
+							¿ Seguro desea eliminar la carpeta?
+						</AlertDialogTitle>
+					</AlertDialogHeader>
+
+					<div className="flex flex-col gap-1">
+						<input
+							defaultValue={folderName}
+							type="text"
+							name="newName"
+							readOnly
+							className="bg-muted/50 px-6 py-3 rounded-md"
+						/>
+					{deleteError && (
+						<p className="text-red-700 text-sm">{deleteError}</p>
+					)}
+					</div>
+
+					<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
+						<AlertDialogCancel
+							className="flex-1"
+							onClick={() => setOpen(false)}
+						>
+							Cancelar
+						</AlertDialogCancel>
+						<SubmitBtn label="Eliminar" className="flex-1" />
 					</AlertDialogFooter>
 				</form>
 			</AlertDialogContent>

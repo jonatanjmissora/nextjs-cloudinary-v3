@@ -20,12 +20,14 @@ export const FilesListGrid = ({
 
 	if (error) return <ErrorComponent error={error} />
 	if (isFetching) return <SkeltonList />
-
+	
 	const sortedAssets = sortedAssetsFn(assets, order)
 	const filteredAssets =
 		actualFolder === "Todas"
 			? sortedAssets
 			: sortedAssets.filter(asset => asset.asset_folder === actualFolder)
+
+	if(filteredAssets.length === 0) return <NoAssets />
 
 	const selectedAssetsNames = selectedAssets.map(asset => asset.public_id)
 
@@ -48,14 +50,14 @@ export const FilesListGrid = ({
 					key={asset.public_id}
 					className={`w-full h-auto relative group border-4 ${selectedAssetsNames.includes(asset.public_id) ? "border-orange-500/75" : "border-transparent hover:border-[var(--foreground)]/75"} mb-1`}
 				>
-					<CldImage
+					{/* <CldImage
 						src={asset.public_id}
 						width={600}
 						height={600}
 						sizes="50vw"
 						alt={asset.public_id}
 						onClick={() => handleSelectAsset(asset)}
-					/>
+					/> */}
 					<Image
 						src={asset.secure_url}
 						alt={asset.public_id}
@@ -77,15 +79,15 @@ export const FilesListGrid = ({
 const ErrorComponent = ({ error }: { error: string }) => {
 	console.log("error en FilesListGrid - error: ", error)
 	return (
-		<article className="w-full h-[70dvh] flex justify-center items-center">
+		<GridLayout>
 			<p className="text-red-700 text-xl font-semibold">{error}</p>
-		</article>
+		</GridLayout>
 	)
 }
 
 const GridLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<article className="w-full h-full columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-x-1">
+		<article className= "w-full min-h-full flex-1 columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-x-1">
 			{children}
 		</article>
 	)
@@ -94,13 +96,25 @@ const GridLayout = ({ children }: { children: React.ReactNode }) => {
 const SkeltonList = () => {
 	return (
 		<GridLayout>
-			{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
+			{[1, 2, 3, 4, 5, 6, 7, 8].map(item => (
 				<div key={item} className="relative w-full h-full">
-					<div className="sm:w-[230px] sm:h-[270px] 2xl:w-[345px] 2xl:h-[370px] my-3 bg-muted rounded-md animate-pulse flex items-center justify-center">
+					<div className="w-full sm:h-[270px] 2xl:w-[345px] 2xl:h-[330px] mb-3 px-1 bg-muted rounded-md animate-pulse flex items-center justify-center">
 						<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/15" />
 					</div>
 				</div>
+				// <div key={item} className="w-full h-[330px] mb-3 px-1">
+				// 	<div className="w-full h-full bg-green-400 "></div>
+				// </div>
 			))}
 		</GridLayout>
+	)
+}
+
+const NoAssets = () => {
+	return (
+		<article className="w-full h-[60dvh] flex flex-col gap-12 justify-center items-center relative">
+			<Image src="/no-pictures.svg" alt="no-pictures" width={300} height={300} className="opacity-20" />
+			<p className="text-foreground/30 text-xl font-semibold">carpeta sin imágenes..</p>
+		</article>
 	)
 }

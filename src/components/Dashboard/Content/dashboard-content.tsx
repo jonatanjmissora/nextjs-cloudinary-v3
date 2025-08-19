@@ -5,11 +5,10 @@ import { Separator } from "@/components/ui/separator"
 
 export default function DashboardContent() {
 	return (
-		<section className="w-full h-full">
-			<Card>
-				<CardContent>
+		<section className="w-full">
+			<Card className="min-h-[80dvh]">
+				<CardContent className="flex-1 flex flex-col">
 					<DashboardContentHeader />
-					<Separator />
 					<DashboardContentBody />
 				</CardContent>
 			</Card>
