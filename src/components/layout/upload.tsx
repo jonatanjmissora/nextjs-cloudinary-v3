@@ -23,6 +23,8 @@ export const UploadBtn = () => {
 	const queryClient = useQueryClient()
 	const [alertDialog, setAlertDialog] = useState(false)
 
+	const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
@@ -35,10 +37,12 @@ export const UploadBtn = () => {
 				success: "Archivo(s) subido(s) exitosamente",
 				error: "Error al subir archivo(s)",
 			})
-			queryClient.invalidateQueries()
-			setFiles([])
-			//close AlertDialog
-			setAlertDialog(false)
+			startTransition(() => {
+				queryClient.invalidateQueries()
+				setFiles([])
+				//close AlertDialog
+				setAlertDialog(false)
+			})
 		})
 	}
 
@@ -56,11 +60,13 @@ export const UploadBtn = () => {
 				>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="text-2xl">
-							Subir Imágenes
+							Subir Imágenes a la carpeta "{uploadPreset}"
 						</AlertDialogTitle>
 						<AlertDialogDescription></AlertDialogDescription>
 					</AlertDialogHeader>
+
 					<InputFiles files={files} setFiles={setFiles} />
+
 					<AlertDialogFooter className="w-full flex justify-center gap-4">
 						<AlertDialogCancel onClick={() => setFiles([])} className="w-1/4">
 							Cancelar
@@ -94,7 +100,7 @@ const InputFiles = ({
 				onChange={handleFileChange}
 				multiple
 				name="files"
-				className={`w-3/4 mx-auto border bg-[var(--foreground)]/20 rounded-lg px-12 py-2 ${files.length === 0 ? "py-60" : "mb-4"}`}
+				className={`w-1/2 mx-auto border bg-[var(--foreground)]/20 rounded-lg px-12 py-2 ${files.length === 0 ? "py-30" : "mb-4"}`}
 			/>
 
 			<div className="w-[80dvw] max-h-[70dvh] flex flex-wrap gap-1 overflow-y-auto">

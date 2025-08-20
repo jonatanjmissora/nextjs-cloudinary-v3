@@ -2,6 +2,7 @@
 
 import { startTransition, useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -15,8 +16,8 @@ import {
 	Trash2,
 	Download,
 	Wand,
-	Link,
 	Edit2,
+	Link as LinkIcon,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -67,8 +68,13 @@ export const DashboardFileMenu = ({
 					<DropdownMenuSeparator />
 
 					{/* 				TRANSFORM							 */}
-					<DropdownMenuItem className="flex items-center justify-between p-3">
-						transformar <Wand />
+					<DropdownMenuItem className="min-h-12">
+						<Link
+							href={`/transform/${asset.public_id}`}
+							className="flex items-center justify-between w-full px-1"
+						>
+							transformar <Wand />
+						</Link>
 					</DropdownMenuItem>
 					<DropdownMenuSeparator />
 
@@ -112,7 +118,7 @@ const RenameAsset = ({
 			<AlertDialogTrigger asChild>
 				<Button
 					variant="ghost"
-					className="w-full flex items-center justify-between"
+					className="w-full flex items-center justify-between min-h-12"
 				>
 					renombrar <Edit2 className="opacity-50" />
 				</Button>
@@ -166,10 +172,10 @@ const CopyURL = ({ assetURL }: { assetURL: string }) => {
 
 	return (
 		<DropdownMenuItem
-			className="flex items-center justify-between p-3"
+			className="flex items-center justify-between p-3 min-h-12"
 			onClick={handleClick}
 		>
-			copiar url <Link />
+			copiar url <LinkIcon />
 		</DropdownMenuItem>
 	)
 }
@@ -178,7 +184,7 @@ const DownloadFile = ({ assetURL }: { assetURL: string }) => {
 	const downloadURL = assetURL.replace(/upload\//, "upload/fl_attachment/")
 
 	return (
-		<DropdownMenuItem>
+		<DropdownMenuItem className="min-h-12">
 			<a
 				className="flex items-center justify-between w-full py-2 px-1"
 				href={downloadURL}
@@ -218,9 +224,9 @@ const DeleteDialog = ({
 			<AlertDialogTrigger asChild>
 				<Button
 					variant="ghost"
-					className="w-full flex items-center justify-between"
+					className="w-full flex items-center justify-between min-h-12"
 				>
-					eliminar <Trash2 className="opacity-50" />
+					eliminar <Trash2 className="text-red-700 opacity-50" />
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">

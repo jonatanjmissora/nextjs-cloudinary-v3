@@ -1,23 +1,25 @@
-import DashboardContent from "@/components/Dashboard/Content/dashboard-content"
-import DashboardSidebar from "@/components/Dashboard/Aside/dashboard-sidebar"
 import Header from "@/components/layout/header"
+import { Button } from "@/components/ui/button"
+import ImageTransformation from "./image-transformation"
+import Link from "next/link"
 
-export default function Home() {
+export default async function TransformPage({
+	params,
+}: {
+	params: Promise<{ id: string }>
+}) {
+	const { id } = await params
+
 	return (
-		<div className="font-sans flex flex-col justify-center items-center min-h-screen relative">
+		<section className="font-sans flex flex-col justify-center items-center min-h-screen relative">
 			<BGMain />
 
-			<Header isHome={true} />
-			<main
-				className={`flex flex-col sm:flex-row sm:gap-[20px] 2xl:gap-[32px] items-start justify-center w-full min-h-[80dvh] flex-1 sm:px-3 2xl:px-10`}
-			>
-				<DashboardSidebar />
-				<DashboardContent />
-			</main>
+			<Header isHome={false} />
+			<ImageTransformation id={id} />
 			<footer className={`flex items-center justify-end w-full px-10 py-4`}>
 				KatoDev {new Date().getFullYear()}
 			</footer>
-		</div>
+		</section>
 	)
 }
 

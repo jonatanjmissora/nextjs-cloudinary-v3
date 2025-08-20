@@ -199,27 +199,10 @@ export default useStore
 
 refactorizamos
 
-
-
-
-testear el skelton contra el MyImageWithSkelton
-
-
-CARPETAS:
-crear una nueva en la raiz, o en donde este la selectedFolder
-editar nombre
-eliminar carpeta con todos los assets
-mostrar carpetas vacias
-
-
-DashboardHeader:
-elegir carpeta para el upload
-
-DashboardStats:
-mover de carpeta a/los archivo/s seleccionado/s
-
 AssetMenu:
 transformar
+
+cuando carga la pagina, cuando prendo la compu, no hay session, asi que no me elige el grid, o el list
 
 probe nueva forma de upload
 up.ts route.ts y upload-files.ts
