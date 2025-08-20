@@ -4,10 +4,12 @@ import { UploadBtn } from "./upload"
 
 export default function Header({ isHome }: { isHome: boolean }) {
 	return (
-		<header className={`flex justify-between items-center w-full p-10`}>
-			<h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-widest text-balance border-b pb-2">
+		<header
+			className={`flex justify-between items-center w-full sm:p-4 2xl:p-10`}
+		>
+			<span className="scroll-m-20 text-center sm:text-2xl 2xl:text-4xl font-extrabold tracking-widest text-balance border-b pb-2">
 				My Cloudinary
-			</h1>
+			</span>
 
 			{isHome && (
 				<nav className="flex gap-[24px] items-center">
