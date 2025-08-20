@@ -64,7 +64,6 @@ export function HeaderAssetsMove() {
 				>
 					<AlertDialogHeader>
 						<AlertDialogTitle className="text-xl">
-							{selectedMoveFolder}
 							¿ Seguro deseas mover {selectedAssets.length} imagen
 							{selectedAssets.length > 1 ? "es" : ""} a ?
 						</AlertDialogTitle>
@@ -80,8 +79,8 @@ export function HeaderAssetsMove() {
 						))}
 					</div>
 
-					<FolderTree selectedMoveFolder={selectedMoveFolder} setSelectedMoveFolder={setSelectedMoveFolder} />
-					
+					<FolderTree setSelectedMoveFolder={setSelectedMoveFolder} />
+
 					<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
 						<AlertDialogCancel className="flex-1">Cancelar</AlertDialogCancel>
 						<SubmitBtn label="Mover" className="flex-1" />
