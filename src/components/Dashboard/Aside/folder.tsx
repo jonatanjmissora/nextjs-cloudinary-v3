@@ -13,7 +13,6 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuGroup,
-	DropdownMenuItem,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -35,6 +34,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { renameFolderAction } from "@/app/actions/rename-folder"
 import { deleteFolderAction } from "@/app/actions/delete-folder"
+import { createSubFolderAction } from "@/app/actions/create-sub-folder"
 
 export function Folder({
 	folderName,
@@ -77,15 +77,20 @@ export function Folder({
 				</p>
 			</button>
 
-			{
-				(folderName !== "Todas" && folderName === actualFolder) 
-				&& <DropdownMenuFolder folderName={folderName} assetsCount={assetsCount}/>
-			}
+			{folderName !== "Todas" && folderName === actualFolder && (
+				<DropdownMenuFolder folderName={folderName} assetsCount={assetsCount} />
+			)}
 		</div>
 	)
 }
 
-const DropdownMenuFolder = ({ folderName, assetsCount }: { folderName: string, assetsCount: number }) => {
+const DropdownMenuFolder = ({
+	folderName,
+	assetsCount,
+}: {
+	folderName: string
+	assetsCount: number
+}) => {
 	const [open, setOpen] = useState<boolean>(false)
 
 	return (
@@ -101,6 +106,10 @@ const DropdownMenuFolder = ({ folderName, assetsCount }: { folderName: string, a
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[200px]">
 				<DropdownMenuGroup>
+					{/* 				NEW							 */}
+					<NewFolder folderName={folderName} setOpen={setOpen} />
+
+					<DropdownMenuSeparator />
 
 					{/* 				RENAME							 */}
 					<RenameFolder folderName={folderName} setOpen={setOpen} />
@@ -108,11 +117,95 @@ const DropdownMenuFolder = ({ folderName, assetsCount }: { folderName: string, a
 					<DropdownMenuSeparator />
 
 					{/* 				DELETE							 */}
-					<DeleteFolder folderName={folderName} setOpen={setOpen} assetsCount={assetsCount} />
-
+					<DeleteFolder
+						folderName={folderName}
+						setOpen={setOpen}
+						assetsCount={assetsCount}
+					/>
 				</DropdownMenuGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
+	)
+}
+
+const NewFolder = ({
+	folderName,
+	setOpen,
+}: {
+	folderName: string
+	setOpen: (open: boolean) => void
+}) => {
+	const queryClient = useQueryClient()
+	const { setActualFolder } = useStore()
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+
+		const newName = e.currentTarget.newName.value.trim()
+		if (newName === "") {
+			return
+		}
+
+		startTransition(async () => {
+			toast.promise(createSubFolderAction(newName, folderName), {
+				loading: "creando carpeta...",
+				success: "carpeta creada exitosamente",
+				error: "Error al crear carpeta",
+			})
+
+			queryClient.invalidateQueries()
+			setActualFolder(newName)
+			setOpen(false)
+		})
+	}
+
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger asChild>
+				<Button
+					variant="ghost"
+					className="w-full flex items-center justify-between"
+				>
+					nueva carpeta <FolderIcon className="opacity-50" />
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent className="w-[600px]">
+				<AlertDialogDescription></AlertDialogDescription>
+				<form
+					onSubmit={handleSubmit}
+					className="w-full flex flex-col gap-6 p-12"
+				>
+					<AlertDialogHeader>
+						<AlertDialogTitle className="text-xl">
+							Nueva subcarpeta:
+						</AlertDialogTitle>
+					</AlertDialogHeader>
+
+					<div className="flex flex-col gap-1">
+						<input
+							defaultValue={folderName}
+							type="text"
+							name="newName"
+							required
+							placeholder="Nuevo nombre"
+							className="bg-muted/50 px-6 py-3 rounded-md"
+						/>
+						<p className="text-xs text-orange-500/30">
+							* controle que el nombre lleve caracteres permitidos
+						</p>
+					</div>
+
+					<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
+						<AlertDialogCancel
+							className="flex-1"
+							onClick={() => setOpen(false)}
+						>
+							Cancelar
+						</AlertDialogCancel>
+						<SubmitBtn label="Crear" className="flex-1" />
+					</AlertDialogFooter>
+				</form>
+			</AlertDialogContent>
+		</AlertDialog>
 	)
 }
 
@@ -124,7 +217,7 @@ const RenameFolder = ({
 	setOpen: (open: boolean) => void
 }) => {
 	const queryClient = useQueryClient()
-	const {setActualFolder} = useStore()
+	const { setActualFolder } = useStore()
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
@@ -199,23 +292,22 @@ const RenameFolder = ({
 const DeleteFolder = ({
 	folderName,
 	setOpen,
-	assetsCount
+	assetsCount,
 }: {
 	folderName: string
 	setOpen: (open: boolean) => void
 	assetsCount: number
 }) => {
-
 	const [deleteError, setDeleteError] = useState<string | null>(null)
 	const queryClient = useQueryClient()
-	const {setActualFolder} = useStore()
+	const { setActualFolder } = useStore()
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 
 		setDeleteError(null)
 		const folderName = e.currentTarget.newName.value.trim()
-		if(assetsCount > 0) {
+		if (assetsCount > 0) {
 			setDeleteError("No se puede eliminar una carpeta con archivos")
 			return
 		}
@@ -263,9 +355,9 @@ const DeleteFolder = ({
 							readOnly
 							className="bg-muted/50 px-6 py-3 rounded-md"
 						/>
-					{deleteError && (
-						<p className="text-red-700 text-sm">{deleteError}</p>
-					)}
+						{deleteError && (
+							<p className="text-red-700 text-sm">{deleteError}</p>
+						)}
 					</div>
 
 					<AlertDialogFooter className="w-full flex justify-center gap-4 items-center">
