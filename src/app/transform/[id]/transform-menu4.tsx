@@ -40,10 +40,14 @@ export const TransformMenu4 = () => {
 
 	const handleBgImage = () => {
 		bgImage !== "" ? setBgImage("") : setBgImage("cld-sample-2")
+		bgImage === "" && isRemoveBg !== true
+			? setIsRemoveBg(true)
+			: setIsRemoveBg(false)
 		setGroupItems(prev => {
 			if (!prev.includes("bg-image")) {
 				const newPrev = prev.filter(item => item !== "clear")
-				return [...newPrev, "bg-image"]
+				if (!prev.includes("remove-bg")) return [...newPrev, "bg-image"]
+				else return [...newPrev, "bg-image", "remove-bg"]
 			} else {
 				return prev.filter(item => item !== "bg-image")
 			}

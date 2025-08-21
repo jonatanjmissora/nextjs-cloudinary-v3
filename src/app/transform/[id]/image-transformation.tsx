@@ -18,6 +18,7 @@ import { TransformMenu2 } from "./transform-menu2"
 import { TransformMenu3 } from "./transform-menu3"
 import { ImageElement } from "./cld-image"
 import { TransformMenu4 } from "./transform-menu4"
+import { TransformMenu5 } from "./transform-menu5"
 
 export default function ImageTransformation({ id }: { id: string }) {
 	const [isLoading, setIsLoading] = useState(true)
@@ -65,6 +66,7 @@ const DrawerElement = () => {
 						<TransformMenu2 />
 						<TransformMenu3 />
 						<TransformMenu4 />
+						<TransformMenu5 />
 					</div>
 
 					<DrawerFooter className="flex items-center justify-start h-[50dvh] flex-col gap-2 pt-30"></DrawerFooter>
