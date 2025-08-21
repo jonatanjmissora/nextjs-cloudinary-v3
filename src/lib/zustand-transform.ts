@@ -11,6 +11,11 @@ interface States {
 	isBrightness: "0" | "10"
 	isRestore: boolean
 	isAspectRatio: "none" | "2:3" | "16:9"
+	isRemoveBg: boolean
+	bgColor: string
+	bgImage: string
+	recolorTarget: string
+	recolorColor: string
 }
 
 interface Actions {
@@ -24,6 +29,11 @@ interface Actions {
 	setIsBrightness: (isBrightness: "0" | "10") => void
 	setIsRestore: (isRestore: boolean) => void
 	setIsAspectRatio: (isAspectRatio: "none" | "2:3" | "16:9") => void
+	setIsRemoveBg: (isRemoveBg: boolean) => void
+	setBgColor: (bgColor: string) => void
+	setBgImage: (bgImage: string) => void
+	setRecolorTarget: (recolorTarget: string) => void
+	setRecolorColor: (recolorColor: string) => void
 }
 
 type StoreState = States & Actions
@@ -39,6 +49,11 @@ export const useTransformStore = create<StoreState & Actions>()(set => ({
 	isBrightness: "0",
 	isRestore: false,
 	isAspectRatio: "none",
+	isRemoveBg: false,
+	bgColor: "",
+	bgImage: "",
+	recolorTarget: "",
+	recolorColor: "",
 
 	setIsGreyScale: isGreyScale => set({ isGreyScale }),
 	setIsBackWhite: isBackWhite => set({ isBackWhite }),
@@ -50,6 +65,11 @@ export const useTransformStore = create<StoreState & Actions>()(set => ({
 	setIsBrightness: isBrightness => set({ isBrightness }),
 	setIsRestore: isRestore => set({ isRestore }),
 	setIsAspectRatio: isAspectRatio => set({ isAspectRatio }),
+	setIsRemoveBg: isRemoveBg => set({ isRemoveBg }),
+	setBgColor: bgColor => set({ bgColor }),
+	setBgImage: bgImage => set({ bgImage }),
+	setRecolorTarget: recolorTarget => set({ recolorTarget }),
+	setRecolorColor: recolorColor => set({ recolorColor }),
 }))
 
 export default useTransformStore
