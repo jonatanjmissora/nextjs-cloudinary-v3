@@ -1,100 +1,73 @@
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import useTransformStore from "@/lib/zustand-transform"
+import { Toggle } from "@/components/ui/toggle"
 import { useState } from "react"
+import { Input } from "@/components/ui/input"
 
 export const TransformMenu4 = () => {
-	const {
-		isRemoveBg,
-		setIsRemoveBg,
-		bgColor,
-		setBgColor,
-		bgImage,
-		setBgImage,
-	} = useTransformStore()
+	const { isRemoveBg, setIsRemoveBg, bgColor, setBgColor, setBgImage } =
+		useTransformStore()
 
-	const [groupItems, setGroupItems] = useState<string[]>(["clear"])
+	const [bgColorValue, setBgColorValue] = useState<string>("#000")
+	const [bgImageValue, setBgImageValue] = useState<string>("")
 
 	const handleRemoveBg = () => {
 		setIsRemoveBg(!isRemoveBg)
-		setGroupItems(prev => {
-			if (!prev.includes("remove-bg")) {
-				const newPrev = prev.filter(item => item !== "clear")
-				return [...newPrev, "remove-bg"]
-			} else {
-				return prev.filter(item => item !== "remove-bg")
-			}
-		})
 	}
 
-	const handleBgColor = () => {
-		bgColor !== "" ? setBgColor("") : setBgColor("blue")
-		setGroupItems(prev => {
-			if (!prev.includes("bg-color")) {
-				const newPrev = prev.filter(item => item !== "clear")
-				return [...newPrev, "bg-color"]
-			} else {
-				return prev.filter(item => item !== "bg-color")
-			}
-		})
+	const handleBgColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setBgColorValue(e.target.value)
+		const colorWithoutHash = `rgb:${e.target.value.slice(1)}`
+		bgColor !== "" ? setBgColor("") : setBgColor(colorWithoutHash)
+		setIsRemoveBg(true)
 	}
 
-	const handleBgImage = () => {
-		bgImage !== "" ? setBgImage("") : setBgImage("cld-sample-2")
-		bgImage === "" && isRemoveBg !== true
-			? setIsRemoveBg(true)
-			: setIsRemoveBg(false)
-		setGroupItems(prev => {
-			if (!prev.includes("bg-image")) {
-				const newPrev = prev.filter(item => item !== "clear")
-				if (!prev.includes("remove-bg")) return [...newPrev, "bg-image"]
-				else return [...newPrev, "bg-image", "remove-bg"]
-			} else {
-				return prev.filter(item => item !== "bg-image")
-			}
-		})
+	const handleBgImage = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		setBgImage(e.currentTarget.bgImage.value)
+		setBgImageValue(e.currentTarget.bgImage.value)
+		setIsRemoveBg(true)
+		e.currentTarget.bgImage.blur()
 	}
 
 	const handleClear = () => {
 		setIsRemoveBg(false)
 		setBgColor("")
+		setBgColorValue("#000")
 		setBgImage("")
-		setGroupItems(["clear"])
+		setBgImageValue("")
 	}
 
 	return (
-		<ToggleGroup
-			type="multiple"
-			value={groupItems}
-			className="flex gap-1 w-full px-4"
-		>
-			<ToggleGroupItem
-				value="remove-bg"
-				aria-label="Toggle grayscale"
-				onClick={handleRemoveBg}
-			>
-				remove bg
-			</ToggleGroupItem>
-			<ToggleGroupItem
-				value="bg-color"
-				aria-label="Toggle backandwhite"
-				onClick={handleBgColor}
-			>
-				bg-color
-			</ToggleGroupItem>
-			<ToggleGroupItem
-				value="bg-image"
-				aria-label="Toggle sepia"
-				onClick={handleBgImage}
-			>
-				bg-image
-			</ToggleGroupItem>
-			<ToggleGroupItem
-				value="clear"
-				aria-label="Toggle clear"
-				onClick={handleClear}
-			>
-				original
-			</ToggleGroupItem>
-		</ToggleGroup>
+		<article className="w-full flex flex-col gap-2 px-4">
+			<div className="flex gap-2 w-full">
+				<Toggle pressed={isRemoveBg} className="w-1/2" onClick={handleRemoveBg}>
+					bg-remove
+				</Toggle>
+				<Toggle pressed={bgColor !== "" && isRemoveBg} className="w-1/2">
+					<input
+						type="color"
+						name="bg-color"
+						id="bg-color"
+						onChange={handleBgColorChange}
+						value={bgColorValue}
+					/>
+				</Toggle>
+			</div>
+			<div className="flex gap-2 w-full">
+				<form onSubmit={handleBgImage} className="w-1/2">
+					<Input
+						type="text"
+						name="bgImage"
+						id="bg-image"
+						value={bgImageValue}
+						className="w-full text-center"
+						onChange={e => setBgImageValue(e.target.value)}
+					/>
+				</form>
+				<Toggle pressed={!isRemoveBg} className="w-1/2" onClick={handleClear}>
+					original
+				</Toggle>
+			</div>
+		</article>
 	)
 }

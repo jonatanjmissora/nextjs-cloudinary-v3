@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { CloudinaryAsset, Folder } from "./types"
-import { persist, createJSONStorage } from "zustand/middleware"
+import { persist } from "zustand/middleware"
 
 interface NonPersistedState {
 	// Non-persisted state
@@ -60,7 +60,7 @@ export const useStore = create<StoreState & StoreActions>()(
 		}),
 		{
 			name: "cloudinary-store",
-			storage: createJSONStorage(() => sessionStorage),
+			// storage: createJSONStorage(() => sessionStorage),
 			// Only persist the specified state properties
 			partialize: state => ({
 				view: state.view,

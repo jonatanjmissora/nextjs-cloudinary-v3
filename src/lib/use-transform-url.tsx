@@ -12,27 +12,33 @@ export const useTransformUrl = (id: string) => {
 		isOpacity,
 		isBrightness,
 		isRestore,
-		isAspectRatio,
 		isRemoveBg,
 		bgColor,
 		bgImage,
+		recolorTarget,
+		recolorColor,
 	} = useTransformStore()
 
 	const urlTransformation: any = {
 		src: id,
+		//  	Menu 1
 		sepia: isSepia,
 		blackwhite: isBackWhite,
 		grayscale: isGreyScale,
+		//		Menu 2
 		cartoonify: isCartoonify,
 		vectorize: isVectorize,
 		vignette: isVignette,
+		//		Menu 3
 		opacity: isOpacity,
 		brightness: isBrightness,
 		restore: isRestore,
-		// aspectRatio: isAspectRatio,
+		//		Menu 4
 		removeBackground: isRemoveBg,
 		background: bgColor,
 		underlay: bgImage,
+		//		Menu 5
+		recolor: [recolorTarget, recolorColor.slice(1)],
 	}
 	if (isOpacity !== "100") urlTransformation.opacity = isOpacity
 	else if (Object.hasOwn(urlTransformation, "opacity"))
@@ -46,6 +52,10 @@ export const useTransformUrl = (id: string) => {
 	if (bgImage !== "") urlTransformation.underlay = bgImage
 	else if (Object.hasOwn(urlTransformation, "underlay"))
 		delete urlTransformation.underlay
+	if (recolorTarget !== "" && recolorColor !== "")
+		urlTransformation.recolor = [recolorTarget, recolorColor.slice(1)]
+	else if (Object.hasOwn(urlTransformation, "recolor"))
+		delete urlTransformation.recolor
 
 	const url = getCldImageUrl(urlTransformation)
 

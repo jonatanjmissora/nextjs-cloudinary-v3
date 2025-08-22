@@ -1,6 +1,5 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { CloudinaryAsset, Folder } from "./types"
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
@@ -37,3 +36,13 @@ export const getFileUri = async (file: File) => {
 	return `data:${mimeType};${encoding},${base64Data}`
 }
 
+export function rgbToHex(rgbArray: number[]) {
+	// Convierte cada componente RGB a hexadecimal y asegura 2 dígitos con padStart
+	const toHex = (c: number) => {
+		const hex = c.toString(16)
+		return hex.padStart(2, "0")
+	}
+
+	// Concatena el '#' y los valores hexadecimales
+	return `#${toHex(Math.trunc(rgbArray[0]))}${toHex(Math.trunc(rgbArray[1]))}${toHex(Math.trunc(rgbArray[2]))}`
+}

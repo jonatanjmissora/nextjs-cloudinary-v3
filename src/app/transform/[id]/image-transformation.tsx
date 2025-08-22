@@ -19,6 +19,7 @@ import { TransformMenu3 } from "./transform-menu3"
 import { ImageElement } from "./cld-image"
 import { TransformMenu4 } from "./transform-menu4"
 import { TransformMenu5 } from "./transform-menu5"
+import { Separator } from "@/components/ui/separator"
 
 export default function ImageTransformation({ id }: { id: string }) {
 	const [isLoading, setIsLoading] = useState(true)
@@ -34,7 +35,6 @@ export default function ImageTransformation({ id }: { id: string }) {
 					<Button variant="outline">Volver</Button>
 				</Link>
 				<span className="text-2xl font-bold">{actualAsset?.display_name}</span>
-				{isLoading ? "TRUE" : "FALSE"}
 				<DrawerElement />
 			</div>
 			{isLoading && (
@@ -56,21 +56,25 @@ const DrawerElement = () => {
 				</Button>
 			</DrawerTrigger>
 			<DrawerContent>
-				<div className="bg-[var(--background-two)]">
-					<DrawerHeader>
-						<DrawerTitle></DrawerTitle>
-					</DrawerHeader>
+				<DrawerHeader>
+					<DrawerTitle className="text-xl font-bold w-full text-center">
+						Transformaciones
+					</DrawerTitle>
+				</DrawerHeader>
 
-					<div className="flex flex-col gap-3">
-						<TransformMenu1 />
-						<TransformMenu2 />
-						<TransformMenu3 />
-						<TransformMenu4 />
-						<TransformMenu5 />
-					</div>
-
-					<DrawerFooter className="flex items-center justify-start h-[50dvh] flex-col gap-2 pt-30"></DrawerFooter>
+				<div className="flex flex-col gap-3">
+					<TransformMenu1 />
+					<Separator />
+					<TransformMenu2 />
+					<Separator />
+					<TransformMenu3 />
+					<Separator />
+					<TransformMenu4 />
+					<Separator />
+					<TransformMenu5 />
 				</div>
+
+				<DrawerFooter></DrawerFooter>
 			</DrawerContent>
 		</Drawer>
 	)
