@@ -16,6 +16,10 @@ interface States {
 	bgImage: string
 	recolorTarget: string
 	recolorColor: string
+	replaceBg: string
+	replaceTarget: string
+	replaceObject: string
+	removeObject: string
 }
 
 interface Actions {
@@ -34,6 +38,10 @@ interface Actions {
 	setBgImage: (bgImage: string) => void
 	setRecolorTarget: (recolorTarget: string) => void
 	setRecolorColor: (recolorColor: string) => void
+	setReplaceBg: (replaceBg: string) => void
+	setReplaceTarget: (replaceTarget: string) => void
+	setReplaceObject: (replaceObject: string) => void
+	setRemoveObject: (removeObject: string) => void
 }
 
 type StoreState = States & Actions
@@ -54,6 +62,10 @@ export const useTransformStore = create<StoreState & Actions>()(set => ({
 	bgImage: "",
 	recolorTarget: "",
 	recolorColor: "",
+	replaceBg: "",
+	replaceTarget: "",
+	replaceObject: "",
+	removeObject: "",
 
 	setIsGreyScale: isGreyScale => set({ isGreyScale }),
 	setIsBackWhite: isBackWhite => set({ isBackWhite }),
@@ -70,6 +82,10 @@ export const useTransformStore = create<StoreState & Actions>()(set => ({
 	setBgImage: bgImage => set({ bgImage }),
 	setRecolorTarget: recolorTarget => set({ recolorTarget }),
 	setRecolorColor: recolorColor => set({ recolorColor }),
+	setReplaceBg: replaceBg => set({ replaceBg }),
+	setReplaceTarget: replaceTarget => set({ replaceTarget }),
+	setReplaceObject: replaceObject => set({ replaceObject }),
+	setRemoveObject: removeObject => set({ removeObject }),
 }))
 
 export default useTransformStore

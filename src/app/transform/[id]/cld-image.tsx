@@ -35,16 +35,6 @@ export const ImageElement = ({
 				// crop="pad" // Returns the given size with padding
 				// fillBackground
 
-				// recolor={["hair", "814343"]}
-
-				// replaceBackground={"forrest"}
-				// replace={["dog", "cat"]}
-
-				// remove={{
-				// 	prompt: "dog",
-				// 	removeShadow: true,
-				// }}
-
 				// fillBackground={{
 				// 	gravity: "south",
 				// 	prompt: "cupcakes",

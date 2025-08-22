@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 
 export const TransformMenu5 = () => {
-	const { recolorTarget, recolorColor, setRecolorTarget, setRecolorColor } =
+	const { recolorColor, setRecolorTarget, setRecolorColor } =
 		useTransformStore()
 
 	const [recolorTargetValue, setRecolorTargetValue] = useState<string>("")
@@ -28,12 +28,6 @@ export const TransformMenu5 = () => {
 
 	return (
 		<article className="w-full px-4">
-			{recolorTarget && recolorColor && (
-				<div>
-					<p>{recolorTarget}</p>
-					<p>{recolorColor}</p>
-				</div>
-			)}
 			<form onSubmit={handleSubmit} className="flex flex-col gap-2">
 				<div className="flex gap-2">
 					<Input
@@ -41,19 +35,24 @@ export const TransformMenu5 = () => {
 						name="recolorTarget"
 						id="recolorTarget"
 						onChange={e => setRecolorTargetValue(e.target.value)}
+						placeholder="...target..."
 						className="w-1/2 text-center"
 						value={recolorTargetValue}
 					/>
-					<Input
-						type="color"
-						name="recolorColor"
-						id="recolorColor"
-						className="w-1/2"
-						value={recolorColorValue}
-						onChange={e => setRecolorColorValue(e.target.value)}
-					/>
+					<div className="w-1/2 flex items-center justify-center">
+						<input
+							type="color"
+							name="recolorColor"
+							id="recolorColor"
+							value={recolorColorValue}
+							onChange={e => setRecolorColorValue(e.target.value)}
+						/>
+					</div>
 				</div>
 				<div className="flex gap-2 w-full">
+					<Button variant="default" type="submit" className="w-1/2">
+						recolor
+					</Button>
 					<Button
 						variant="outline"
 						type="button"
@@ -61,9 +60,6 @@ export const TransformMenu5 = () => {
 						className="w-1/2"
 					>
 						original
-					</Button>
-					<Button variant="default" type="submit" className="w-1/2">
-						recolor
 					</Button>
 				</div>
 			</form>

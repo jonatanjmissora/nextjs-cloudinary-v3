@@ -56,9 +56,9 @@ function DrawerContent({
 			<DrawerPrimitive.Content
 				data-slot="drawer-content"
 				className={cn(
-					"group/drawer-content bg-background fixed z-50 flex h-[60dvh] flex-col mt-",
+					"group/drawer-content bg-background fixed z-50 flex h-[80dvh] flex-col mt-",
 
-					"data-[vaul-drawer-direction=right]:inset-y-1/4 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:border rounded-l-md data-[vaul-drawer-direction=right]:sm:max-w-sm",
+					"data-[vaul-drawer-direction=right]:inset-y-28 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:border rounded-l-md data-[vaul-drawer-direction=right]:sm:max-w-sm",
 
 					className
 				)}

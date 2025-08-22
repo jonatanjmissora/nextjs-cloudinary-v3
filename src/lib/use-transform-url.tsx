@@ -17,6 +17,10 @@ export const useTransformUrl = (id: string) => {
 		bgImage,
 		recolorTarget,
 		recolorColor,
+		replaceBg,
+		replaceTarget,
+		replaceObject,
+		removeObject,
 	} = useTransformStore()
 
 	const urlTransformation: any = {
@@ -39,7 +43,17 @@ export const useTransformUrl = (id: string) => {
 		underlay: bgImage,
 		//		Menu 5
 		recolor: [recolorTarget, recolorColor.slice(1)],
+		//		Menu 6
+		replaceBackground: replaceBg,
+		//		Menu 7
+		replace: [replaceTarget, replaceObject],
+		// 		Menu 8
+		remove: {
+			prompt: removeObject,
+			removeShadow: true,
+		},
 	}
+
 	if (isOpacity !== "100") urlTransformation.opacity = isOpacity
 	else if (Object.hasOwn(urlTransformation, "opacity"))
 		delete urlTransformation.opacity
@@ -56,6 +70,20 @@ export const useTransformUrl = (id: string) => {
 		urlTransformation.recolor = [recolorTarget, recolorColor.slice(1)]
 	else if (Object.hasOwn(urlTransformation, "recolor"))
 		delete urlTransformation.recolor
+	if (replaceBg !== "") urlTransformation.replaceBackground = replaceBg
+	else if (Object.hasOwn(urlTransformation, "replaceBackground"))
+		delete urlTransformation.replaceBackground
+	if (replaceTarget !== "" && replaceObject !== "")
+		urlTransformation.replace = [replaceTarget, replaceObject]
+	else if (Object.hasOwn(urlTransformation, "replace"))
+		delete urlTransformation.replace
+	if (removeObject !== "")
+		urlTransformation.remove = {
+			prompt: removeObject,
+			removeShadow: true,
+		}
+	else if (Object.hasOwn(urlTransformation, "remove"))
+		delete urlTransformation.remove
 
 	const url = getCldImageUrl(urlTransformation)
 

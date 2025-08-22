@@ -62,6 +62,7 @@ export const TransformMenu4 = () => {
 						value={bgImageValue}
 						className="w-full text-center"
 						onChange={e => setBgImageValue(e.target.value)}
+						placeholder="...image..."
 					/>
 				</form>
 				<Toggle pressed={!isRemoveBg} className="w-1/2" onClick={handleClear}>

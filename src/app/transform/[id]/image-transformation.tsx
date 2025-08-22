@@ -20,6 +20,9 @@ import { ImageElement } from "./cld-image"
 import { TransformMenu4 } from "./transform-menu4"
 import { TransformMenu5 } from "./transform-menu5"
 import { Separator } from "@/components/ui/separator"
+import { TransformMenu6 } from "./transform-menu6"
+import { TransformMenu7 } from "./transform-menu7"
+import { TransformMenu8 } from "./transform-menu8"
 
 export default function ImageTransformation({ id }: { id: string }) {
 	const [isLoading, setIsLoading] = useState(true)
@@ -63,7 +66,7 @@ const DrawerElement = () => {
 				</DrawerHeader>
 
 				<div className="flex flex-col gap-3">
-					<TransformMenu1 />
+					{/* <TransformMenu1 />
 					<Separator />
 					<TransformMenu2 />
 					<Separator />
@@ -72,6 +75,12 @@ const DrawerElement = () => {
 					<TransformMenu4 />
 					<Separator />
 					<TransformMenu5 />
+					<Separator /> */}
+					<TransformMenu6 />
+					<Separator />
+					<TransformMenu7 />
+					<Separator />
+					<TransformMenu8 />
 				</div>
 
 				<DrawerFooter></DrawerFooter>
