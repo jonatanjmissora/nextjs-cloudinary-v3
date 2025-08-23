@@ -23,6 +23,7 @@ import { Separator } from "@/components/ui/separator"
 import { TransformMenu6 } from "./transform-menu6"
 import { TransformMenu7 } from "./transform-menu7"
 import { TransformMenu8 } from "./transform-menu8"
+import { TransformMenu9 } from "./transform-menu9"
 
 export default function ImageTransformation({ id }: { id: string }) {
 	const [isLoading, setIsLoading] = useState(true)
@@ -81,6 +82,8 @@ const DrawerElement = () => {
 					<TransformMenu7 />
 					<Separator />
 					<TransformMenu8 />
+					<Separator />
+					<TransformMenu9 />
 				</div>
 
 				<DrawerFooter></DrawerFooter>

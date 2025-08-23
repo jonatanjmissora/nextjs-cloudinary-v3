@@ -8,40 +8,40 @@ export const ImageElement = ({
 	id: string
 	setIsLoading: (isLoading: boolean) => void
 }) => {
-	const url = useTransformUrl(id)
+	const { url, isFill, width, height } = useTransformUrl(id)
 
 	return (
-		<div className="w-full aspect-[3:2] flex-1 relative flex">
-			<span className="absolute top-0 left-0 z-100">{url}</span>
-			<CldImage
-				sizes="100vw"
-				className="object-contain"
-				alt="image"
-				src={url}
-				fill
-				preserveTransformations
-				onLoad={() => setIsLoading(false)}
-				// aspectRatio={isAspectRatio}
-
-				// width="600"
-				// height="300"
-				// crop="fill"
-
-				// crop="fill"
-				// fill={true}
-
-				// width="800" //Original width 900
-				// height="300"
-				// crop="pad" // Returns the given size with padding
-				// fillBackground
-
-				// fillBackground={{
-				// 	gravity: "south",
-				// 	prompt: "cupcakes",
-				// }}
-
-				// zoompan="loop" // Will loop twice
-			/>
+		<div className="w-full flex-1 flex flex-col gap-2 items-center justify-center">
+			{isFill ? (
+				<div className="w-full aspect-[3:2] flex-1 relative flex items-center justify-center">
+					<CldImage
+						sizes="100vw"
+						quality="90"
+						className="object-contain"
+						alt="image"
+						src={url}
+						preserveTransformations
+						onLoad={() => setIsLoading(false)}
+						fill={true}
+					/>
+				</div>
+			) : (
+				<div
+					className={`w-[${width}px] h-[${height}px] relative flex items-center justify-center border`}
+				>
+					<CldImage
+						quality="90"
+						className="object-contain"
+						alt="image"
+						src={url}
+						preserveTransformations
+						onLoad={() => setIsLoading(false)}
+						width={width}
+						height={height}
+					/>
+				</div>
+			)}
+			<span className="text-foreground/25">{url}</span>
 		</div>
 	)
 }

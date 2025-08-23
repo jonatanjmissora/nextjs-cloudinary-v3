@@ -21,8 +21,14 @@ export const useTransformUrl = (id: string) => {
 		replaceTarget,
 		replaceObject,
 		removeObject,
+		isFillBackground,
+		width,
+		height,
+		isFill,
+		crop,
 	} = useTransformStore()
 
+	// biome-ignore lint/suspicious/noExplicitAny: no tengo tipo para urlTransformation
 	const urlTransformation: any = {
 		src: id,
 		//  	Menu 1
@@ -52,6 +58,12 @@ export const useTransformUrl = (id: string) => {
 			prompt: removeObject,
 			removeShadow: true,
 		},
+		// 		Menu 9
+		fillBackground: isFillBackground,
+		width: width,
+		height: height,
+		fill: isFill,
+		crop: crop,
 	}
 
 	if (isOpacity !== "100") urlTransformation.opacity = isOpacity
@@ -85,7 +97,23 @@ export const useTransformUrl = (id: string) => {
 	else if (Object.hasOwn(urlTransformation, "remove"))
 		delete urlTransformation.remove
 
+	if (width !== 0) urlTransformation.width = width
+	else if (Object.hasOwn(urlTransformation, "width"))
+		delete urlTransformation.width
+	if (height !== 0) urlTransformation.height = height
+	else if (Object.hasOwn(urlTransformation, "height"))
+		delete urlTransformation.height
+	if (width !== 0 && height !== 0) {
+		urlTransformation.fill = true
+		urlTransformation.crop = crop
+		urlTransformation.fillBackground = isFillBackground
+	} else if (Object.hasOwn(urlTransformation, "fill")) {
+		delete urlTransformation.fill
+		delete urlTransformation.crop
+		delete urlTransformation.fillBackground
+	}
+
 	const url = getCldImageUrl(urlTransformation)
 
-	return url
+	return { url, isFill, width, height }
 }

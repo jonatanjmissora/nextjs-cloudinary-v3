@@ -20,6 +20,11 @@ interface States {
 	replaceTarget: string
 	replaceObject: string
 	removeObject: string
+	isFillBackground: boolean
+	width: number
+	height: number
+	isFill: boolean
+	crop: "fill" | "pad"
 }
 
 interface Actions {
@@ -42,6 +47,11 @@ interface Actions {
 	setReplaceTarget: (replaceTarget: string) => void
 	setReplaceObject: (replaceObject: string) => void
 	setRemoveObject: (removeObject: string) => void
+	setIsFillBackground: (isFillBackground: boolean) => void
+	setWidth: (width: number) => void
+	setHeight: (height: number) => void
+	setIsFill: (isFill: boolean) => void
+	setCrop: (crop: "fill" | "pad") => void
 }
 
 type StoreState = States & Actions
@@ -66,6 +76,11 @@ export const useTransformStore = create<StoreState & Actions>()(set => ({
 	replaceTarget: "",
 	replaceObject: "",
 	removeObject: "",
+	isFillBackground: false,
+	width: 0,
+	height: 0,
+	isFill: true,
+	crop: "pad",
 
 	setIsGreyScale: isGreyScale => set({ isGreyScale }),
 	setIsBackWhite: isBackWhite => set({ isBackWhite }),
@@ -86,6 +101,11 @@ export const useTransformStore = create<StoreState & Actions>()(set => ({
 	setReplaceTarget: replaceTarget => set({ replaceTarget }),
 	setReplaceObject: replaceObject => set({ replaceObject }),
 	setRemoveObject: removeObject => set({ removeObject }),
+	setIsFillBackground: isFillBackground => set({ isFillBackground }),
+	setWidth: width => set({ width }),
+	setHeight: height => set({ height }),
+	setIsFill: isFill => set({ isFill }),
+	setCrop: crop => set({ crop }),
 }))
 
 export default useTransformStore
