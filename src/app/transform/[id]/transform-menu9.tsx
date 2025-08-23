@@ -6,17 +6,35 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 
 export const TransformMenu9 = () => {
-	const { setIsFillBackground, setCrop, setIsFill, setWidth, setHeight } =
-		useTransformStore()
+	const {
+		isFillBackground,
+		setIsFillBackground,
+		setCrop,
+		setIsFill,
+		setWidth,
+		setHeight,
+	} = useTransformStore()
 
 	const [widthValue, setWidthValue] = useState<number>(0)
 	const [heightValue, setHeightValue] = useState<number>(0)
+	const [fillBackgroundValue, setFillBackgroundValue] = useState<boolean>(false)
+	const [cropValue, setCropValue] = useState<boolean>(false)
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		setWidth(widthValue)
 		setHeight(heightValue)
 		setIsFill(false)
+	}
+
+	const handleFillBackgroundChange = (checked: boolean) => {
+		setIsFillBackground(checked)
+		setFillBackgroundValue(checked)
+	}
+
+	const handleCropChange = (checked: boolean) => {
+		setCrop(checked ? "fill" : "pad")
+		setCropValue(checked)
 	}
 
 	const resetWidthHeight = () => {
@@ -27,6 +45,8 @@ export const TransformMenu9 = () => {
 		setIsFillBackground(false)
 		setCrop("pad")
 		setIsFill(true)
+		setFillBackgroundValue(false)
+		setCropValue(false)
 	}
 
 	return (
@@ -56,16 +76,16 @@ export const TransformMenu9 = () => {
 					<div className="flex items-center gap-3 w-1/2">
 						<Checkbox
 							id="fillBg"
-							onCheckedChange={checked =>
-								setIsFillBackground(checked as boolean)
-							}
+							checked={fillBackgroundValue}
+							onCheckedChange={handleFillBackgroundChange}
 						/>
 						<Label htmlFor="fillBg">fillBackground</Label>
 					</div>
 					<div className="flex items-center gap-3 w-1/2">
 						<Checkbox
 							id="crop"
-							onCheckedChange={checked => setCrop(checked ? "fill" : "pad")}
+							checked={cropValue}
+							onCheckedChange={handleCropChange}
 						/>
 						<Label htmlFor="crop">crop</Label>
 					</div>
