@@ -24,6 +24,7 @@ export const TransformMenu7 = () => {
 
 	return (
 		<article className="w-full px-4">
+			<p className="pb-2">Cambiar objeto</p>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-2">
 				<div className="flex gap-2">
 					<Input

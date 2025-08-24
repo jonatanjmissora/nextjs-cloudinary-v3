@@ -19,6 +19,7 @@ export const TransformMenu6 = () => {
 
 	return (
 		<article className="w-full px-4">
+			<p className="pb-2">Cambiar fondo con IA</p>
 			<form onSubmit={handleSubmit} className="flex gap-2">
 				<Input
 					type="text"

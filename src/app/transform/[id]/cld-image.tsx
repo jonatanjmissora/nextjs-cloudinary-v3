@@ -27,7 +27,7 @@ export const ImageElement = ({
 				</div>
 			) : (
 				<div
-					className={`w-[${width}px] h-[${height}px] relative flex items-center justify-center border`}
+					className={`w-[${width}px] h-[${height}px] relative flex items-center justify-center bg-foreground/10`}
 				>
 					<CldImage
 						quality="90"

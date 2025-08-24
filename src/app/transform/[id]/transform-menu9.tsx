@@ -22,13 +22,13 @@ export const TransformMenu9 = () => {
 		if (arValue !== "null") {
 			switch (arValue) {
 				case "ar16_9":
-					newHeight = (widthValue * 9) / 16
+					newHeight = Math.round((widthValue * 9) / 16)
 					break
 				case "ar4_3":
-					newHeight = (widthValue * 3) / 4
+					newHeight = Math.round((widthValue * 3) / 4)
 					break
 				case "ar4_5":
-					newHeight = (widthValue * 5) / 4
+					newHeight = Math.round((widthValue * 5) / 4)
 					break
 				default:
 					newHeight = 0
@@ -38,9 +38,9 @@ export const TransformMenu9 = () => {
 		console.log("width", widthValue)
 		console.log("height", arValue !== "null" ? newHeight : heightValue)
 		console.log("newHeight", newHeight)
-		// setWidth(widthValue)
-		// setHeight(arValue !== "null" ? newHeight : heightValue)
-		// setIsFill(false)
+		setWidth(widthValue)
+		setHeight(arValue !== "null" ? newHeight : heightValue)
+		setIsFill(false)
 	}
 
 	const handleFillBackgroundChange = (checked: boolean) => {
@@ -68,15 +68,16 @@ export const TransformMenu9 = () => {
 
 	return (
 		<article className="w-full px-4">
+			<p className="pb-2">Tamaño y forma</p>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-2">
-				<AspectRatioRow arValue={arValue} setArValue={setArValue} />
-
 				<InputSizeRow
 					widthValue={widthValue}
 					heightValue={heightValue}
 					setWidthValue={setWidthValue}
 					setHeightValue={setHeightValue}
 				/>
+
+				<AspectRatioRow arValue={arValue} setArValue={setArValue} />
 
 				<IARow
 					fillBackgroundValue={fillBackgroundValue}
@@ -118,32 +119,6 @@ const AspectRatioRow = ({
 	setArValue: (arValue: string) => void
 }) => {
 	return (
-		// <div className="flex gap-2 w-full">
-		// 	<div className="flex items-center gap-3 flex-1">
-		// 		<Checkbox
-		// 			id="ar16_9"
-		// 			checked={arValue === "16:9"}
-		// 			onCheckedChange={() => setArValue("16:9")}
-		// 		/>
-		// 		<Label htmlFor="ar16_9">16:9</Label>
-		// 	</div>
-		// 	<div className="flex items-center gap-3 flex-1">
-		// 		<Checkbox
-		// 			id="ar4_3"
-		// 			checked={arValue === "4:3"}
-		// 			onCheckedChange={() => setArValue("4:3")}
-		// 		/>
-		// 		<Label htmlFor="ar4_3">4:3</Label>
-		// 	</div>
-		// 	<div className="flex items-center gap-3 flex-1">
-		// 		<Checkbox
-		// 			id="ar4_5"
-		// 			checked={arValue === "4:5"}
-		// 			onCheckedChange={() => setArValue("4:5")}
-		// 		/>
-		// 		<Label htmlFor="ar4_5">4:5</Label>
-		// 	</div>
-		// </div>
 		<RadioGroup
 			defaultValue="null"
 			className="w-full flex justify-between items-center"
@@ -151,11 +126,11 @@ const AspectRatioRow = ({
 		>
 			<div className="flex items-center space-x-2">
 				<RadioGroupItem
-					value="ar19_6"
-					id="ar19_6"
-					// checked={arValue === "ar19_6"}
+					value="ar16_9"
+					id="ar16_9"
+					// checked={arValue === "ar16_9"}
 				/>
-				<Label htmlFor="ar19_6">19:6</Label>
+				<Label htmlFor="ar16_9">19:6</Label>
 			</div>
 			<div className="flex items-center space-x-2">
 				<RadioGroupItem

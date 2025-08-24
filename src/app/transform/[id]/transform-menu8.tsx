@@ -20,6 +20,7 @@ export const TransformMenu8 = () => {
 
 	return (
 		<article className="w-full px-4">
+			<p className="pb-2">Remover objeto</p>
 			<form onSubmit={handleSubmit} className="flex gap-2">
 				<Input
 					type="text"
