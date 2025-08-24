@@ -28,6 +28,7 @@ export const TransformMenu5 = () => {
 
 	return (
 		<article className="w-full px-4">
+			<p className="pb-2">Cambiar color de objeto</p>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-2">
 				<div className="flex gap-2">
 					<Input
@@ -35,7 +36,7 @@ export const TransformMenu5 = () => {
 						name="recolorTarget"
 						id="recolorTarget"
 						onChange={e => setRecolorTargetValue(e.target.value)}
-						placeholder="...target..."
+						placeholder="objeto..."
 						className="w-1/2 text-center"
 						value={recolorTargetValue}
 					/>
@@ -51,7 +52,7 @@ export const TransformMenu5 = () => {
 				</div>
 				<div className="flex gap-2 w-full">
 					<Button variant="default" type="submit" className="w-1/2">
-						recolor
+						cambiar color
 					</Button>
 					<Button
 						variant="outline"

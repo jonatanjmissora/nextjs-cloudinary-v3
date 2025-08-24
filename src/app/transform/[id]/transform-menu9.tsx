@@ -68,8 +68,7 @@ export const TransformMenu9 = () => {
 
 	return (
 		<article className="w-full px-4">
-			<p className="pb-2">Tamaño y forma</p>
-			<form onSubmit={handleSubmit} className="flex flex-col gap-2">
+			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
 				<InputSizeRow
 					widthValue={widthValue}
 					heightValue={heightValue}
@@ -95,7 +94,7 @@ export const TransformMenu9 = () => {
 						className="w-1/2"
 						disabled={!widthValue || !heightValue}
 					>
-						resize
+						cambiar
 					</Button>
 					<Button
 						variant="outline"
@@ -168,25 +167,32 @@ const InputSizeRow = ({
 	setHeightValue: (heightValue: number) => void
 }) => {
 	return (
-		<div className="flex gap-2">
-			<Input
-				type="text"
-				name="width"
-				id="width"
-				onChange={e => setWidthValue(Number(e.target.value))}
-				placeholder="...width..."
-				className="w-1/2 text-center"
-				value={widthValue}
-			/>
-			<Input
-				type="text"
-				name="height"
-				id="height"
-				onChange={e => setHeightValue(Number(e.target.value))}
-				placeholder="...height..."
-				className="w-1/2 text-center"
-				value={heightValue}
-			/>
+		<div className="flex flex-col">
+			<div className="flex w-full">
+				<span className="w-1/2 text-center">ancho</span>
+				<span className="w-1/2 text-center">alto</span>
+			</div>
+
+			<div className="flex w-full">
+				<Input
+					type="text"
+					name="width"
+					id="width"
+					onChange={e => setWidthValue(Number(e.target.value))}
+					placeholder="...width..."
+					className="w-1/2 text-center"
+					value={widthValue}
+				/>
+				<Input
+					type="text"
+					name="height"
+					id="height"
+					onChange={e => setHeightValue(Number(e.target.value))}
+					placeholder="...height..."
+					className="w-1/2 text-center"
+					value={heightValue}
+				/>
+			</div>
 		</div>
 	)
 }

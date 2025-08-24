@@ -19,23 +19,29 @@ export const TransformMenu6 = () => {
 
 	return (
 		<article className="w-full px-4">
-			<p className="pb-2">Cambiar fondo con IA</p>
-			<form onSubmit={handleSubmit} className="flex gap-2">
+			<form onSubmit={handleSubmit} className="flex flex-col gap-2">
 				<Input
 					type="text"
 					name="bgImage"
 					id="bgImage"
 					value={bgImageValue}
-					placeholder="...replace-bg..."
+					placeholder="reemplazar con prompt..."
 					className="text-center"
 					onChange={e => setBgImageValue(e.target.value)}
 				/>
-				<Button variant="default" type="submit">
-					replace-bg
-				</Button>
-				<Button variant="outline" type="button" onClick={resetReplaceBg}>
-					original
-				</Button>
+				<div className="flex gap-2 w-full">
+					<Button variant="default" type="submit" className="w-1/2">
+						replace-bg
+					</Button>
+					<Button
+						variant="outline"
+						type="button"
+						onClick={resetReplaceBg}
+						className="w-1/2"
+					>
+						original
+					</Button>
+				</div>
 			</form>
 		</article>
 	)

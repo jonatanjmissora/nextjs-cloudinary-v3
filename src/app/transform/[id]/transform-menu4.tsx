@@ -40,10 +40,14 @@ export const TransformMenu4 = () => {
 	return (
 		<article className="w-full flex flex-col gap-2 px-4">
 			<div className="flex gap-2 w-full">
-				<Toggle pressed={isRemoveBg} className="w-1/2" onClick={handleRemoveBg}>
-					bg-remove
+				<Toggle
+					pressed={isRemoveBg}
+					className="w-2/3 border"
+					onClick={handleRemoveBg}
+				>
+					quitar fondo
 				</Toggle>
-				<Toggle pressed={bgColor !== "" && isRemoveBg} className="w-1/2">
+				<Toggle pressed={bgColor !== "" && isRemoveBg} className="w-1/3">
 					<input
 						type="color"
 						name="bg-color"
@@ -54,7 +58,7 @@ export const TransformMenu4 = () => {
 				</Toggle>
 			</div>
 			<div className="flex gap-2 w-full">
-				<form onSubmit={handleBgImage} className="w-1/2">
+				<form onSubmit={handleBgImage} className="w-2/3">
 					<Input
 						type="text"
 						name="bgImage"
@@ -62,10 +66,10 @@ export const TransformMenu4 = () => {
 						value={bgImageValue}
 						className="w-full text-center"
 						onChange={e => setBgImageValue(e.target.value)}
-						placeholder="...image..."
+						placeholder="reemplazar con public id..."
 					/>
 				</form>
-				<Toggle pressed={!isRemoveBg} className="w-1/2" onClick={handleClear}>
+				<Toggle pressed={!isRemoveBg} className="w-1/3" onClick={handleClear}>
 					original
 				</Toggle>
 			</div>

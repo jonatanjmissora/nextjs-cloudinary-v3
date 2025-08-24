@@ -27,12 +27,12 @@ export const TransformMenu8 = () => {
 					name="removeObject"
 					id="removeObject"
 					onChange={e => setRemoveObjectValue(e.target.value)}
-					placeholder="...object..."
+					placeholder="objeto..."
 					className="text-center"
 					value={removeObjectValue}
 				/>
 				<Button variant="default" type="submit" className="">
-					remove
+					remover
 				</Button>
 				<Button
 					variant="outline"

@@ -24,6 +24,12 @@ import { TransformMenu6 } from "./transform-menu6"
 import { TransformMenu7 } from "./transform-menu7"
 import { TransformMenu8 } from "./transform-menu8"
 import { TransformMenu9 } from "./transform-menu9"
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export default function ImageTransformation({ id }: { id: string }) {
 	const [isLoading, setIsLoading] = useState(true)
@@ -66,8 +72,8 @@ const DrawerElement = () => {
 					</DrawerTitle>
 				</DrawerHeader>
 
-				<div className="flex flex-col gap-3">
-					{/* <TransformMenu1 />
+				{/* <div className="flex flex-col gap-3">
+					<TransformMenu1 />
 					<Separator />
 					<TransformMenu2 />
 					<Separator />
@@ -76,7 +82,7 @@ const DrawerElement = () => {
 					<TransformMenu4 />
 					<Separator />
 					<TransformMenu5 />
-					<Separator /> */}
+					<Separator />
 					<TransformMenu6 />
 					<Separator />
 					<TransformMenu7 />
@@ -84,7 +90,61 @@ const DrawerElement = () => {
 					<TransformMenu8 />
 					<Separator />
 					<TransformMenu9 />
-				</div>
+				</div> */}
+				<Accordion type="single" collapsible className="w-full px-4">
+					<AccordionItem value="menu-0">
+						<AccordionTrigger>Tamaño</AccordionTrigger>
+						<AccordionContent>
+							<TransformMenu9 />
+						</AccordionContent>
+					</AccordionItem>
+					<AccordionItem value="menu-1">
+						<AccordionTrigger>Efectos</AccordionTrigger>
+						<AccordionContent>
+							<TransformMenu1 />
+							<TransformMenu2 />
+							<TransformMenu3 />
+						</AccordionContent>
+					</AccordionItem>
+					<AccordionItem value="menu-2">
+						<AccordionTrigger>Background</AccordionTrigger>
+						<AccordionContent className="flex flex-col gap-3">
+							<TransformMenu4 />
+							<Separator />
+							<TransformMenu6 />
+						</AccordionContent>
+					</AccordionItem>
+					<AccordionItem value="menu-3">
+						<AccordionTrigger>Objetos</AccordionTrigger>
+						<AccordionContent className="flex flex-col gap-3">
+							{/* <TransformMenu5 />
+							<Separator />
+							<TransformMenu7 />
+							<Separator />
+							<TransformMenu8 /> */}
+							<Accordion type="single" collapsible className="px-4">
+								<AccordionItem value="submenu-1">
+									<AccordionTrigger>Cambiar color del objeto</AccordionTrigger>
+									<AccordionContent>
+										<TransformMenu5 />
+									</AccordionContent>
+								</AccordionItem>
+								<AccordionItem value="submenu-2">
+									<AccordionTrigger>Reemplazar objeto</AccordionTrigger>
+									<AccordionContent>
+										<TransformMenu7 />
+									</AccordionContent>
+								</AccordionItem>
+								<AccordionItem value="submenu-3">
+									<AccordionTrigger>Remover objeto</AccordionTrigger>
+									<AccordionContent>
+										<TransformMenu8 />
+									</AccordionContent>
+								</AccordionItem>
+							</Accordion>
+						</AccordionContent>
+					</AccordionItem>
+				</Accordion>
 
 				<DrawerFooter></DrawerFooter>
 			</DrawerContent>
