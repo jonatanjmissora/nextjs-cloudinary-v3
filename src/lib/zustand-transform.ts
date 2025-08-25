@@ -25,6 +25,7 @@ interface States {
 	height: number
 	isFill: boolean
 	crop: "fill" | "pad"
+	format: "auto" | "webp" | "jpg" | "png"
 }
 
 interface Actions {
@@ -52,6 +53,7 @@ interface Actions {
 	setHeight: (height: number) => void
 	setIsFill: (isFill: boolean) => void
 	setCrop: (crop: "fill" | "pad") => void
+	setFormat: (format: "auto" | "webp" | "jpg" | "png") => void
 }
 
 type StoreState = States & Actions
@@ -81,6 +83,7 @@ export const useTransformStore = create<StoreState & Actions>()(set => ({
 	height: 0,
 	isFill: true,
 	crop: "pad",
+	format: "auto",
 
 	setIsGreyScale: isGreyScale => set({ isGreyScale }),
 	setIsBackWhite: isBackWhite => set({ isBackWhite }),
@@ -106,6 +109,7 @@ export const useTransformStore = create<StoreState & Actions>()(set => ({
 	setHeight: height => set({ height }),
 	setIsFill: isFill => set({ isFill }),
 	setCrop: crop => set({ crop }),
+	setFormat: format => set({ format }),
 }))
 
 export default useTransformStore

@@ -31,7 +31,7 @@ export const TransformMenu6 = () => {
 				/>
 				<div className="flex gap-2 w-full">
 					<Button variant="default" type="submit" className="w-1/2">
-						replace-bg
+						remplazar
 					</Button>
 					<Button
 						variant="outline"

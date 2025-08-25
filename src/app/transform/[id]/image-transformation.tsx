@@ -30,11 +30,15 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion"
+import TransformMenu10 from "../transform-menu10"
+import { CloudinaryAsset } from "@/lib/types"
 
 export default function ImageTransformation({ id }: { id: string }) {
 	const [isLoading, setIsLoading] = useState(true)
 	const { assets } = useGetAssets()
-	const actualAsset = assets?.find(asset => asset.public_id === id)
+	const actualAsset = assets?.find(
+		asset => asset.public_id === id
+	) as CloudinaryAsset
 
 	return (
 		<article
@@ -67,30 +71,13 @@ const DrawerElement = () => {
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader>
-					<DrawerTitle className="text-xl font-bold w-full text-center">
-						Transformaciones
+					<DrawerTitle className="w-full flex justify-between items-center">
+						<span className="text-xl font-bold">Transformaciones</span>
+						<Button onClick={() => null} variant="outline" className="text-xs">
+							Reset
+						</Button>
 					</DrawerTitle>
 				</DrawerHeader>
-
-				{/* <div className="flex flex-col gap-3">
-					<TransformMenu1 />
-					<Separator />
-					<TransformMenu2 />
-					<Separator />
-					<TransformMenu3 />
-					<Separator />
-					<TransformMenu4 />
-					<Separator />
-					<TransformMenu5 />
-					<Separator />
-					<TransformMenu6 />
-					<Separator />
-					<TransformMenu7 />
-					<Separator />
-					<TransformMenu8 />
-					<Separator />
-					<TransformMenu9 />
-				</div> */}
 				<Accordion type="single" collapsible className="w-full px-4">
 					<AccordionItem value="menu-0">
 						<AccordionTrigger>Tamaño</AccordionTrigger>
@@ -117,11 +104,6 @@ const DrawerElement = () => {
 					<AccordionItem value="menu-3">
 						<AccordionTrigger>Objetos</AccordionTrigger>
 						<AccordionContent className="flex flex-col gap-3">
-							{/* <TransformMenu5 />
-							<Separator />
-							<TransformMenu7 />
-							<Separator />
-							<TransformMenu8 /> */}
 							<Accordion type="single" collapsible className="px-4">
 								<AccordionItem value="submenu-1">
 									<AccordionTrigger>Cambiar color del objeto</AccordionTrigger>
@@ -142,6 +124,12 @@ const DrawerElement = () => {
 									</AccordionContent>
 								</AccordionItem>
 							</Accordion>
+						</AccordionContent>
+					</AccordionItem>
+					<AccordionItem value="menu-4">
+						<AccordionTrigger>Formato</AccordionTrigger>
+						<AccordionContent className="flex flex-col gap-3">
+							<TransformMenu10 />
 						</AccordionContent>
 					</AccordionItem>
 				</Accordion>

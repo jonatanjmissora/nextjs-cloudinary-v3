@@ -26,6 +26,7 @@ export const useTransformUrl = (id: string) => {
 		height,
 		isFill,
 		crop,
+		format,
 	} = useTransformStore()
 
 	// biome-ignore lint/suspicious/noExplicitAny: no tengo tipo para urlTransformation
@@ -64,6 +65,8 @@ export const useTransformUrl = (id: string) => {
 		height: height,
 		fill: isFill,
 		crop: crop,
+		//		Menu 10
+		format: format,
 	}
 
 	if (isOpacity !== "100") urlTransformation.opacity = isOpacity
@@ -112,6 +115,9 @@ export const useTransformUrl = (id: string) => {
 		delete urlTransformation.crop
 		delete urlTransformation.fillBackground
 	}
+	if (format !== "auto") urlTransformation.format = format
+	else if (Object.hasOwn(urlTransformation, "format"))
+		delete urlTransformation.format
 
 	const url = getCldImageUrl(urlTransformation)
 
