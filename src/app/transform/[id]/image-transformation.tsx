@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/drawer"
 import { TransformMenu1 } from "./transform-menu1"
 import { TransformMenu2 } from "./transform-menu2"
-import { TransformMenu3 } from "./transform-menu3"
+import { TransformMenu02 } from "./transform-menu02"
 import { ImageElement } from "./cld-image"
 import { TransformMenu4 } from "./transform-menu4"
 import { TransformMenu5 } from "./transform-menu5"
@@ -32,6 +32,9 @@ import {
 } from "@/components/ui/accordion"
 import TransformMenu10 from "../transform-menu10"
 import { CloudinaryAsset } from "@/lib/types"
+import TransformMenu01 from "./transform-menu-01"
+import useTransformStore from "@/lib/zustand-transform"
+import TransformMenu00 from "./transform-menu-00"
 
 export default function ImageTransformation({ id }: { id: string }) {
 	const [isLoading, setIsLoading] = useState(true)
@@ -62,6 +65,7 @@ export default function ImageTransformation({ id }: { id: string }) {
 }
 
 const DrawerElement = () => {
+	const { setResetAll } = useTransformStore()
 	return (
 		<Drawer direction="right">
 			<DrawerTrigger asChild>
@@ -73,7 +77,7 @@ const DrawerElement = () => {
 				<DrawerHeader>
 					<DrawerTitle className="w-full flex justify-between items-center">
 						<span className="text-xl font-bold">Transformaciones</span>
-						<Button onClick={() => null} variant="outline" className="text-xs">
+						<Button onClick={setResetAll} variant="outline" className="text-xs">
 							Reset
 						</Button>
 					</DrawerTitle>
@@ -82,23 +86,22 @@ const DrawerElement = () => {
 					<AccordionItem value="menu-0">
 						<AccordionTrigger>Tamaño</AccordionTrigger>
 						<AccordionContent>
-							<TransformMenu9 />
+							<TransformMenu00 />
 						</AccordionContent>
 					</AccordionItem>
 					<AccordionItem value="menu-1">
 						<AccordionTrigger>Efectos</AccordionTrigger>
 						<AccordionContent>
-							<TransformMenu1 />
-							<TransformMenu2 />
-							<TransformMenu3 />
+							<TransformMenu01 />
+							<TransformMenu02 />
 						</AccordionContent>
 					</AccordionItem>
 					<AccordionItem value="menu-2">
 						<AccordionTrigger>Background</AccordionTrigger>
 						<AccordionContent className="flex flex-col gap-3">
-							<TransformMenu4 />
+							{/* <TransformMenu4 /> */}
 							<Separator />
-							<TransformMenu6 />
+							{/* <TransformMenu6 /> */}
 						</AccordionContent>
 					</AccordionItem>
 					<AccordionItem value="menu-3">
@@ -108,19 +111,19 @@ const DrawerElement = () => {
 								<AccordionItem value="submenu-1">
 									<AccordionTrigger>Cambiar color del objeto</AccordionTrigger>
 									<AccordionContent>
-										<TransformMenu5 />
+										{/* <TransformMenu5 /> */}
 									</AccordionContent>
 								</AccordionItem>
 								<AccordionItem value="submenu-2">
 									<AccordionTrigger>Reemplazar objeto</AccordionTrigger>
 									<AccordionContent>
-										<TransformMenu7 />
+										{/* <TransformMenu7 /> */}
 									</AccordionContent>
 								</AccordionItem>
 								<AccordionItem value="submenu-3">
 									<AccordionTrigger>Remover objeto</AccordionTrigger>
 									<AccordionContent>
-										<TransformMenu8 />
+										{/* <TransformMenu8 /> */}
 									</AccordionContent>
 								</AccordionItem>
 							</Accordion>
@@ -129,7 +132,7 @@ const DrawerElement = () => {
 					<AccordionItem value="menu-4">
 						<AccordionTrigger>Formato</AccordionTrigger>
 						<AccordionContent className="flex flex-col gap-3">
-							<TransformMenu10 />
+							{/* <TransformMenu10 /> */}
 						</AccordionContent>
 					</AccordionItem>
 				</Accordion>

@@ -43,7 +43,7 @@ export const ImageElement = ({
 	return (
 		<div className="w-full flex-1 flex flex-col gap-2 items-center justify-center">
 			{isFill ? (
-				<div className="w-full aspect-[3:2] flex-1 relative flex items-center justify-center">
+				<div className="w-full aspect-[3:2] flex-1 relative flex items-center justify-center  border border-red-500">
 					<CldImage
 						sizes="100vw"
 						quality="90"
@@ -57,7 +57,7 @@ export const ImageElement = ({
 				</div>
 			) : (
 				<div
-					className={`w-[${width}px] h-[${height}px] relative flex items-center justify-center bg-foreground/10`}
+					className={`w-[${width}px] h-[${height}px] relative flex items-center justify-center bg-foreground/10 border border-green-500`}
 				>
 					<CldImage
 						quality="90"
