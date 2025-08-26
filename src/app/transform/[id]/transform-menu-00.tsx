@@ -90,7 +90,7 @@ export default function TransformMenu00() {
 				<Button
 					variant="default"
 					type="submit"
-					className="w-full"
+					className="w-full cursor-pointer"
 					disabled={!widthInputValue || !heightInputValue}
 				>
 					cambiar
@@ -208,8 +208,6 @@ const IARow = ({
 			setCropInputValue("pad")
 		}
 	}
-	console.log(isFillBackgroundInputValue, cropInputValue)
-
 	return (
 		<RadioGroup
 			defaultValue="null"

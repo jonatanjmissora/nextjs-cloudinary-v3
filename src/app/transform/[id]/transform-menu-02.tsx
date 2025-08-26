@@ -27,17 +27,29 @@ export const TransformMenu02 = () => {
 	return (
 		<ToggleGroup
 			type="multiple"
-			className="flex gap-1 w-full px-4"
+			className="flex w-full px-4"
 			onValueChange={handleChange}
 			value={ToggleGroupArray}
 		>
-			<ToggleGroupItem value="opacity" aria-label="Toggle grayscale">
+			<ToggleGroupItem
+				variant="outline"
+				value="opacity"
+				aria-label="Toggle grayscale"
+			>
 				opacity
 			</ToggleGroupItem>
-			<ToggleGroupItem value="brightness" aria-label="Toggle backandwhite">
+			<ToggleGroupItem
+				variant="outline"
+				value="brightness"
+				aria-label="Toggle backandwhite"
+			>
 				brillo
 			</ToggleGroupItem>
-			<ToggleGroupItem value="restore" aria-label="Toggle sepia">
+			<ToggleGroupItem
+				variant="outline"
+				value="restore"
+				aria-label="Toggle sepia"
+			>
 				mejorar
 			</ToggleGroupItem>
 		</ToggleGroup>

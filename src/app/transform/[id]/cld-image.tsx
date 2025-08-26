@@ -1,52 +1,31 @@
 import { useTransformUrl } from "@/lib/use-transform-url"
 import { CldImage } from "next-cloudinary"
-import { Button } from "@/components/ui/button"
-import { toast } from "sonner"
+import { CloudinaryAsset } from "@/lib/types"
+import { useEffect } from "react"
+import useTransformStore from "@/lib/zustand-transform"
 
 export const ImageElement = ({
-	id,
+	actualAsset,
 	setIsLoading,
 }: {
-	id: string
+	actualAsset: CloudinaryAsset
 	setIsLoading: (isLoading: boolean) => void
 }) => {
-	const { url, isFill, width, height } = useTransformUrl(id)
+	const { url, isFill, width, height } = useTransformUrl(actualAsset.public_id)
+	const { setResetAll } = useTransformStore()
 
-	const handleDownload = async () => {
-		try {
-			// Create and append the download link
-			const temporaryDownloadLink = document.createElement("a")
-			temporaryDownloadLink.style.display = "none"
-			document.body.appendChild(temporaryDownloadLink)
-
-			await new Promise<void>(resolve => {
-				temporaryDownloadLink.href = url.replace(
-					/upload\//,
-					"upload/fl_attachment/"
-				)
-				temporaryDownloadLink.download = "image"
-				temporaryDownloadLink.click()
-				toast.success("Files downloaded successfully")
-				resolve()
-			})
-		} catch (error) {
-			console.error("Download error:", error)
-			toast.error("Error downloading file")
-		} finally {
-			const link = document.querySelector('a[style*="display: none"]')
-			if (link?.parentNode) {
-				document.body.removeChild(link)
-			}
-		}
-	}
+	useEffect(() => {
+		setResetAll()
+	}, [setResetAll])
 
 	return (
 		<div className="w-full flex-1 flex flex-col gap-2 items-center justify-center">
 			{isFill ? (
-				<div className="w-full aspect-[3:2] flex-1 relative flex items-center justify-center  border border-red-500">
+				<div className="w-full h-auto flex-1 relative flex items-center justify-center">
 					<CldImage
 						sizes="100vw"
 						quality="90"
+						priority
 						className="object-contain"
 						alt="image"
 						src={url}
@@ -57,10 +36,11 @@ export const ImageElement = ({
 				</div>
 			) : (
 				<div
-					className={`w-[${width}px] h-[${height}px] relative flex items-center justify-center bg-foreground/10 border border-green-500`}
+					className={`w-[${width}px] h-[${height}px] relative flex items-center justify-center bg-foreground/10`}
 				>
 					<CldImage
 						quality="90"
+						priority
 						className="object-contain"
 						alt="image"
 						src={url}
@@ -71,10 +51,6 @@ export const ImageElement = ({
 					/>
 				</div>
 			)}
-			<span className="text-foreground/25">{url}</span>
-			<Button variant="outline" onClick={handleDownload}>
-				descargar
-			</Button>
 		</div>
 	)
 }

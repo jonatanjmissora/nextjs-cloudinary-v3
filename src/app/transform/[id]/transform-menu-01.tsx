@@ -7,32 +7,53 @@ export default function TransformMenu01() {
 	return (
 		<ToggleGroup
 			type="single"
-			className="flex flex-col gap-1 w-full px-4"
+			className="flex flex-col w-full px-4"
 			onValueChange={setEffect}
 			value={effect}
 		>
-			<div className="flex gap-1 w-full">
-				<ToggleGroupItem value="grayscale" aria-label="Toggle grayscale">
+			<div className="flex w-full">
+				<ToggleGroupItem
+					variant="outline"
+					value="grayscale"
+					aria-label="Toggle grayscale"
+				>
 					grayscale
 				</ToggleGroupItem>
 				<ToggleGroupItem
+					variant="outline"
 					value="blackandwhite"
 					aria-label="Toggle blackandwhite"
 				>
 					black/white
 				</ToggleGroupItem>
-				<ToggleGroupItem value="sepia" aria-label="Toggle sepia">
+				<ToggleGroupItem
+					variant="outline"
+					value="sepia"
+					aria-label="Toggle sepia"
+				>
 					sepia
 				</ToggleGroupItem>
 			</div>
-			<div className="flex gap-1 w-full">
-				<ToggleGroupItem value="cartoonify" aria-label="Toggle cartoonify">
+			<div className="flex w-full">
+				<ToggleGroupItem
+					variant="outline"
+					value="cartoonify"
+					aria-label="Toggle cartoonify"
+				>
 					cartoonify
 				</ToggleGroupItem>
-				<ToggleGroupItem value="vectorize" aria-label="Toggle vectorize">
+				<ToggleGroupItem
+					variant="outline"
+					value="vectorize"
+					aria-label="Toggle vectorize"
+				>
 					vectorize
 				</ToggleGroupItem>
-				<ToggleGroupItem value="vignette" aria-label="Toggle vignette">
+				<ToggleGroupItem
+					variant="outline"
+					value="vignette"
+					aria-label="Toggle vignette"
+				>
 					vignette
 				</ToggleGroupItem>
 			</div>

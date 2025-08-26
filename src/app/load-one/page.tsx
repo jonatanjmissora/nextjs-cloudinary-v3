@@ -35,7 +35,10 @@ export default function LoadOnePage() {
 				className="flex items-center gap-2 mb-4"
 			>
 				<input type="file" name="file" />
-				<button type="submit" className="bg-blue-500 text-white p-2">
+				<button
+					type="submit"
+					className="bg-blue-500 text-white p-2 cursor-pointer"
+				>
 					Upload
 				</button>
 			</form>

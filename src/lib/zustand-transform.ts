@@ -22,6 +22,20 @@ interface State {
 	isOpacity: boolean
 	isBrightness: boolean
 	isRestore: boolean
+	//Menu 2
+	isRemoveBg: boolean
+	bgColor: string
+	bgImage: string
+	replaceBg: string
+	//Menu 3
+	recolorTarget: string
+	recolorColor: string
+	//Menu 4
+	replaceTarget: string
+	replaceObject: string
+	removeObject: string
+	//Menu 5
+	format: "auto" | "webp" | "jpg" | "png"
 }
 
 interface Actions {
@@ -37,6 +51,20 @@ interface Actions {
 	setIsOpacity: (isOpacity: boolean) => void
 	setIsBrightness: (isBrightness: boolean) => void
 	setIsRestore: (isRestore: boolean) => void
+	//Menu 2
+	setIsRemoveBg: (isRemoveBg: boolean) => void
+	setBgColor: (bgColor: string) => void
+	setBgImage: (bgImage: string) => void
+	setReplaceBg: (replaceBg: string) => void
+	//Menu 3
+	setRecolorTarget: (recolorTarget: string) => void
+	setRecolorColor: (recolorColor: string) => void
+	//Menu 4
+	setReplaceTarget: (replaceTarget: string) => void
+	setReplaceObject: (replaceObject: string) => void
+	setRemoveObject: (removeObject: string) => void
+	//Menu 5
+	setFormat: (format: "auto" | "webp" | "jpg" | "png") => void
 	// Reset
 	setResetAll: () => void
 }
@@ -56,6 +84,20 @@ export const useTransformStore = create<StoreState>()(set => ({
 	isOpacity: false,
 	isBrightness: false,
 	isRestore: false,
+	//Menu 2
+	isRemoveBg: false,
+	bgColor: "",
+	bgImage: "",
+	replaceBg: "",
+	//Menu 3
+	recolorTarget: "",
+	recolorColor: "",
+	//Menu 4
+	replaceTarget: "",
+	replaceObject: "",
+	removeObject: "",
+	//Menu 5
+	format: "auto",
 
 	//Menu 0
 	setIsFill: isFill => set({ isFill }),
@@ -69,6 +111,20 @@ export const useTransformStore = create<StoreState>()(set => ({
 	setIsOpacity: isOpacity => set({ isOpacity }),
 	setIsBrightness: isBrightness => set({ isBrightness }),
 	setIsRestore: isRestore => set({ isRestore }),
+	//Menu 2
+	setIsRemoveBg: isRemoveBg => set({ isRemoveBg }),
+	setBgColor: bgColor => set({ bgColor }),
+	setBgImage: bgImage => set({ bgImage }),
+	setReplaceBg: replaceBg => set({ replaceBg }),
+	//Menu 3
+	setRecolorTarget: recolorTarget => set({ recolorTarget }),
+	setRecolorColor: recolorColor => set({ recolorColor }),
+	//Menu 4
+	setReplaceTarget: replaceTarget => set({ replaceTarget }),
+	setReplaceObject: replaceObject => set({ replaceObject }),
+	setRemoveObject: removeObject => set({ removeObject }),
+	//Menu 5
+	setFormat: format => set({ format }),
 	//Reset
 	setResetAll: () =>
 		set({
@@ -82,6 +138,16 @@ export const useTransformStore = create<StoreState>()(set => ({
 			isOpacity: false,
 			isBrightness: false,
 			isRestore: false,
+			isRemoveBg: false,
+			bgColor: "",
+			bgImage: "",
+			replaceBg: "",
+			recolorTarget: "",
+			recolorColor: "",
+			replaceTarget: "",
+			replaceObject: "",
+			removeObject: "",
+			format: "auto",
 		}),
 }))
 

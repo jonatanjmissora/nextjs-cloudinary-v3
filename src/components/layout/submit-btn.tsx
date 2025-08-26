@@ -15,7 +15,7 @@ export default function SubmitBtn({
 	return (
 		<Button
 			type="submit"
-			className={`${className} bg-orange-500`}
+			className={`${className} bg-orange-500 cursor-pointer`}
 			disabled={pending}
 		>
 			{pending ? <Loader2 className="h-8 w-20 animate-spin" /> : label}

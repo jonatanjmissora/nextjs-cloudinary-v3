@@ -51,8 +51,12 @@ export default function ColorPickerComponent({
 						/>
 					</AlertDialogHeader>
 					<AlertDialogFooter>
-						<AlertDialogCancel type="button">Cancel</AlertDialogCancel>
-						<AlertDialogAction type="submit">Continue</AlertDialogAction>
+						<AlertDialogCancel type="button" className="cursor-pointer">
+							Cancel
+						</AlertDialogCancel>
+						<AlertDialogAction type="submit" className="cursor-pointer">
+							Continue
+						</AlertDialogAction>
 					</AlertDialogFooter>
 				</form>
 			</AlertDialogContent>
