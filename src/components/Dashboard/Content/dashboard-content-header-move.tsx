@@ -57,7 +57,9 @@ export function HeaderAssetsMove() {
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">
-				<AlertDialogDescription></AlertDialogDescription>
+				<AlertDialogDescription className="hidden">
+					Cambiar de carpeta las imagenes
+				</AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"

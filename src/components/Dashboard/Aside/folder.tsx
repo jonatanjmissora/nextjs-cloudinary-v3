@@ -169,7 +169,9 @@ const NewFolder = ({
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">
-				<AlertDialogDescription></AlertDialogDescription>
+				<AlertDialogDescription className="hidden">
+					Ingresa una nueva subcarpeta
+				</AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"
@@ -249,7 +251,9 @@ const RenameFolder = ({
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">
-				<AlertDialogDescription></AlertDialogDescription>
+				<AlertDialogDescription className="hidden">
+					Cambio de nombre
+				</AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"
@@ -336,7 +340,9 @@ const DeleteFolder = ({
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">
-				<AlertDialogDescription></AlertDialogDescription>
+				<AlertDialogDescription className="hidden">
+					Eliminacion de carpeta
+				</AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"

@@ -52,7 +52,9 @@ export default function CreateRootFolder() {
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg sm:rounded-lg">
-				<AlertDialogDescription></AlertDialogDescription>
+				<AlertDialogDescription className="hidden">
+					Ingresa un nombre para la nueva carpeta
+				</AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"

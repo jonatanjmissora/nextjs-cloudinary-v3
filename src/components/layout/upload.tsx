@@ -62,7 +62,9 @@ export const UploadBtn = () => {
 						<AlertDialogTitle className="text-2xl">
 							Subir Imágenes a la carpeta "{uploadPreset}"
 						</AlertDialogTitle>
-						<AlertDialogDescription></AlertDialogDescription>
+						<AlertDialogDescription className="hidden">
+							Subimos las imágenes a la carpeta "{uploadPreset}"
+						</AlertDialogDescription>
 					</AlertDialogHeader>
 
 					<InputFiles files={files} setFiles={setFiles} />

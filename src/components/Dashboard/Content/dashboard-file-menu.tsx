@@ -124,7 +124,9 @@ const RenameAsset = ({
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">
-				<AlertDialogDescription></AlertDialogDescription>
+				<AlertDialogDescription className="hidden">
+					Cambio el nombre de la imagen
+				</AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"
@@ -230,7 +232,9 @@ const DeleteDialog = ({
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">
-				<AlertDialogDescription></AlertDialogDescription>
+				<AlertDialogDescription className="hidden">
+					Eliminacion de imagen
+				</AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"

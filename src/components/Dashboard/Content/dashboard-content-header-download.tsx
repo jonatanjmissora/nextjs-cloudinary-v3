@@ -102,7 +102,9 @@ export function HeaderAssetsDownload() {
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="w-[600px]">
-				<AlertDialogDescription></AlertDialogDescription>
+				<AlertDialogDescription className="hidden">
+					Descarga de imagenes
+				</AlertDialogDescription>
 				<form
 					onSubmit={handleSubmit}
 					className="w-full flex flex-col gap-6 p-12"
