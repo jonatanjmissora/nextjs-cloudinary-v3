@@ -82,12 +82,12 @@ const Menu = () => {
 
 	const handleView = (view: "grid" | "list") => {
 		setView(view)
-		localStorage.setItem("view", view)
+		// localStorage.setItem("view", view)
 	}
 
 	const handleOrder = (order: "name" | "size" | "date") => {
 		setOrder(order)
-		localStorage.setItem("order", order)
+		// localStorage.setItem("order", order)
 	}
 
 	return (

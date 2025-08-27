@@ -13,7 +13,7 @@ interface NonPersistedState {
 
 interface PersistedState {
 	// Persisted in sessionStorage
-	view: "grid" | "list" | null
+	view: "grid" | "list"
 	order: "name" | "size" | "date"
 }
 
@@ -44,7 +44,7 @@ export const useStore = create<StoreState & StoreActions>()(
 			foldersTree: [],
 
 			// Persisted state with defaults
-			view: null,
+			view: "grid",
 			order: "name",
 
 			// Non-persisted actions
