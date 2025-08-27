@@ -129,3 +129,8 @@ input[type="file"]::file-selector-button {
 	padding: 0 1rem;
 	margin-left: auto;
 }
+
+button,
+a {
+	cursor: pointer;
+}

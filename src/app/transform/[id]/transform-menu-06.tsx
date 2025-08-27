@@ -48,7 +48,11 @@ export default function TransformMenu06() {
 					onChange={e => setReplaceObjectValue(e.target.value)}
 				/>
 			</div>
-			<Button className="w-full cursor-pointer" type="submit">
+			<Button
+				className="w-full cursor-pointer"
+				type="submit"
+				disabled={replaceTargetValue === "" || replaceObjectValue === ""}
+			>
 				Aplicar
 			</Button>
 		</form>

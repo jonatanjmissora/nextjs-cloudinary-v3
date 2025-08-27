@@ -1,7 +1,9 @@
+import ColorPickerBox from "@/components/layout/color-picker"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import useTransformStore from "@/lib/zustand-transform"
+import { Palette } from "lucide-react"
 import { useEffect, useState } from "react"
 
 export default function TransformMenu05() {
@@ -9,6 +11,7 @@ export default function TransformMenu05() {
 		useTransformStore()
 	const [recolorTargetValue, setRecolorTargetValue] = useState<string>("")
 	const [recolorColorValue, setRecolorColorValue] = useState<string>("")
+	const [showColorPicker, setShowColorPicker] = useState(false)
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		setRecolorTarget(recolorTargetValue)
@@ -36,18 +39,41 @@ export default function TransformMenu05() {
 					onChange={e => setRecolorTargetValue(e.target.value)}
 				/>
 			</div>
-			<div className="flex items-center gap-4">
-				<Label htmlFor="replaceColorObject">remplazar color de objeto :</Label>
-				<Input
+
+			<div className="flex flex-col items-start gap-4">
+				<div className="flex items-center gap-6">
+					<Label htmlFor="replaceColorObject">
+						remplazar color de objeto :
+					</Label>
+					{/* <Input
 					type="color"
 					id="replaceColorObject"
 					name="replaceColorObject"
 					className="w-1/4 border-none bg-transparent"
 					value={recolorColorValue.replace("rgb:", "#")}
 					onChange={e => setRecolorColorValue(e.target.value)}
-				/>
+				/> */}
+					<button
+						type="button"
+						onClick={() => setShowColorPicker(!showColorPicker)}
+						className={`h-9 w-16 border rounded-md text-center`}
+						style={{ backgroundColor: recolorColorValue.replace("rgb:", "#") }}
+					>
+						{recolorColorValue ? "" : <Palette className="mx-auto size-5" />}
+					</button>
+				</div>
+				{showColorPicker && (
+					<ColorPickerBox
+						colorValue={recolorColorValue}
+						setColorValue={setRecolorColorValue}
+					/>
+				)}
 			</div>
-			<Button className="w-full cursor-pointer" type="submit">
+			<Button
+				className="w-full cursor-pointer"
+				type="submit"
+				disabled={recolorTargetValue === "" || recolorColorValue === ""}
+			>
 				Aplicar
 			</Button>
 		</form>

@@ -6,7 +6,6 @@ import useStore from "@/lib/zustand-cloudinary"
 import { CloudinaryAsset } from "@/lib/types"
 import Image from "next/image"
 import { LoaderCircle } from "lucide-react"
-import { CldImage } from "next-cloudinary"
 
 export const FilesListGrid = ({
 	order,
@@ -20,14 +19,14 @@ export const FilesListGrid = ({
 
 	if (error) return <ErrorComponent error={error} />
 	if (isFetching) return <SkeltonList />
-	
+
 	const sortedAssets = sortedAssetsFn(assets, order)
 	const filteredAssets =
 		actualFolder === "Todas"
 			? sortedAssets
 			: sortedAssets.filter(asset => asset.asset_folder === actualFolder)
 
-	if(filteredAssets.length === 0) return <NoAssets />
+	if (filteredAssets.length === 0) return <NoAssets />
 
 	const selectedAssetsNames = selectedAssets.map(asset => asset.public_id)
 
@@ -87,7 +86,7 @@ const ErrorComponent = ({ error }: { error: string }) => {
 
 const GridLayout = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<article className= "w-full min-h-full flex-1 columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-x-1">
+		<article className="w-full min-h-full flex-1 columns-[1fr] sm:columns-[200px] 2xl:columns-[300px] gap-x-1">
 			{children}
 		</article>
 	)
@@ -113,8 +112,16 @@ const SkeltonList = () => {
 const NoAssets = () => {
 	return (
 		<article className="w-full h-[60dvh] flex flex-col gap-12 justify-center items-center relative">
-			<Image src="/no-pictures.svg" alt="no-pictures" width={300} height={300} className="opacity-20" />
-			<p className="text-foreground/30 text-xl font-semibold">carpeta sin imágenes..</p>
+			<Image
+				src="/no-pictures.svg"
+				alt="no-pictures"
+				width={300}
+				height={300}
+				className="opacity-20"
+			/>
+			<p className="text-foreground/30 text-xl font-semibold">
+				carpeta sin imágenes..
+			</p>
 		</article>
 	)
 }

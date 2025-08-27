@@ -33,7 +33,11 @@ export default function TransformMenu04() {
 					onChange={e => setBgPromptValue(e.target.value)}
 				/>
 			</div>
-			<Button className="w-full cursor-pointer" type="submit">
+			<Button
+				className="w-full cursor-pointer"
+				type="submit"
+				disabled={bgPromptValue === ""}
+			>
 				Aplicar
 			</Button>
 		</form>

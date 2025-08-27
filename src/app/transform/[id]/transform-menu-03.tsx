@@ -1,8 +1,11 @@
+import ColorPickerBox from "@/components/layout/color-picker"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+
 import useTransformStore from "@/lib/zustand-transform"
+import { Palette } from "lucide-react"
 import { useEffect, useState } from "react"
 
 export default function TransformMenu03() {
@@ -49,7 +52,7 @@ export default function TransformMenu03() {
 			<ReplaceBackgroundColor
 				bgColorValue={bgColorValue}
 				setBgColorValue={setBgColorValue}
-				setIsRemoveBgValue={setIsRemoveBgValue}
+				// setIsRemoveBgValue={setIsRemoveBgValue}
 			/>
 			<ReplaceBackgroundImage
 				bgImageValue={bgImageValue}
@@ -95,28 +98,47 @@ const RemoveBackgroundChk = ({
 const ReplaceBackgroundColor = ({
 	bgColorValue,
 	setBgColorValue,
-	setIsRemoveBgValue,
+	// setIsRemoveBgValue,
 }: {
 	bgColorValue: string
 	setBgColorValue: (bgColor: string) => void
-	setIsRemoveBgValue: (isRemoveBg: boolean) => void
+	// setIsRemoveBgValue: (isRemoveBg: boolean) => void
 }) => {
-	const handleBgColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setIsRemoveBgValue(true)
-		setBgColorValue(e.target.value)
-	}
+	const [showColorPicker, setShowColorPicker] = useState(false)
 
+	// const handleBgColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	setIsRemoveBgValue(true)
+	// 	setBgColorValue(e.target.value)
+	// }
 	return (
-		<div className="flex items-center gap-4">
-			<Label htmlFor="replaceBackgroundColor">remplazar color de fondo :</Label>
-			<Input
-				type="color"
-				id="replaceBackgroundColor"
-				name="replaceBackgroundColor"
-				className="w-1/4 border-none bg-transparent"
-				value={bgColorValue.replace("rgb:", "#")}
-				onChange={handleBgColorChange}
-			/>
+		<div className="flex flex-col items-start gap-4">
+			<div className="flex items-center gap-6">
+				<Label htmlFor="replaceBackgroundColor">
+					remplazar color de fondo :
+				</Label>
+				{/* <Input
+					type="color"
+					id="replaceBackgroundColor"
+					name="replaceBackgroundColor"
+					className="w-1/4 border-none bg-transparent"
+					value={bgColorValue.replace("rgb:", "#")}
+					onChange={handleBgColorChange}
+				/> */}
+				<button
+					type="button"
+					onClick={() => setShowColorPicker(!showColorPicker)}
+					className={`h-9 w-16 border rounded-md text-center`}
+					style={{ backgroundColor: bgColorValue.replace("rgb:", "#") }}
+				>
+					{bgColorValue ? "" : <Palette className="mx-auto size-5" />}
+				</button>
+			</div>
+			{showColorPicker && (
+				<ColorPickerBox
+					colorValue={bgColorValue}
+					setColorValue={setBgColorValue}
+				/>
+			)}
 		</div>
 	)
 }

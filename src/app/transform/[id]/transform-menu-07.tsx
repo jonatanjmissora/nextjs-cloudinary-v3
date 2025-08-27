@@ -32,7 +32,11 @@ export default function TransformMenu07() {
 					onChange={e => setRemoveObjectValue(e.target.value)}
 				/>
 			</div>
-			<Button className="w-full cursor-pointer" type="submit">
+			<Button
+				className="w-full cursor-pointer"
+				type="submit"
+				disabled={removeObjectValue === ""}
+			>
 				Aplicar
 			</Button>
 		</form>

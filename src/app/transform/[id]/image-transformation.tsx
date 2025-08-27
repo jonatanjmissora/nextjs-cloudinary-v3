@@ -77,16 +77,20 @@ const DrawerElement = ({ id }: { id: string }) => {
 				</Button>
 			</DrawerTrigger>
 			<DrawerContent>
-				<DrawerHeader>
-					<DrawerDescription></DrawerDescription>
-					<DrawerTitle className="w-full flex justify-between items-center">
-						<span className="text-xl font-bold">Transformaciones</span>
-						<Button onClick={setResetAll} variant="outline" className="text-xs">
-							Reset
-						</Button>
-					</DrawerTitle>
-				</DrawerHeader>
-				<div className="h-[70%] overflow-y-auto">
+				<div className="h-full flex flex-col overflow-y-auto">
+					<DrawerHeader>
+						<DrawerDescription></DrawerDescription>
+						<DrawerTitle className="w-full flex justify-between items-center">
+							<span className="text-xl font-bold">Transformaciones</span>
+							<Button
+								onClick={setResetAll}
+								variant="outline"
+								className="text-xs"
+							>
+								Reset
+							</Button>
+						</DrawerTitle>
+					</DrawerHeader>
 					<Accordion type="single" collapsible className="w-full px-4">
 						{/* 					TAMAÑO 								*/}
 						<AccordionItem value="menu-0">
@@ -173,10 +177,10 @@ const DrawerElement = ({ id }: { id: string }) => {
 							</AccordionContent>
 						</AccordionItem>
 					</Accordion>
+					<DrawerFooter>
+						<DownloadButton url={url} />
+					</DrawerFooter>
 				</div>
-				<DrawerFooter>
-					<DownloadButton url={url} />
-				</DrawerFooter>
 			</DrawerContent>
 		</Drawer>
 	)
