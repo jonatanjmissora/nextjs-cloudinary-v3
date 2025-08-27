@@ -60,7 +60,7 @@ export default function ImageTransformation({ id }: { id: string }) {
 					<LoaderCircle className="size-[7vw] p-5 animate-spin text-[var(--foreground)]/25" />
 				</div>
 			)}
-			<ImageElement actualAsset={actualAsset} setIsLoading={setIsLoading} />
+			<ImageElement id={id} setIsLoading={setIsLoading} />
 		</article>
 	)
 }

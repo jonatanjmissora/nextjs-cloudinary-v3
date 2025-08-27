@@ -14,7 +14,6 @@ export const useGetAssets = () => {
 		refetchIntervalInBackground: true,
 		refetchOnWindowFocus: false,
 	})
-
 	const error = queryError || data?.success === false ? data?.message : null
 	const assets = data?.response || []
 

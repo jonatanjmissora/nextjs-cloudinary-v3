@@ -26,7 +26,7 @@ export const DashboardFileInfo = ({
 				<div className="group left-0 absolute bottom-0 right-0 text-[var(--foreground)]/75 group-hover:opacity-100 opacity-0 bg-[var(--background)]/50 p-1 sm:text-xs 2xl:text-sm">
 					<div className="flex items-center justify-center">
 						<span className="w-3/4 truncate text-center">
-							{asset.public_id}
+							{asset.display_name}
 						</span>
 					</div>
 					<div className={`flex items-center justify-between`}>
@@ -41,7 +41,7 @@ export const DashboardFileInfo = ({
 			<>
 				<Ampliar asset={asset} />
 				<div className="group flex-1 flex flex-col justify-center gap-2 p-1 sm:text-sm 2xl:text-base">
-					<span className="w-3/4 mx-auto">{asset.public_id}</span>
+					<span className="w-3/4 mx-auto">{asset.display_name}</span>
 					<span>{setFileDate(asset.created_at)}</span>
 					<span>{setFileSize(asset.bytes)}</span>
 				</div>

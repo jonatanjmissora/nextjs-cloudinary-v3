@@ -1,17 +1,16 @@
 import { useTransformUrl } from "@/lib/use-transform-url"
 import { CldImage } from "next-cloudinary"
-import { CloudinaryAsset } from "@/lib/types"
 import { useEffect } from "react"
 import useTransformStore from "@/lib/zustand-transform"
 
 export const ImageElement = ({
-	actualAsset,
+	id,
 	setIsLoading,
 }: {
-	actualAsset: CloudinaryAsset
+	id: string
 	setIsLoading: (isLoading: boolean) => void
 }) => {
-	const { url, isFill, width, height } = useTransformUrl(actualAsset.public_id)
+	const { url, isFill, width, height } = useTransformUrl(id)
 	const { setResetAll } = useTransformStore()
 
 	useEffect(() => {
