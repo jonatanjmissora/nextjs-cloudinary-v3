@@ -6,7 +6,7 @@ import { FilesListList } from "./files-list-list"
 import { LoaderCircle } from "lucide-react"
 
 export default function DashboardContentBody() {
-	const { view, order, actualFolder } = useStore()
+	const { view, order, actualFolder, search } = useStore()
 
 	if (!view)
 		return (
@@ -15,8 +15,8 @@ export default function DashboardContentBody() {
 			</div>
 		)
 	return view === "grid" ? (
-		<FilesListGrid order={order} actualFolder={actualFolder} />
+		<FilesListGrid order={order} actualFolder={actualFolder} search={search} />
 	) : (
-		<FilesListList order={order} actualFolder={actualFolder} />
+		<FilesListList order={order} actualFolder={actualFolder} search={search} />
 	)
 }

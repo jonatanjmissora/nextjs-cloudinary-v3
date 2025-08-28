@@ -10,9 +10,11 @@ import { LoaderCircle } from "lucide-react"
 export const FilesListList = ({
 	order,
 	actualFolder,
+	search,
 }: {
 	order: "name" | "size" | "date"
 	actualFolder: string
+	search: string
 }) => {
 	const { isFetching, assets, error } = useGetAssets()
 	const { selectedAssets, setSelectedAssets } = useStore()
@@ -24,10 +26,16 @@ export const FilesListList = ({
 	const sortedAssets = sortedAssetsFn(assets, order)
 	const filteredAssets =
 		actualFolder === "Todas"
-			? sortedAssets
-			: sortedAssets.filter(asset => asset.asset_folder === actualFolder)
+			? sortedAssets.filter(asset =>
+					asset.display_name.toLowerCase().includes(search.toLowerCase())
+				)
+			: sortedAssets
+					.filter(asset => asset.asset_folder === actualFolder)
+					.filter(asset =>
+						asset.display_name.toLowerCase().includes(search.toLowerCase())
+					)
 
-	if(filteredAssets.length === 0) return <NoAssets />
+	if (filteredAssets.length === 0) return <NoAssets />
 
 	const selectedAssetsNames = selectedAssets.map(asset => asset.public_id)
 
@@ -108,8 +116,16 @@ const SkeltonList = () => {
 const NoAssets = () => {
 	return (
 		<article className="w-full h-[60dvh] flex flex-col gap-12 justify-center items-center relative">
-			<Image src="/no-pictures.svg" alt="no-pictures" width={300} height={300} className="opacity-20" />
-			<p className="text-foreground/30 text-xl font-semibold">carpeta sin imágenes..</p>
+			<Image
+				src="/no-pictures.svg"
+				alt="no-pictures"
+				width={300}
+				height={300}
+				className="opacity-20"
+			/>
+			<p className="text-foreground/30 text-xl font-semibold">
+				carpeta sin imágenes..
+			</p>
 		</article>
 	)
 }

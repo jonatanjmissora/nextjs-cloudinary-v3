@@ -197,15 +197,7 @@ export default useStore
 
 🟩 luego usamos la store, para listar y ordenar los archivos
 
-refactorizamos
 
-AssetMenu:
-transformar
-
-cuando carga la pagina, cuando prendo la compu, no hay session, asi que no me elige el grid, o el list
-
-probe nueva forma de upload
-up.ts route.ts y upload-files.ts
 
 🟩🟩
 

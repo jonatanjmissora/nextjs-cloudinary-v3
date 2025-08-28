@@ -10,9 +10,11 @@ import { LoaderCircle } from "lucide-react"
 export const FilesListGrid = ({
 	order,
 	actualFolder,
+	search,
 }: {
 	order: "name" | "size" | "date"
 	actualFolder: string
+	search: string
 }) => {
 	const { isFetching, assets, error } = useGetAssets()
 	const { selectedAssets, setSelectedAssets } = useStore()
@@ -23,8 +25,14 @@ export const FilesListGrid = ({
 	const sortedAssets = sortedAssetsFn(assets, order)
 	const filteredAssets =
 		actualFolder === "Todas"
-			? sortedAssets
-			: sortedAssets.filter(asset => asset.asset_folder === actualFolder)
+			? sortedAssets.filter(asset =>
+					asset.display_name.toLowerCase().includes(search.toLowerCase())
+				)
+			: sortedAssets
+					.filter(asset => asset.asset_folder === actualFolder)
+					.filter(asset =>
+						asset.display_name.toLowerCase().includes(search.toLowerCase())
+					)
 
 	if (filteredAssets.length === 0) return <NoAssets />
 
